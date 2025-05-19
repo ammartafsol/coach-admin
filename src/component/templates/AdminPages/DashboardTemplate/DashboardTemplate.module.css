@@ -1,0 +1,509 @@
+.container {
+  background-color: #fafafa;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Header Styles */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1b1b1b;
+  color: white;
+  padding: 0.75rem 2rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.75rem;
+  line-height: 1;
+  font-weight: 600;
+}
+
+.nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.navItem {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  background: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.active {
+  background-color: #333333;
+}
+
+.activeButton {
+  background-color: #b0cd6e;
+  color: #1b1b1b;
+  font-weight: 500;
+}
+
+.userSection {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.notificationButton {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.userProfile {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.avatar {
+  width: 2rem;
+  height: 2rem;
+  background-color: #b0cd6e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+/* Main Content Styles */
+.main {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Stats Row */
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+}
+
+.statCard {
+  background-color: white;
+  border: 1px solid #b0cd6e;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.statIcon {
+  margin-bottom: 0.5rem;
+}
+
+.statValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.statLabel {
+  font-size: 0.875rem;
+  color: #6d6d6d;
+}
+
+/* Content Row */
+.contentRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  min-height: 400px;
+  margin-top: 40px;
+}
+
+.leftColumn {
+  height: 100%;
+  width: 65%;
+}
+
+/* Earnings Card */
+.earningsCard {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.earningsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+.earningsValue {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.earningsLabel {
+  font-size: 0.875rem;
+  color: #6d6d6d;
+}
+
+.yearSelector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #333333;
+  padding: 0.5rem;
+  border: 1px solid #e7e7e7;
+  border-radius: 0.25rem;
+}
+
+.chartContainer {
+  position: relative;
+  height: 200px;
+}
+
+.bordetop {
+  margin-top: 30px;
+}
+
+.tooltipContainer {
+  position: absolute;
+  top: 80px;
+  left: 40%;
+  z-index: 10;
+}
+
+.topHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.topHeader h4 {
+  color: #333;
+  /* font-family: Aventa; */
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  
+}
+.topHeader span {
+  text-align: right;
+  color: #64832D;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px; /* 163.636% */
+  text-transform: capitalize;
+  cursor: pointer;
+
+}
+
+.tooltip {
+  background-color: white;
+  border: 1px solid #e7e7e7;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  font-size: 0.75rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tooltipValue {
+  font-weight: 600;
+}
+
+.tooltipDot {
+  width: 10px;
+  height: 10px;
+  background-color: #b0cd6e;
+  border-radius: 50%;
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.chart {
+  height: 100%;
+  width: 100%;
+}
+
+.chartSvg {
+  width: 100%;
+  height: 100%;
+}
+
+.months {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #6d6d6d;
+  margin-top: 0.5rem;
+}
+
+/* Right Column */
+.rightColumn {
+  height: 100%;
+  flex: 1;
+}
+
+/* Subscribers Card */
+.subscribersCard {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.cardTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.subscriberItem {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.subscriberLabel {
+  font-size: 0.875rem;
+}
+
+.subscriberBar {
+  height: 0.5rem;
+  background-color: #e7e7e7;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.subscriberBarFill {
+  height: 100%;
+  border-radius: 1rem;
+}
+
+.subscriberValue {
+  font-size: 0.875rem;
+  text-align: right;
+}
+
+/* Feeds Card */
+.feedsCard {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.feedsHeader {
+  margin-bottom: 1rem;
+}
+
+.feedsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.feedItem {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1rem;
+  align-items: center;
+}
+
+.feedImage {
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
+
+.feedTitle {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.feedDescription {
+  font-size: 0.75rem;
+  color: #6d6d6d;
+}
+
+.feedTime {
+  font-size: 0.75rem;
+  color: #6d6d6d;
+}
+
+.seeAllLink {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.25rem;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: #64832d;
+  cursor: pointer;
+}
+
+/* Registration Card */
+.registrationCard {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.registrationContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.registrationUser {
+  display: flex;
+  gap: 1rem;
+}
+
+.registrationAvatar {
+  border-radius: 50%;
+}
+
+.registrationName {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.registrationText {
+  font-size: 0.75rem;
+  color: #6d6d6d;
+}
+
+.registrationTime {
+  font-size: 0.75rem;
+  color: #6d6d6d;
+  margin-top: 0.25rem;
+}
+
+.registrationActions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.rejectButton {
+  padding: 0.5rem 1rem;
+  border: 1px solid #e7e7e7;
+  background-color: white;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.acceptButton {
+  padding: 0.5rem 1rem;
+  background-color: #b0cd6e;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+/* Coaches Section */
+.coachesSection {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.coachesHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.viewAllLink {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+  color: #64832d;
+  cursor: pointer;
+}
+
+.coachesTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1.5fr 1fr 1fr 0.5fr;
+  background-color: #eaf2d5;
+  padding: 0.75rem 1rem;
+  border-radius: 0.25rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.tableHeaderCell {
+  padding: 0.5rem;
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1.5fr 1fr 1fr 0.5fr;
+  border-bottom: 1px solid #e7e7e7;
+  font-size: 0.875rem;
+}
+
+.tableCell {
+  padding: 0.75rem 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.coachProfile {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.coachAvatar {
+  border-radius: 50%;
+}
+
+.moreButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #6d6d6d;
+}

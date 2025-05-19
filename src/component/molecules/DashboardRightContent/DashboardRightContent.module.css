@@ -1,0 +1,177 @@
+.rightColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+  }
+  
+  /* Subscribers Card */
+  .subscribersCard {
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    /* display: flex;
+    flex-direction: column; */
+  }
+  
+  .cardTitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .main{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .subscriberItem {
+    /* display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+    gap: 1rem; */
+    margin-bottom: 1rem;
+  }
+  
+  .subscriberLabel {
+    font-size: 0.875rem;
+  }
+  
+  .subscriberBar {
+    height: 0.5rem;
+    background-color: #e7e7e7;
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+  
+  .subscriberBarFill {
+    height: 100%;
+    border-radius: 1rem;
+  }
+  
+  .subscriberValue {
+    font-size: 0.875rem;
+    text-align: right;
+  }
+  
+  /* Feeds Card */
+  .feedsCard {
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .feedsHeader {
+    margin-bottom: 1rem;
+  }
+  
+  .feedsList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .feedItem {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  .feedImage {
+    border-radius: 0.25rem;
+    overflow: hidden;
+  }
+  
+  .feedTitle {
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+  
+  .feedDescription {
+    font-size: 0.75rem;
+    color: #6d6d6d;
+  }
+  
+  .feedTime {
+    font-size: 0.75rem;
+    color: #6d6d6d;
+  }
+  
+  .seeAllLink {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.25rem;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: #64832d;
+    cursor: pointer;
+  }
+  
+  /* Registration Card */
+  .registrationCard {
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .registrationContent {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .registrationUser {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .registrationAvatar {
+    border-radius: 50%;
+  }
+  
+  .registrationName {
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+  
+  .registrationText {
+    font-size: 0.75rem;
+    color: #6d6d6d;
+  }
+  
+  .registrationTime {
+    font-size: 0.75rem;
+    color: #6d6d6d;
+    margin-top: 0.25rem;
+  }
+  
+  .registrationActions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+  }
+  
+  .rejectButton {
+    padding: 0.5rem 1rem;
+    border: 1px solid #e7e7e7;
+    background-color: white;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+  }
+  
+  .acceptButton {
+    padding: 0.5rem 1rem;
+    background-color: #b0cd6e;
+    border: none;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+  }
+  

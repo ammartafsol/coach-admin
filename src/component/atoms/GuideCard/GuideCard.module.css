@@ -1,0 +1,44 @@
+.guidCardMain {
+  border-radius: 10px;
+  border: 1px solid var(--border-blue);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.removeBorder{
+  border: none !important;
+}
+
+.cardImg {
+  width: 60px;
+  height: 60px;
+}
+
+.cardImg img {
+  position: relative !important;
+  object-fit: contain;
+}
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cardContent h2 {
+  color: var(--black-color);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 31.2px;
+  letter-spacing: -0.4px;
+}
+
+.cardContent p {
+  color: var(--text-color-v1);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 19.6px;
+  opacity: 0.8;
+}

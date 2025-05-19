@@ -1,0 +1,76 @@
+.row {
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding-top: 70px;
+  margin-bottom: 80px;
+}
+
+.imageCol {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  flex: 1;
+  padding: 0;
+}
+.text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.mainImage {
+  border-radius: 8px;
+}
+
+.btn {
+  width: fit-content;
+  padding: 16px 40px;
+}
+.text h5 {
+  margin: 0px;
+  color: var(--black-color);
+  font-size: 44px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 64px;
+  letter-spacing: -0.88px;
+}
+.text p {
+  color: var(--text-color-v1);
+  font-family: "SF UI Display";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 21px;
+  opacity: 0.8;
+}
+
+.listStyle {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0px !important;
+  gap: 20px;
+}
+
+.listStyle li {
+  display: flex;
+  align-content: center;
+  gap: 20px;
+  list-style: none;
+}
+
+.rowReverse {
+  flex-direction: row-reverse;
+}

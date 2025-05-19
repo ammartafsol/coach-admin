@@ -1,0 +1,28 @@
+
+.filePreview {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .previewIcon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    z-index: 10;
+    cursor: pointer;
+  }
+
+  .fileItem{
+    display: flex;
+    align-items: center;
+    color: var(--heading-gray);
+    border-radius: 6px;
+    width: 250px;
+    height: 160px;
+    overflow: hidden;
+    position: relative;
+    margin-top: 5px;
+    border: 1px solid var(--primary-color) !important;
+  }

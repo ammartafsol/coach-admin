@@ -1,0 +1,76 @@
+.btn {
+  line-height: 1;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  width: 100%;
+  transition: 0.5s all;
+  border-radius: 6px !important;
+  padding: 14px 15px;
+  border: none;
+  outline: none !important;
+  background-color: var(--royal-navy-blue);
+  color: var(--white-color);
+}
+
+.btn:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+.btn[color-variant="gradient"] {
+  color: white;
+  border-radius: 6px;
+  padding: 15px 32px;
+  background: linear-gradient(225deg, #e04018 0%, #f8d11d 100%), #0a2147;
+}
+.btn[color-variant="primary"] {
+  background: var(--royal-navy-blue);
+  color: var(--white-color);
+}
+.btn[color-variant="secondary"] {
+  background: transparent;
+  color:  var(--black-color);
+}
+.btn[color-variant="dark"] {
+  background: var(--black);
+  color: var(--white);
+}
+.btn[color-variant="black-outlined"] {
+  background: var(--white);
+  color: var(--black);
+  border: 1px solid var(--black) !important;
+}
+
+.btn[color-variant="tertiary"] {
+  background: var(--tertiary);
+  color: var(--white);
+}
+.btn[color-variant="blue"] {
+  background: var(--blue-v1);
+  color: var(--white);
+}
+
+.btn[color-variant="outlined"] {
+  /* border: 1px solid var(--royal-navy-blue) !important; */
+  color:  linear-gradient(225deg, #e04018 0%, #f8d11d 100%), #0a2147;
+  box-shadow: none !important;
+  background-color: transparent;
+}
+
+@media screen and (max-width: 767px) {
+  .btn {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 570px) {
+  .btn {
+    padding: 14px 25px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .btn {
+    padding: 12px 20px;
+  }
+}

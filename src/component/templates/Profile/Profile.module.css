@@ -1,0 +1,33 @@
+
+.wrapper{
+    padding: 10px;
+}
+.profile{
+    width: 121px;
+    height: 121px;
+    position: relative;
+    border-radius: 50%;
+    margin-bottom: 30px;
+}
+.profileImage{
+    border-radius: 50%;
+}
+.CTA{
+    position: relative;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 5px;
+    bottom: 10px;
+    cursor: pointer;
+}
+
+.addIcon{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color:var(--royal-navy-blue);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

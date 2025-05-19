@@ -1,0 +1,80 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  height: 80px;
+  border-radius: 20px;
+  background: var(--black-color-300);
+  padding: 28px 24px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.75rem;
+  line-height: 1;
+  font-weight: 600;
+}
+
+.nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.navItem {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  background: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #333333;
+}
+
+.active {
+  background-color: #b0cd6e;
+  color: #1b1b1b;
+  font-weight: 500;
+}
+
+.userSection {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.notificationButton {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.userProfile {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.avatar {
+  width: 2rem;
+  height: 2rem;
+  background-color: #b0cd6e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}

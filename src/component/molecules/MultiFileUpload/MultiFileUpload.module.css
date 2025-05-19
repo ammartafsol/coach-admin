@@ -1,0 +1,167 @@
+.fileInputDiv {
+  padding: 24px;
+  border-radius: 5px;
+  text-align: center;
+  border: 1px dashed var(--primary-color);
+  margin-top: 6px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  height: 160px;
+}
+
+.disabledFile{
+  opacity: 0.5;
+}
+
+.labelStyle {
+  color: var(--black-color);
+  text-transform: capitalize;
+  margin-bottom: 8px;
+  font-family: var(--font-poppins);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.dropzone {
+  padding: 20px;
+  cursor: pointer;
+}
+
+.filePreviewList {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  z-index: 1;
+}
+
+.fileItem {
+  display: flex;
+  align-items: center;
+  /* margin: 10px 0; */
+  border: 1px solid var(--primary-color) !important;
+  color: var(--heading-gray);
+  border-radius: 6px;
+  width: 250px;
+  height: 160px;
+  overflow: hidden;
+  position: relative;
+margin-top: 5px;
+}
+
+.removeFile {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 24px;
+  height: 24px;
+  padding: 0px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+  background: var(--primary-text);
+  z-index: 1;
+}
+
+.filePreview {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.previewIcon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  z-index: 10;
+  cursor: pointer;
+}
+
+.text {
+  cursor: pointer;
+  color: var(--text-gray);
+  font-size: 12px;
+  margin-bottom: 0px !important;
+}
+
+.fileDesc {
+  width: max-content;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+}
+
+.desc {
+  cursor: pointer;
+  color: var(--text-gray);
+  font-size: 12px;
+  margin-bottom: 0px !important;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.imageDiv {
+  position: relative;
+  width: 40px;
+  height: 48px;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  font-weight: normal;
+  margin-top: 5px;
+  margin-bottom: 0;
+  font-family: var(--plusJakartaSans);
+}
+
+.imageContainer {
+  width: 100%;
+  height: 200px;
+  background-color: var(--text-white);
+}
+
+.imageContainer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.uploadWrapper {
+  margin-top: 8px;
+  margin-left: 32px;
+  padding: 8px;
+  border-left: 2px solid #e6f7ff;
+}
+
+.uploadedFile {
+  margin-left: 32px;
+  font-size: 13px;
+  color: #595959;
+  margin-top: 4px;
+}
+
+.hidden{
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .fileDesc {
+    width: fit-content;
+  }
+}
