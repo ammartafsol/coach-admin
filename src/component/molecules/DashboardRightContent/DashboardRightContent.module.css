@@ -19,6 +19,7 @@
     font-size: 1.125rem;
     font-weight: 600;
     margin-bottom: 1rem;
+    font-family: var(--font-aventa);
   }
   .main{
     display: flex;
@@ -37,6 +38,7 @@
   
   .subscriberLabel {
     font-size: 0.875rem;
+    font-family: var(--font-aventa);
   }
   
   .subscriberBar {
@@ -54,6 +56,7 @@
   .subscriberValue {
     font-size: 0.875rem;
     text-align: right;
+    font-family: var(--font-avenir-next);
   }
   
   /* Feeds Card */
@@ -89,27 +92,37 @@
   .feedTitle {
     font-weight: 600;
     font-size: 0.875rem;
+    font-family: var(--font-aventa);
+    font-size: 14px;
   }
   
   .feedDescription {
     font-size: 0.75rem;
     color: #6d6d6d;
+    font-family: var(--font-aventa);
+    font-size: 13px;
   }
   
   .feedTime {
     font-size: 0.75rem;
     color: #6d6d6d;
+    font-family: var(--font-avenir-next);
+    font-size: 14px;
   }
   
   .seeAllLink {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: flex-start;
     gap: 0.25rem;
     margin-top: 1rem;
     font-size: 0.875rem;
     color: #64832d;
     cursor: pointer;
+  }
+  .seeAllLink span{
+    font-family: var(--font-aventa);
+    font-size: 11px;
   }
   
   /* Registration Card */

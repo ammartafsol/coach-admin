@@ -31,5 +31,40 @@ export const tableHeaders = [
     style: { width: "20%" },
     renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
-  { title: "Action", key: "action",width:"15%", },
+  { title: "", key: "action",width:"15%", },
+];
+
+
+export const tableUserHeaders = [
+  {
+    title: "Username",
+    key: "username",
+    style: { width: "15%" },
+    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+  },
+  {
+    title: "Email",
+    key: "email",
+    style: { width: "20%" },
+    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+  },
+  {
+    title: "Number",
+    key: "phoneNumber",
+    style: { width: "20%" },
+    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+  },
+  {
+    title: "Subscriber",
+    key: "subscriber",
+    style: { width: "10%" },
+        renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+  },
+  {
+    title: "Location",
+    key: "location",
+    style: { width: "20%" },
+    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+  },
+  { title: "", key: "action",width:"15%", },
 ];

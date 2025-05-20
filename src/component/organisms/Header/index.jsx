@@ -4,9 +4,11 @@ import { useState } from "react"
 import Image from "next/image"
 import { ChevronDown, Bell } from "lucide-react"
 import classes from "./Header.module.css"
+import { useRouter } from "next/navigation"
 
 export default function Navbar() {
-  const [activeTab, setActiveTab] = useState("Coaches")
+  const [activeTab, setActiveTab] = useState("Coaches");
+  const router = useRouter();
 
   return (
     <header className={classes.header}>
@@ -17,13 +19,13 @@ export default function Navbar() {
       <nav className={classes.nav}>
         <button
           className={`${classes.navItem} ${activeTab === "Dashboard" ? classes.active : ""}`}
-          onClick={() => setActiveTab("Dashboard")}
+          onClick={() => {setActiveTab("Dashboard");router.push('/')}}
         >
           Dashboard
         </button>
         <button
           className={`${classes.navItem} ${activeTab === "Users" ? classes.active : ""} ${classes.activeButton}`}
-          onClick={() => setActiveTab("Users")}
+          onClick={() => {setActiveTab("Users");router.push('/user')}}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -43,19 +45,19 @@ export default function Navbar() {
         </button>
         <button
           className={`${classes.navItem} ${activeTab === "Coaches" ? classes.active : ""}`}
-          onClick={() => setActiveTab("Coaches")}
+          onClick={() => {setActiveTab("Coaches");router.push('/coach')}}
         >
           Coaches
         </button>
         <button
           className={`${classes.navItem} ${activeTab === "Feeds" ? classes.active : ""}`}
-          onClick={() => setActiveTab("Feeds")}
+          onClick={() => {setActiveTab("Feeds");router.push('/feeds')}}
         >
           Feeds
         </button>
         <button
           className={`${classes.navItem} ${activeTab === "Transaction" ? classes.active : ""}`}
-          onClick={() => setActiveTab("Transaction")}
+          onClick={() => {setActiveTab("Transaction");router.push('transaction')}}
         >
           Transaction
         </button>

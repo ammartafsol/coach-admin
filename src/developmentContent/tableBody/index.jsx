@@ -41,3 +41,51 @@ export const CoachTableBody = [
     }
   ];
   
+  export const tableUserData = [
+    {
+      username: "johndoe",
+      email: "johndoe@example.com",
+      phoneNumber: "+1 123 456 7890",
+      subscriber: "Yes",
+      location: "New York, USA",
+      action: "", // Placeholder for any action buttons or components
+    },
+    {
+      username: "janedoe",
+      email: "janedoe@example.com",
+      phoneNumber: "+1 987 654 3210",
+      subscriber: "No",
+      location: "Los Angeles, USA",
+      action: "",
+    },
+    {
+      username: "michaelb",
+      email: "michael.b@example.com",
+      phoneNumber: "+44 20 7946 0958",
+      subscriber: "Yes",
+      location: "London, UK",
+      action: "",
+    },
+    {
+      username: "sarahk",
+      email: "sarah.k@example.com",
+      phoneNumber: "+61 2 9876 5432",
+      subscriber: "Yes",
+      location: "Sydney, Australia",
+      action: "",
+    },
+    {
+      username: "liwei88",
+      email: "li.wei@example.cn",
+      phoneNumber: "+86 10 1234 5678",
+      subscriber: "No",
+      location: "Beijing, China",
+      action: "",
+    },
+    {
+      username: "amandat",
+      email: "amanda.t@example.ca",
+      phoneNumber: "+1 416 555 0198",
+      subscriber: "Yes",
+    }
+    ]  

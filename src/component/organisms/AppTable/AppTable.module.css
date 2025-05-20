@@ -23,8 +23,10 @@
   height: 70px;
   border-inline: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
-  color: var(--table-head-text) !important;
-  background-color: var(--Wild-Willow-100);
+  color: #333 !important;
+  background-color: #EAF2D5;
+  font-size: 14px !important;
+  font-family: var(--font-aventa);
 }
 
 .tableHeaderContainer th:first-child,
@@ -42,6 +44,9 @@
 
 .tableBodyContainer td {
   border-inline: 1px solid var(--border-color);
+  font-family: var(--font-avenir-next);
+  font-size: 14px !important;
+  color: #454545 !important;
 }
 
 .tableBodyContainer tr {

@@ -49,38 +49,38 @@ const DropDown = ({
       backgroundColor: isDisabled
         ? "var(--disabled-input-color)"
         : "var(--white-color)",
-      borderRadius: borderRadius,
+      borderRadius:10,
       color: "#3F78A3",
       boxShadow: "none",
-      fontFamily: "var(--inter)",
-      width: "100%",
+      fontFamily: "var(--font-avenir-next)",
+      width: "120px",
       fontSize: "16px",
       cursor: "pointer",
-      border: `1px solid var(--input-border)`,
+      border: `1px solid #B8B6B6`,
       padding: "1px 15px",
       height: "40px",
       ...customStyle,
 
       ":hover": {
         ...styles[":hover"],
-        borderColor: "var(--input-border-active)",
+        borderColor: "var(--Wild-Willow-100)",
       },
       ":placeholder": {
         ...styles[":placeholder"],
-        color: "var(--placeholder-color)",
+        color: "var(--Wild-Willow-100)",
       },
       ":active": {
         ...styles[":active"],
-        borderColor: "var(--input-border-active)",
+        borderColor: "var(--Wild-Willow-100)",
       },
     }),
 
     placeholder: (defaultStyles) => {
       return {
         ...defaultStyles,
-        color: "var(--placeholder-color)",
+        color: "#454545",
         textTransform: "capitalize",
-        fontFamily: "var(--inter)",
+        fontFamily: "var(--font-avenir-next)",
         fontSize: "14px",
       };
     },

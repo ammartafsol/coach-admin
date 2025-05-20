@@ -3,6 +3,8 @@
 import { useRef, useEffect } from "react"
 import Chart from "chart.js/auto"
 import classes from "./Chart.module.css"
+import BorderWrapper from "@/component/atoms/BorderWrapper"
+import DropDown from "../DropDown/DropDown"
 
 export default function EarningsChart() {
   const chartRef = useRef(null)
@@ -162,23 +164,19 @@ export default function EarningsChart() {
   }, [])
 
   return (
-    <div className={classes.container}>
-      <div className={classes.header}>
+    <BorderWrapper>
+ <div className={classes.header}>
         <div>
           <h2 className={classes.amount}>$63,489.50</h2>
           <p className={classes.label}>Total Earnings</p>
         </div>
         <div className={classes.yearSelector}>
-          <span>This Year</span>
-          <div className={classes.checkboxContainer}>
-            <input type="checkbox" id="thisYear" className={classes.checkboxInput} checked readOnly />
-            <label htmlFor="thisYear" className={classes.checkboxLabel}></label>
-          </div>
+         <DropDown placeholder={"Years"} />
         </div>
       </div>
       <div className={classes.chartContainer}>
         <canvas ref={chartRef}></canvas>
       </div>
-    </div>
+    </BorderWrapper>
   )
 }

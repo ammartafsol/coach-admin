@@ -8,26 +8,12 @@
   --font-weight-bold: 700;
   --font-weight-heavy: 800;
   --font-weight-black: 900;
+
+  /* Font Families */
+  --font-avenir-next: "Avenir Next Cyr", sans-serif;
+  --font-aventa: Aventa, sans-serif;
+  --font-helvetica: "Helvetica Neue", system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 
-body {
-  font-family: 'SF UI Display', sans-serif !important;
-  font-weight: var(--font-weight-regular); /* Default to regular */
-}
-
-h1 {
-  font-family: 'SF UI Display', sans-serif !important;
-  font-weight: var(--font-weight-black); /* Black */
-}
-
-h2 {
-  font-family: 'SF UI Display', sans-serif !important;
-  font-weight: var(--font-weight-bold); /* Bold */
-}
-
-p {
-  font-family: 'SF UI Display', sans-serif !important;
-  font-weight: var(--font-weight-light); /* Light */
-}
 

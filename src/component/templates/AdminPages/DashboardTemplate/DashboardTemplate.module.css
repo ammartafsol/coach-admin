@@ -206,6 +206,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  font-family: var(--font-aventa);
   
 }
 .topHeader span {
@@ -217,7 +218,7 @@
   line-height: 18px; /* 163.636% */
   text-transform: capitalize;
   cursor: pointer;
-
+  font-family: var(--font-aventa);
 }
 
 .tooltip {

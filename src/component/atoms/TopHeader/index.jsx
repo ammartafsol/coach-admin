@@ -1,23 +1,16 @@
-"use client";
-
 import React from "react";
 import classes from "./TopHeader.module.css";
-import { usePathname } from "next/navigation";
-import { formatPathname } from "@/resources/utils/helper";
 
-const TopHeader = ({ data, showBreadcrumb = true }) => {
-  const pathname = usePathname();
-  const formattedName = formatPathname(data ? data : pathname);
-
+const TopHeader = ({ children }) => {
   return (
     <div className={classes?.TopHeader}>
-      <h4>{formattedName}</h4>
-      {showBreadcrumb && (
-        <ul className={classes?.pageMenu}>
-          <li>Home</li>
-          <li>{formattedName}</li>
-        </ul>
-      )}
+      <div className={classes?.mainPoint}>
+        Dashboard / <span>Users</span>
+        <div className={classes?.route}>Users</div>
+      </div>
+      <div className={classes?.childrenMain}>
+        {children}
+      </div>
     </div>
   );
 };
