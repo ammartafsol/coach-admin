@@ -1,12 +1,12 @@
 import React from "react";
 import classes from "./TopHeader.module.css";
 
-const TopHeader = ({ children }) => {
+const TopHeader = ({ children,title }) => {
   return (
     <div className={classes?.TopHeader}>
       <div className={classes?.mainPoint}>
-        Dashboard / <span>Users</span>
-        <div className={classes?.route}>Users</div>
+        Dashboard / <span>{title}</span>
+        <div className={classes?.route}>{title}</div>
       </div>
       <div className={classes?.childrenMain}>
         {children}
