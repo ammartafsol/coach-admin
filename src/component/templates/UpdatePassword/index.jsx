@@ -2,113 +2,112 @@
 import Button from "@/component/atoms/Button";
 import { Input } from "@/component/atoms/Input";
 import RenderToast from "@/component/atoms/RenderToast";
-import Wrapper from "@/component/atoms/wrapper";
-import { Patch } from "@/interceptor/axios-functions";
-import { handleEncrypt } from "@/resources/utils/helper";
-import { updatePasswordSchema } from "@/schema/forgetPasswordSchema";
-import { saveToken } from "@/store/auth/authSlice";
 import { useFormik } from "formik";
-import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import classes from "./UpdatePassword.module.css";
+import BorderWrapper from "@/component/atoms/BorderWrapper";
+import * as Yup from "yup";
+
+const updatePasswordSchema = Yup.object().shape({
+  currentPassword: Yup.string()
+    .min(6, "Password must be at least 6 characters")
+    .required("Current password is required"),
+  newPassword: Yup.string()
+    .min(6, "Password must be at least 6 characters")
+    .required("New password is required"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("newPassword"), null], "Passwords must match")
+    .required("Confirm password is required"),
+});
 
 const UpdatePasswordTemplate = () => {
+  const router = useRouter();
   const [loading, setLoading] = useState("");
-  const updatePasswordFormik = useFormik({
+
+  const passwordFormik = useFormik({
     initialValues: {
-      oldPassword: "",
+      currentPassword: "",
       newPassword: "",
-      reEnterNewPassword: "",
+      confirmPassword: "",
     },
     validationSchema: updatePasswordSchema,
-    onSubmit: (values, { resetForm }) => {
-      handleSubmit(values, { resetForm });
+    onSubmit: (values) => {
+      setLoading("loading");
+      setTimeout(() => {
+        RenderToast({
+          type: "success",
+          message: "Password Updated Successfully",
+        });
+        setLoading("");
+        router.push("/profile");
+      }, 1000);
     },
   });
 
-  const handleSubmit = async (values, { resetForm }) => {
-    setLoading("loading");
-    const obj = {
-      currentPassword: values.oldPassword,
-      password: values.newPassword,
-      confirmPassword: values.reEnterNewPassword,
-    };
-    const response = await Patch({ route: "auth/update/password", data: obj });
-    if (response) {
-      saveToken(response?.data?.data?.token);
-      Cookies.set("_xpdx", handleEncrypt(response?.data?.data?.token));
-      RenderToast({
-        type: "success",
-        message: "Password Updated Successfully",
-      });
-      resetForm();
-    }
-    setLoading("");
-  };
-
   return (
-    <Wrapper>
-      <div className={classes.Wrapper}>
-        <h5 className={`${"heading1"} ${classes.passwordText}`}>
-          Update Password
-        </h5>
-        <Row>
-          <Col xs="12">
-            <Input
-              label={"Old Password"}
-              setter={(e) =>
-                updatePasswordFormik.setFieldValue("oldPassword", e)
-              }
-              errorText={
-                updatePasswordFormik.touched.oldPassword &&
-                updatePasswordFormik.errors.oldPassword
-              }
-              value={updatePasswordFormik.values.oldPassword}
-              type={"password"}
-              placeholder={"*****"}
+    <div className="main">
+      <BorderWrapper>
+        <div className={classes.wrapper}>
+          <Row>
+            <Col xs="12">
+              <Input
+                label={"Current Password"}
+                value={passwordFormik.values.currentPassword}
+                setter={(e) => {
+                  passwordFormik.setFieldValue("currentPassword", e);
+                }}
+                errorText={
+                  passwordFormik.touched.currentPassword &&
+                  passwordFormik.errors.currentPassword
+                }
+                type={"password"}
+                placeholder={"Enter your current password"}
+              />
+            </Col>
+            <Col xs="12">
+              <Input
+                label={"New Password"}
+                value={passwordFormik.values.newPassword}
+                setter={(e) => {
+                  passwordFormik.setFieldValue("newPassword", e);
+                }}
+                errorText={
+                  passwordFormik.touched.newPassword &&
+                  passwordFormik.errors.newPassword
+                }
+                type={"password"}
+                placeholder={"Enter your new password"}
+              />
+            </Col>
+            <Col xs="12">
+              <Input
+                label={"Confirm Password"}
+                value={passwordFormik.values.confirmPassword}
+                setter={(e) => {
+                  passwordFormik.setFieldValue("confirmPassword", e);
+                }}
+                errorText={
+                  passwordFormik.touched.confirmPassword &&
+                  passwordFormik.errors.confirmPassword
+                }
+                type={"password"}
+                placeholder={"Confirm your new password"}
+              />
+            </Col>
+          </Row>
+          <div className="btnRight">
+            <Button
+              className={classes.btn}
+              onClick={passwordFormik.handleSubmit}
+              disabled={loading === "loading"}
+              label={loading === "loading" ? "loading..." : "Update Password"}
             />
-          </Col>
-          <Col xs="12">
-            <Input
-              label={"New Password"}
-              setter={(e) =>
-                updatePasswordFormik.setFieldValue("newPassword", e)
-              }
-              errorText={
-                updatePasswordFormik.touched.newPassword &&
-                updatePasswordFormik.errors.newPassword
-              }
-              value={updatePasswordFormik.values.newPassword}
-              type={"password"}
-              placeholder={"*****"}
-            />
-          </Col>
-          <Col xs="12">
-            <Input
-              label={"Re-enter New Password"}
-              setter={(e) =>
-                updatePasswordFormik.setFieldValue("reEnterNewPassword", e)
-              }
-              errorText={
-                updatePasswordFormik.touched.reEnterNewPassword &&
-                updatePasswordFormik.errors.reEnterNewPassword
-              }
-              value={updatePasswordFormik.values.reEnterNewPassword}
-              type={"password"}
-              placeholder={"*****"}
-            />
-          </Col>
-        </Row>
-        <div className="btnRight">
-          <Button
-            onClick={updatePasswordFormik.handleSubmit}
-            disabled={loading === "loading"}
-            label={loading === "loading" ? "loading..." : "Update Password"}
-          />
+          </div>
         </div>
-      </div>
-    </Wrapper>
+      </BorderWrapper>
+    </div>
   );
 };
 

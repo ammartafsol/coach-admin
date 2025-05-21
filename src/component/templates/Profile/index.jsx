@@ -7,7 +7,7 @@ import { mergeClass } from "@/resources/utils/helper";
 import { useFormik } from "formik";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { IoMdAdd } from "react-icons/io";
 import classes from "./Profile.module.css";
@@ -33,11 +33,10 @@ const ProfileTemplate = () => {
   const profileFormik = useFormik({
     initialValues: {
       email: "",
-      password:"",
+      password: "",
     },
     validationSchema: profileSchema,
     onSubmit: (values) => {
-      // Temporarily just show success message
       setLoading("loading");
       setTimeout(() => {
         RenderToast({
@@ -97,13 +96,13 @@ const ProfileTemplate = () => {
             <Col xs="12">
               <Input
                 label={"Password"}
-                value={profileFormik.values.email}
+                value={profileFormik.values.password}
                 setter={(e) => {
                   profileFormik.setFieldValue("password", e);
                 }}
                 errorText={
-                  profileFormik.touched.email &&
-                  profileFormik.errors.email
+                  profileFormik.touched.password &&
+                  profileFormik.errors.password
                 }
                 type={"password"}
                 placeholder={"Enter your Password"}
@@ -112,15 +111,15 @@ const ProfileTemplate = () => {
           </Row>
           <div
             onClick={() => {
-              router.push("/update-Password");
+              router.push("/update-password");
             }}
-            className={mergeClass("mt-3", "textBlodLeft")}
+            className={classes?.textBlodLeft}
           >
             Update Password?
           </div>
           <div className="btnRight">
             <Button
-            className={classes?.btn}
+              className={classes.btn}
               onClick={profileFormik.handleSubmit}
               disabled={loading === "loading"}
               label={loading === "loading" ? "loading..." : "Update Profile"}
