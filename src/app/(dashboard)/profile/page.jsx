@@ -1,9 +1,10 @@
+import ProfileTemplate from '@/component/templates/Profile'
 import React from 'react'
 
 const page = () => {
   return (
     <div>
-        {/* <Profil */}
+        <ProfileTemplate />
     </div>
   )
 }

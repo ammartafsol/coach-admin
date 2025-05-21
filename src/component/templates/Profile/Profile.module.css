@@ -1,33 +1,58 @@
-
 .wrapper{
-    padding: 10px;
+    padding: 24px;
 }
 .profile{
+    margin-bottom: 32px;
+}
+.profileImageContainer{
+    position: relative;
     width: 121px;
     height: 121px;
-    position: relative;
     border-radius: 50%;
-    margin-bottom: 30px;
+    overflow: hidden;
 }
 .profileImage{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     border-radius: 50%;
 }
 .CTA{
-    position: relative;
-    width: 30px;
-    height: 30px;
     position: absolute;
-    right: 5px;
-    bottom: 10px;
+    bottom: 0;
+    right: 0;
     cursor: pointer;
 }
 
 .addIcon{
     width: 40px;
     height: 40px;
+    background-color: var(--primary-color);
     border-radius: 50%;
-    background-color:var(--royal-navy-blue);
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+
+.addIcon:hover {
+    background-color: var(--primary-color-dark);
+}
+
+.btnRight {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+}
+
+.textBlodLeft {
+    color: var(--primary-color);
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.btn{
+    width: fit-content !important;
+    margin-top: 20px;
 }

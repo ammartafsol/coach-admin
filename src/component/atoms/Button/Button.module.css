@@ -6,11 +6,13 @@
   width: 100%;
   transition: 0.5s all;
   border-radius: 6px !important;
-  padding: 14px 15px;
   border: none;
   outline: none !important;
-  background-color: var(--royal-navy-blue);
-  color: var(--white-color);
+  background-color: #B0CD6E;
+  color: #344313;
+  padding: 10px 24px;
+  height: 45px;
+  font-family: var(--font-avenir-next);
 }
 
 .btn:disabled {
