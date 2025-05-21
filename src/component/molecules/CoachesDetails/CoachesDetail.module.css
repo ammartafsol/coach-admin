@@ -1,0 +1,132 @@
+.coachCard {
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.coachHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.main {
+  display: flex;
+  width: 42px;
+  height: 42px;
+  padding: 4px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  border-radius: 38px;
+  border: 1px solid #e4e4e7;
+  background: #fff;
+}
+
+.dots {
+  width: 10px;
+  height: 10px;
+  background-color: #2cdd96;
+  border-radius: 50%;
+}
+.active{
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    width: fit-content;
+    margin-top: 5px;
+    gap: 6px;
+}
+
+.coachInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.coachAvatar {
+  width: 80px;
+  height: 80%;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+  border: 3px solid rgba(249, 225, 122, 0.3);
+}
+
+.coachAvatar img {
+  border-radius: 50%;
+}
+
+.coachDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.coachName {
+  color: #333;
+  font-family: var(--font-aventa);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.coachRating {
+  display: flex;
+  gap: 0.25rem;
+  color: #f29267;
+}
+
+.memberCount {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  /* color:#F9E17A; */
+  color: #828282;
+  font-size: 0.75rem;
+}
+
+.expandBtn {
+  background: none;
+  border: none;
+  color: #71717a;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.subscriptionDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.subscriptionPlan {
+  color: #333;
+  font-family: var(--font-aventa);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 1.2px;
+}
+
+.subscriptionDate {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.statusBadge {
+  color: #14532D;
+font-family: var(--font-aventa);
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px;
+margin-top: 3px;
+}

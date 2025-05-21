@@ -40,7 +40,7 @@ const UserTemplate = () => {
   ];
 
   return (
-    <div>
+    <>
       <TopHeader title="User">
         <DropDown placeholder={"Location"} />
         <DropDown placeholder={"Status"} />
@@ -50,6 +50,7 @@ const UserTemplate = () => {
           rightIcon={<IoSearchOutline color="#B0CD6E" size={20} />}
         />
       </TopHeader>
+    <div>
       <AppTable tableHeader={tableUserHeaders} data={tableUserData}
             renderItem={({ item, key, rowIndex, renderValue }) => {
               const rowItem = CoachTableBody[rowIndex];
@@ -67,6 +68,7 @@ const UserTemplate = () => {
           />
       {showActionMenu && <ActionMenu options={menuOptions} onClose={handleCloseMenu} x={menuX} y={menuY} />}
     </div>
+    </>
   );
 };
 

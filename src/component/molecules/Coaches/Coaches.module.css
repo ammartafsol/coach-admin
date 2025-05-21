@@ -1,0 +1,76 @@
+.card {
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+}
+
+.profileSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+.profileInfo {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-right: 1.5rem;
+  position: relative;
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.userInfo {
+}
+
+.userName {
+  color: #333;
+  font-size: 34px;
+  font-style: normal;
+  font-weight: 400;
+  font-family: var(--font-aventa);
+  margin-bottom: 1rem;
+}
+
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-family: var(--font-aventa);
+}
+
+.contactItem {
+  display: flex;
+  align-items: center;
+  color: #4b5563;
+}
+
+.contactIcon {
+  margin-right: 0.5rem;
+}
+
+.deactivateButton {
+  border-radius: 6px;
+  background: #b0cd6e;
+  backdrop-filter: blur(8.149999618530273px);
+  height: 45px;
+  padding: 10px 24px;
+  color: #344313;
+  font-family: var(--font-avenir-next);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 450;
+  line-height: normal;
+  letter-spacing: 0.32px;
+  border: none;
+}
+

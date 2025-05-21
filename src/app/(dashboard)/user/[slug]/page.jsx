@@ -1,11 +1,10 @@
-import UserDetailTemplate from '@/component/templates/AdminPages/UserTemplate/UserDetailTemplate';
+import UserDetailTemplate from '@/component/templates/AdminPages/UserDetailTemplate';
 import React from 'react'
 
 const page = ({params}) => {
-    const {slug} = params;
   return (
     <div>
-        <UserDetailTemplate slug={slug} />
+      <UserDetailTemplate />
     </div>
   )
 }
