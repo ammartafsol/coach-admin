@@ -1,6 +1,6 @@
-"use client";
-import { Modal } from "react-bootstrap";
-import classes from "./ModalSkeleton.module.css";
+"use client"
+import { useEffect } from "react"
+import classes from "./ModalSkeleton.module.css"
 
 export default function ModalSkeleton({
   show,
@@ -9,100 +9,88 @@ export default function ModalSkeleton({
   children,
   modalClass,
   headerStyles,
-  width,
+  width = "800px",
   headerClass,
-  height
+  height,
+  onBack,
 }) {
   function handleClose() {
-    setShow(false);
+    setShow(false)
   }
+
+  // Prevent body scrolling when modal is open
+  useEffect(() => {
+    if (show) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = ""
+    }
+    return () => {
+      document.body.style.overflow = ""
+    }
+  }, [show])
+
+  if (!show) return null
+
   return (
     <>
-      <style>{`
-        .modal-dialog-centered {
-          min-height: 100% !important;
-          border-radius: 20px;
-        }
- 
-        .modal-header {
-          border-bottom: none !important;
-          padding: 0px !important;
-          padding-top: 20px !important;
-        }
-
-        .${classes.header} button {
-          color: var(--black-color) !important;
-        }
-
-        .modal-content {
-          width: 94%;
-          margin: 0 auto;
-        }
-
-        .modal-body {
-          border-radius: 20px;
-          overflow-y: auto !important; 
-        }
-
-         .modal-body::-webkit-scrollbar {
-          width: 6px;
-        }
-
-        .modal-body::-webkit-scrollbar-track {
-          background: #f1f1f1;
-          border-radius: 10px;
-        }
-
-        .modal-body::-webkit-scrollbar-thumb {
-          background: var(--primary-bg);
-          border-radius: 10px;
-        }
-
-        .modal .modal-dialog {
-          max-width: ${width};
-          margin: 0px auto;
-        }
-
-        @media screen and (max-width: 992px) {
-          .modal .modal-dialog {
-            max-width: 70%;
-          }
-        }
-        @media screen and (max-width: 768px) {
-          .modal .modal-dialog {
-            max-width: 80%;
-          }
-        }
-        @media screen and (max-width: 575px) {
-          .modal .modal-dialog {
-            max-width: 90%;
-          }
-        }
-      `}</style>
-
-      <Modal
-        show={show}
-        onHide={handleClose}
-        centered
-        className={`  ${[classes.modal].join(" ")} `}
-      >
-        {header && (
-          <Modal.Header
-            className={`${[classes.header, headerClass && headerClass].join(
-              " "
-            )}`}
-            style={{ ...headerStyles }}
-          >
-            <h4 className="heading1" style={{ ...headerStyles }}>{header}</h4>
-          </Modal.Header>
-        )}
-        <Modal.Body
-          className={`${[classes.body, modalClass && modalClass].join(" ")}`}
-          style={{ height: height || "auto" }}
+      <div className="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center" onClick={handleClose}>
+        <div
+          className="bg-white rounded-lg max-h-[90vh] overflow-hidden"
+          style={{ width: width }}
+          onClick={(e) => e.stopPropagation()}
         >
-          {children}
-        </Modal.Body>
-      </Modal>
+          {header && (
+            <div className={`${classes.header} ${headerClass || ""}`} style={{ ...headerStyles }}>
+              {onBack && (
+                <button onClick={onBack} className={classes.backButton}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M19 12H5"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M12 19L5 12L12 5"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+              )}
+              <h4 style={{ ...headerStyles }}>{header}</h4>
+              <button onClick={handleClose} className="ml-auto text-gray-500 hover:text-gray-700">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M18 6L6 18"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M6 6L18 18"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+          )}
+          <div
+            className={`${classes.body} ${modalClass || ""} overflow-y-auto`}
+            style={{ height: height || "auto", maxHeight: "calc(90vh - 80px)" }}
+          >
+            {children}
+          </div>
+        </div>
+      </div>
     </>
-  );
+  )
 }
