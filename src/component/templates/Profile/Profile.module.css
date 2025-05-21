@@ -9,7 +9,6 @@
     width: 121px;
     height: 121px;
     border-radius: 50%;
-    overflow: hidden;
 }
 .profileImage{
     width: 100%;
@@ -19,15 +18,15 @@
 }
 .CTA{
     position: absolute;
-    bottom: 0;
-    right: 0;
+    right: 7px;
+    bottom: 5px;
     cursor: pointer;
 }
 
 .addIcon{
-    width: 40px;
-    height: 40px;
-    background-color: var(--primary-color);
+    width: 30px;
+    height: 30px;
+    background-color: #F29267;
     border-radius: 50%;
     display: flex;
     align-items: center;

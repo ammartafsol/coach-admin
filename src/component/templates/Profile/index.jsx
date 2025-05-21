@@ -71,7 +71,7 @@ const ProfileTemplate = () => {
                 />
                 <label htmlFor="fileInput">
                   <div className={classes.addIcon}>
-                    <IoMdAdd color="var(--white-color)" size={25} />
+                    <IoMdAdd color="#fff" size={25} />
                   </div>
                 </label>
               </div>
