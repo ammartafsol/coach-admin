@@ -1,0 +1,18 @@
+
+.mainContClassName{
+    width: 300px !important;
+}
+
+.notificationHeader{
+    margin-top: 30px;
+}
+
+.notificationMain{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.notification{
+    display: inline-block !important;
+}

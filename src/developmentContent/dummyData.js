@@ -158,3 +158,57 @@ export const transactionCardData = [
     ],
   },
 ]
+
+export const notificationCardData = [
+  {
+    id: 1,
+    name: "Jenny Wilson",
+    email: "alma.lawson@example.com",
+    description:"Jenny Wilson is a new register. Want to accept registration."
+    },
+    {
+      id: 2,
+      name: "Jenny Wilson",
+      email: "alma.lawson@example.com",
+      description:"Jenny Wilson is a new register. Want to accept registration."
+    }
+
+
+]
+export const notificationData = [
+  {
+    id: 1,
+    name: "Jenny Wilson",
+    email: "alma.lawson@example.com",
+    description:"Jenny Wilson is a new register. Want to accept registration."
+    },
+    {
+      id: 2,
+      name: "Jenny Wilson",
+      email: "alma.lawson@example.com",
+      description:"Jenny Wilson is a new register. Want to accept registration."
+    },
+    {
+      id: 3,
+      name: "Jenny Wilson",
+      email: "alma.lawson@example.com",
+      description:"Jenny Wilson is a new register. Want to accept registration."
+    },
+      
+    {
+      id: 4,
+      name: "Jenny Wilson",
+      email: "alma.lawson@example.com",
+      description:"Jenny Wilson is a new register. Want to accept registration."
+    },
+      
+    {
+      id: 5,
+      name: "Jenny Wilson",
+      email: "alma.lawson@example.com",
+      description:"Jenny Wilson is a new register. Want to accept registration."
+    },
+      
+
+
+]
