@@ -10,7 +10,7 @@ import NotificationsPopup from "../NotificationsPopup/NotificationsPopup";
 
 export default function Navbar() {
   const bellRef = useRef(null);
-  const [activeTab, setActiveTab] = useState("Coaches");
+  const [activeTab, setActiveTab] = useState("Dashboard");
   const router = useRouter();
   const [showNotifications, setShowNotifications] = useState(false);
   return (
@@ -74,11 +74,11 @@ export default function Navbar() {
         </button>
         <button
           className={`${classes.navItem} ${
-            activeTab === "Feeds" ? classes.active : ""
+            activeTab === "Feed" ? classes.active : ""
           }`}
           onClick={() => {
-            setActiveTab("Feeds");
-            router.push("/feeds");
+            setActiveTab("Feed");
+            router.push("/feed");
           }}
         >
           Feeds

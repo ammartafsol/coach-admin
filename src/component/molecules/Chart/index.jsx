@@ -117,9 +117,9 @@ export default function EarningsChart() {
                   display: false,
                 },
               },
-              y: {
-                display: false,
-              },
+              // y: {
+              //   display: false,
+              // },
             },
             interaction: {
               intersect: false,

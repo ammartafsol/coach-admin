@@ -37,3 +37,6 @@ export const coachTabs = [
     },
     
 ]
+
+
+export const buttonsTabs = ["WorkOut","Gym Routine","Nutrition","Drills"]

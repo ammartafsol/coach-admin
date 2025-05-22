@@ -1,0 +1,11 @@
+
+
+.mainWrapper{
+    margin-top: 20px;
+}
+
+.feedsList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }

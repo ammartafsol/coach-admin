@@ -7,3 +7,13 @@
 .TopHeader{
     margin-bottom: 20px;
 }
+
+.coach{
+    color: #333;
+font-family: var(--font-aventa);
+font-size: 18px;
+font-style: normal;
+font-weight: 400;
+line-height: 29.279px; /* 162.659% */
+margin-bottom: 20px;
+}

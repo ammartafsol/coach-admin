@@ -9,6 +9,8 @@ import Button from "@/component/atoms/Button";
 import DropDown from "@/component/molecules/DropDown/DropDown";
 import { Input } from "@/component/atoms/Input";
 import { IoSearchOutline } from "react-icons/io5";
+import ButtonTabs from "@/component/atoms/ButtonTabs";
+import FeedsCom from "@/component/organisms/FeedsCom";
 import UserProfile from "@/component/organisms/UserProfile/UserProfile";
 import Subscription from "@/component/organisms/Subscription/Subscription";
 
@@ -52,20 +54,22 @@ const CoachDetailTemplate = () => {
       <div className={classes?.coachTop}>
         {SelectedTabs.value === "users" ? (
           <UsersTable />
-        ) : SelectedTabs.value === "profile" ? (
-          "profile"
-        ) : (
-          "dsa"
-        )}
-        {SelectedTabs.value === "users" ? (
+        ) :SelectedTabs.value === "users" ? (
           <UsersTable />
         ) : SelectedTabs.value === "profile" ? (
           <UserProfile />
         ) : SelectedTabs.value === "subscription" ? (
           <Subscription />
-        ) : (
-          "dsa"
+        ) : 
+          SelectedTabs.value === 'feeds'? 
+          (
+            <FeedsCom />
+          )
+          :
+          (
+          "No data "
         )}
+        
       </div>
     </div>
   );
