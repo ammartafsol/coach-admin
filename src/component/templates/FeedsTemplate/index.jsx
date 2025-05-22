@@ -8,8 +8,8 @@ import { IoSearchOutline } from "react-icons/io5"
 import BorderWrapper from "@/component/atoms/BorderWrapper"
 import FeedsCard from "@/component/molecules/FeedsCard/FeedsCard"
 import { feedsData } from "@/developmentContent/dummyData"
-import VideoModalSkeleton from "@/component/molecules/Modal/VideoModalSkeleton/page"
-import ModalSkeleton from "@/component/molecules/Modal/ModalSkeleton/ModalSkeleton"
+import VideoModalSkeleton from "@/component/molecules/VideoModalSkeleton"
+import Modal from "@/component/molecules/Modal/Modal"
 
 const FeedsTemplate = () => {
   const [searchQuery, setSearchQuery] = useState("")
@@ -65,7 +65,7 @@ const FeedsTemplate = () => {
       </div>
 
       <VideoModalSkeleton
-        show={activeVideo !== null} // Change this to be based on activeVideo
+        isOpen={true} // Change this to be based on activeVideo
         setShow={(show) => !show && closeVideo()}
         header={activeFeed?.title}
         width="900px"
@@ -77,6 +77,7 @@ const FeedsTemplate = () => {
         newComment={newComment}
         setNewComment={setNewComment}
       />
+      
     </>
   )
 }

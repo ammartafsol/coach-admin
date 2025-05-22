@@ -54,22 +54,17 @@ const CoachDetailTemplate = () => {
       <div className={classes?.coachTop}>
         {SelectedTabs.value === "users" ? (
           <UsersTable />
-        ) :SelectedTabs.value === "users" ? (
+        ) : SelectedTabs.value === "users" ? (
           <UsersTable />
         ) : SelectedTabs.value === "profile" ? (
           <UserProfile />
         ) : SelectedTabs.value === "subscription" ? (
           <Subscription />
-        ) : 
-          SelectedTabs.value === 'feeds'? 
-          (
-            <FeedsCom />
-          )
-          :
-          (
+        ) : SelectedTabs.value === "feeds" ? (
+          <FeedsCom />
+        ) : (
           "No data "
         )}
-        
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ import { MdOutlineMessage } from "react-icons/md"
 
 
 
-export default function FeedsCard({ feed, onOpenVideo }) {
+export default function FeedsCard({ feed, setIsOpen }) {
   return (
     <div className={classes.feedCard}>
       <div className={classes.feedHeader}>
@@ -41,7 +41,7 @@ export default function FeedsCard({ feed, onOpenVideo }) {
               height={400}
               className={classes.thumbnailImage}
             />
-            <button className={classes.playButton} onClick={() => onOpenVideo(feed.id)}>
+            <button className={classes.playButton} onClick={() => setIsOpen(feed.id)}>
               <svg width="90" height="90" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="12" cy="12" r="12" fill="rgba(0, 0, 0, 0.5)" />
                 <path d="M16 12L10 16V8L16 12Z" fill="white" />

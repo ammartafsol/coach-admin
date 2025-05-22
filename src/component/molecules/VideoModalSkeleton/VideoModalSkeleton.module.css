@@ -1,0 +1,295 @@
+/* sssss */
+.topHead {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-block: 10px;
+}
+
+.topHeadLeftText h3 {
+  color: #fff;
+  font-family: AventaRegular;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 32px; /* 100% */
+}
+
+/* Video Modal Styles */
+.videoModalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 35px;
+}
+
+.videoPlayer {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  background-color: #000;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.videoPlayer iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.videoControls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.controlButtons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.controlButton {
+  background: none;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progressBar {
+  width: 100%;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress {
+  width: 30%;
+  height: 100%;
+  background-color: #b0cd6e;
+}
+
+.thumbnailsRow {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.thumbnail {
+  flex: 0 0 auto;
+  width: 482px;
+  height: 316px;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.thumbnailImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modalAuthorInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.modalContent {
+  color: rgba(255, 255, 255, 0.8);
+  font-family: "AvenirRegular";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 23px; /* 143.75% */
+  letter-spacing: 0.32px;
+}
+
+.pdfAttachment {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 16px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  width: 304px;
+}
+
+.pdfIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pdfLink {
+  color: #fff;
+  font-family: "AvenirRegular";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.commentsSection {
+  /* margin-top: 1rem; */
+  /* border-top: 1px solid #e4e4e7; */
+  /* padding-top: 1.5rem; */
+  width: 50%;
+}
+
+.commentsTitle {
+  color: #fff;
+  font-family: "AventaRegular";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.commentsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.comment {
+  display: flex;
+  gap: 1rem;
+}
+
+.commentAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.commentContent {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.commentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.25rem;
+}
+
+.commentAuthor {
+  color: #fff;
+  font-family: "AvenirRegular";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 450;
+  line-height: 19px; /* 135.714% */
+}
+
+.commentMeta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin-top: 12px;
+}
+
+.commentTime {
+  color: rgba(255, 255, 255, 0.7);
+  font-family: "AvenirRegular";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 450;
+  line-height: normal;
+}
+
+.replyBtn {
+  color: #b0cd6e;
+  font-family: "AvenirRegular";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 450;
+  line-height: normal;
+}
+
+.commentText {
+  color: rgba(255, 255, 255, 0.5);
+  font-family: "AvenirRegular";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 450;
+  line-height: 19px; /* 158.333% */
+}
+
+.viewAllBtn {
+  background: none;
+  border: none;
+  color: #b0cd6e;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  margin: 0.5rem 0;
+  text-align: left;
+}
+
+.commentForm {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.commentInputWrapper {
+  flex: 1;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.commentInput {
+  flex: 1;
+  font-size: 0.875rem;
+  color: #fff;
+  height: 40px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid rgba(208, 213, 221, 0.4);
+  background: transparent;
+}
+.commentInput:focus {
+  outline: none;
+}
+.submitCommentBtn {
+  border-radius: 6px;
+  background: #b0cd6e;
+  display: flex;
+  width: 40px;
+  height: 40px;
+  padding: 6px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+}
