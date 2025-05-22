@@ -1,0 +1,44 @@
+.profileParent {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.profile {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  position: relative;
+}
+.profile img {
+  border-radius: 50%;
+}
+
+.tableParent {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.tableParent span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #2cdd96;
+}
+
+.text {
+  color: #14532d;
+  font-family: var(--font-avenir-next);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 450;
+  line-height: 20px;
+}
+
+
+.deactive {
+  background-color: #EF4444; /* red for Un-Subscribe */
+}
+
+.deactiveText {
+  color: #7F1D1D; /* dark red text */
+}

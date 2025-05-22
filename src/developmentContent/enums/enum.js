@@ -33,7 +33,7 @@ export const coachTabs = [
     },
     {
         label:"Users",
-        value:"user"
+        value:"users"
     },
     
 ]

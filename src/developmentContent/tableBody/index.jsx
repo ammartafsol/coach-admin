@@ -143,3 +143,54 @@ export const CoachTableBody = [
         action: "view / edit / delete"
       }
     ];
+
+
+
+    export const coachTableData = [
+      {
+        username: "JohnDoe",
+        email: "john.doe@example.com",
+        phoneNumber: "+1-555-1234",
+        date: "2025-05-20",
+        status: "Subscribe",
+        location: "New York, USA",
+        action: "",
+      },
+      {
+        username: "JaneSmith",
+        email: "jane.smith@example.com",
+        phoneNumber: "+44-20-1234-5678",
+        date: "2025-05-18",
+        status: "Subscribe",
+        location: "London, UK",
+        action: "",
+      },
+      {
+        username: "CarlosMendez",
+        email: "carlos.mendez@example.com",
+        phoneNumber: "+34-91-123-4567",
+        date: "2025-05-21",
+        status: "Subscribe",
+        location: "Madrid, Spain",
+        action: "",
+      },
+      {
+        username: "AikoTanaka",
+        email: "aiko.tanaka@example.com",
+        phoneNumber: "+81-3-1234-5678",
+        date: "2025-05-19",
+        status: "Subscribe",
+        location: "Tokyo, Japan",
+        action: "",
+      },
+      {
+        username: "LiamBrown",
+        email: "liam.brown@example.com",
+        phoneNumber: "+61-2-1234-5678",
+        date: "2025-05-22",
+        status: "Subscribe",
+        location: "Sydney, Australia",
+        action: "",
+      },
+    ];
+    

@@ -106,3 +106,41 @@ export const tableHeadersData = [
   },
   { title: "", key: "action",width:"15%", },
 ];
+
+
+export const coachtableHeaders = [
+  {
+    title: "User Name",
+    key: "username",
+    style: { width: "15%" },
+  },
+  {
+    title: "Email",
+    key: "email",
+    style: { width: "15%" },
+    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+  },
+  {
+    title: "Number",
+    key: "phoneNumber",
+    style: { width: "15%" },
+    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+  },
+  {
+    title: "Date",
+    key: "date",
+    style: { width: "10%" },
+        renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+  },
+  {
+    title: "Status",
+    key: "status",
+    style: { width: "15%" },
+  },
+  {
+    title: "Location",
+    key: "location",
+    style: { width: "15%" },
+  },
+  { title: "", key: "action",width:"15%", },
+];
