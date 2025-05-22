@@ -206,7 +206,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  font-family: "AventaRegular";
+  font-family: "AventaBold";
   
 }
 .topHeader span {
@@ -366,6 +366,7 @@
 .feedDescription {
   font-size: 0.75rem;
   color: #6d6d6d;
+  font-family: "AvenirRegular";
 }
 
 .feedTime {

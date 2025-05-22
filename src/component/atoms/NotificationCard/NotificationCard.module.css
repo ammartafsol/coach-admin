@@ -22,12 +22,15 @@
   .registrationText {
     font-size: 0.75rem;
     color: #6d6d6d;
+    font-family: "AvenirRegular";
   }
   
   .registrationTime {
     font-size: 0.75rem;
     color: #6d6d6d;
     margin-top: 0.25rem;
+    font-family: "AvenirRegular";
+
   }
   
   .registrationActions {
@@ -48,6 +51,8 @@
     border-radius: 0.25rem;
     font-size: 0.875rem;
     cursor: pointer;
+    font-family: "AvenirRegular";
+
   }
   
   .acceptButton {
@@ -57,6 +62,8 @@
     border-radius: 0.25rem;
     font-size: 0.875rem;
     cursor: pointer;
+    font-family: "AvenirRegular";
+
   }
   
   .notificationMain{

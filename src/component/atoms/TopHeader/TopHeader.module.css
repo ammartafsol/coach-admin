@@ -1,6 +1,6 @@
 .mainPoint{
   color: #71717A;
-font-family: "AvenirRegular";
+font-family: "AventaBold";
 font-size: 14px;
 font-style: normal;
 font-weight: 450;
@@ -9,13 +9,16 @@ line-height: normal;
 
 .mainPoint span{
   color: #64832D;
+  font-family: "AventaBold";
+
+
 }
 
 .route{
   margin-top: 10px;
   color: #333;
-font-family: "AventaRegular";
-font-size: 24px;
+  font-family: "AventaBold";
+  font-size: 24px;
 font-style: normal;
 font-weight: 400;
 line-height: normal;

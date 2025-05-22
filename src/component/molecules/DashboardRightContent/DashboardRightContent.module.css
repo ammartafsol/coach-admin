@@ -38,7 +38,8 @@
   
   .subscriberLabel {
     font-size: 0.875rem;
-    font-family: "AventaRegular";
+    font-family: "AvenirRegular";
+    font-weight: 450;
   }
   
   .subscriberBar {
@@ -56,6 +57,7 @@
   .subscriberValue {
     font-size: 0.875rem;
     text-align: right;
+    font-weight: 450;
     font-family: "AvenirRegular";
   }
   
@@ -99,7 +101,7 @@
   .feedDescription {
     font-size: 0.75rem;
     color: #6d6d6d;
-    font-family: "AventaRegular";
+    font-family: "AvenirRegular";
     font-size: 13px;
   }
   
