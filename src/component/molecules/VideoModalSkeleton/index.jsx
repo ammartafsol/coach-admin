@@ -166,11 +166,9 @@ export default function VideoModalSkeleton({
               <div key={comment.id} className={classes.comment}>
                 <div className={classes.commentAvatar}>
                   <Image
-                    src={comment.avatar || "/placeholder.svg"}
+                    src={"/images/cms-images/profile.png"}
                     alt={comment.author}
-                    width={40}
-                    height={40}
-                    className={classes.avatarImage}
+                    fill
                   />
                 </div>
                 <div className={classes.contentDiv}>

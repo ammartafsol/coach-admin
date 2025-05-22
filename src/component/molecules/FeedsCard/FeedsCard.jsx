@@ -9,7 +9,7 @@ import { MdOutlineMessage } from "react-icons/md"
 
 
 
-export default function FeedsCard({ feed, setIsOpen }) {
+export default function FeedsCard({ feed, setIsOpen,onOpenComments }) {
   return (
     <div className={classes.feedCard}>
       <div className={classes.feedHeader}>
@@ -50,7 +50,7 @@ export default function FeedsCard({ feed, setIsOpen }) {
           </div>
         </div>
         <div className={classes.feedStats}>
-          <div className={classes.likesCount}>
+          <div className={classes.likesCount} onClick={() => onOpenComments(feed.id)}>
            <MdOutlineMessage size={20} color="#B0CD6E" />
             <span>{feed.likes}</span>
           </div>

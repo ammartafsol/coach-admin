@@ -10,13 +10,15 @@ import FeedsCard from "@/component/molecules/FeedsCard/FeedsCard"
 import { feedsData } from "@/developmentContent/dummyData"
 import VideoModalSkeleton from "@/component/molecules/VideoModalSkeleton"
 import Modal from "@/component/molecules/Modal/Modal"
+import CommentsModal from "@/component/molecules/CommentsModal/CommentsModal"
 
 const FeedsTemplate = () => {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedDate, setSelectedDate] = useState("Jan 24, 2023")
   const [selectedFeed, setSelectedFeed] = useState("All")
-  const [isOpenVideo, setIsOpenVideo] = useState(false)
-  const [activeFeedId, setActiveFeedId] = useState(null)
+  const [isOpenVideo, setIsOpenVideo] = useState(false);
+  const [activeFeedId, setActiveFeedId] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
   const [showAllComments, setShowAllComments] = useState(false)
   const [newComment, setNewComment] = useState("")
   const [isCommentsOpen, setIsCommentsOpen] = useState(false)
@@ -64,13 +66,18 @@ const FeedsTemplate = () => {
               <FeedsCard
                 key={index}
                 feed={feed}
+                onOpenComments={() => setIsOpen(true)}
                 setIsOpen={handleOpenVideo}
               />
             </BorderWrapper>
           ))}
         </div>
       </div>
-
+      <CommentsModal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        feedId={feedsData[0].id}
+      />
       <VideoModalSkeleton
         isOpen={isOpenVideo}
         setIsOpenVideo={setIsOpenVideo}

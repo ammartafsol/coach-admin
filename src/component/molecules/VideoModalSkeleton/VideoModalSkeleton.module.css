@@ -169,7 +169,8 @@
   background: rgba(255, 255, 255, 0.1);
   width: 304px;
   border-radius: 8px;
-  border: 1px solid #EAECF0;}
+  border: 1px solid #eaecf0;
+}
 
 .pdfIcon {
   display: flex;
@@ -178,7 +179,7 @@
 }
 
 .pdfLink {
-  color: #71717A;
+  color: #71717a;
   font-family: var(--font-avenir-next);
   font-size: 16px;
   font-style: normal;
@@ -194,8 +195,8 @@
 }
 
 .commentsTitle {
-  color: #fff;
-  font-family: "AventaRegular";
+  color: #333;
+  font-family: var(--font-aventa);
   font-size: 24px;
   font-style: normal;
   font-weight: 400;
@@ -206,6 +207,16 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+}
+
+.commentAvatar{
+  position: relative;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+}
+.commentAvatar {
+  border-radius: 50%;
 }
 
 .comment {
@@ -225,7 +236,8 @@
   flex: 1;
   padding: 12px;
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.1);
+  background: #F8F8F8;
+  border-radius: 10px;
 }
 
 .commentHeader {
@@ -236,12 +248,12 @@
 }
 
 .commentAuthor {
-  color: #fff;
-  font-family: "AvenirRegular";
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 450;
-  line-height: 19px; /* 135.714% */
+  color: #333;
+font-family: var(--font-avenir-next);
+font-size: 14px;
+font-style: normal;
+font-weight: 750;
+line-height: 19px; 
 }
 
 .commentMeta {
@@ -253,12 +265,12 @@
 }
 
 .commentTime {
-  color: rgba(255, 255, 255, 0.7);
-  font-family: "AvenirRegular";
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 450;
-  line-height: normal;
+  color: rgba(113, 113, 122, 0.80);
+font-family: var(--font-avenir-next);
+font-size: 12px;
+font-style: normal;
+font-weight: 450;
+line-height: normal;
 }
 
 .replyBtn {
@@ -271,12 +283,12 @@
 }
 
 .commentText {
-  color: rgba(255, 255, 255, 0.5);
-  font-family: "AvenirRegular";
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 450;
-  line-height: 19px; /* 158.333% */
+  color: #71717A;
+font-family: var(--font-avenir-next);
+font-size: 12px;
+font-style: normal;
+font-weight: 450;
+line-height: 19px; /* 158.333% */
 }
 
 .viewAllBtn {
