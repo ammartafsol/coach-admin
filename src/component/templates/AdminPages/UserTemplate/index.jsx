@@ -12,6 +12,7 @@ import { CoachTableBody, tableUserData } from "@/developmentContent/tableBody";
 import ActionMenu from "@/component/molecules/ActionMenu/ActionMenu";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Image from "next/image";
 
 const UserTemplate = () => {
   const [showActionMenu, setShowActionMenu] = useState(false);
@@ -57,7 +58,7 @@ const UserTemplate = () => {
               if (renderValue) {
                 return renderValue(item, rowItem);
               }
-              if(key === 'coachName'){
+              if(key === 'username'){
                 return(
                     <div className={classes?.profileParent}>
                         <div className={classes?.profile}>
