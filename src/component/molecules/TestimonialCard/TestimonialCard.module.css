@@ -1,0 +1,62 @@
+.card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.1);
+  display: flex;
+  padding: 24px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  flex: 1 0 0;
+  height: 284px;
+}
+
+.starsContainer {
+  display: flex;
+}
+
+.starFilled {
+  color: #f29267;
+  width: 18px;
+  height: 18px;
+}
+
+.starEmpty {
+  color: #e0e0e0;
+  width: 18px;
+  height: 18px;
+}
+
+.text {
+  color: #6c6c72;
+  font-family: var(--font-avenir-next);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 450;
+  line-height: 28px; /* 155.556% */
+  letter-spacing: -0.88px;
+  margin-block: 16px;
+}
+
+.reviewerInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.name {
+  color: #333;
+  font-family: var(--font-aventa);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}

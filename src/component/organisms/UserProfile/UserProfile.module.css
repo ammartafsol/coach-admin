@@ -1,0 +1,308 @@
+.container {
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.profileGrid {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 32px;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .profileGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.profileSection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 60%;
+}
+
+.profileHeader {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.avatar {
+  border-radius: 50%;
+  object-fit: cover;
+  border-radius: 120px;
+  border: 1px solid #fdea7e;
+  background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.5) 67.75%
+    ),
+    lightgray 50% / cover no-repeat;
+}
+
+.name {
+  color: #333;
+  font-family: var(--font-aventa);
+  font-size: 34px;
+
+  font-weight: 400;
+  line-height: 32px;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  color: #f29267;
+  font-family: var(--font-aventa);
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.starIcon {
+  width: 24px;
+  height: 24px;
+  margin-right: 4px;
+}
+
+.bioSection {
+  margin-bottom: 16px;
+}
+
+.sectionTitle {
+  color: #333;
+  font-family: var(--font-aventa);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 29.279px;
+  margin-bottom: 12px;
+}
+
+.bioText {
+  color: #71717a;
+  font-family: var(--font-avenir-next);
+  font-size: 16px;
+  font-weight: 450;
+  line-height: 26px; /* 162.5% */
+}
+
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contactItem {
+  color: #71717a;
+  font-family: var(--font-avenir-next);
+  font-size: 16px;
+  font-weight: 450;
+}
+
+.contactIcon {
+  width: 16px;
+  height: 16px;
+  color: #333333;
+  margin-right: 10px;
+}
+
+.socialLinks {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  margin-top: 24px;
+  gap: 16px;
+}
+
+.socialTitle {
+  color: #333;
+  font-family: var(--font-aventa);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.socialIcons {
+  display: flex;
+  gap: 12px;
+}
+
+.twitterIcon,
+.instagramIcon,
+.phoneIcon {
+  color: #b0cd6e;
+}
+
+.videoSection {
+  display: flex;
+  width: 568px;
+  padding: 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  border-radius: 20px;
+  background: #212121;
+}
+
+.videoTitle {
+  color: #b0cd6e;
+  font-family: var(--font-avenir-next);
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 450;
+  line-height: normal;
+  margin-bottom: 15px;
+}
+
+.videoContainer {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%;
+  height: 387px;
+  /* aspect-ratio: 16 / 9; */
+}
+
+.videoThumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.playButtonContainer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.playButton {
+  background-color: #4caf50;
+  border: none;
+  border-radius: 50%;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.playButton:hover {
+  background-color: #3d8b40;
+  transform: scale(1.1);
+}
+
+.playIcon {
+  width: 32px;
+  height: 32px;
+}
+
+.videoPlayerWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.videoPlayer {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.closeVideoButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.2s;
+  z-index: 10;
+}
+
+.closeVideoButton:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.reviewsSection {
+  margin-top: 40px;
+}
+
+.reviewsTitle {
+  color: #333;
+  font-family: var(--font-aventa);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 32px;
+  margin-bottom: 20px;
+}
+
+.reviewsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.fadeTransition {
+  animation: fadeEffect 0.5s ease;
+}
+
+@keyframes fadeEffect {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 768px) {
+  .reviewsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.paginationDots {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 32px;
+}
+
+.paginationButton {
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+}
+
+.activeDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #333;
+  transition: background-color 0.3s ease;
+}
+
+.inactiveDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ccc;
+  transition: background-color 0.3s ease;
+}
+
+.inactiveDot:hover {
+  background-color: #999;
+}
