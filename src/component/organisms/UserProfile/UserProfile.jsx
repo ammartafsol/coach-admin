@@ -61,18 +61,15 @@ export default function UserProfile() {
     setIsPaused(true);
     setCurrentPage(pageIndex);
 
-    // Resume auto-scroll after a delay
     setTimeout(() => {
       setIsPaused(false);
-    }, 7000); // Resume auto-scroll after 7 seconds of inactivity
+    }, 5000);
   };
 
-  // Pause auto-scroll when user hovers over testimonials
   const handleTestimonialHover = () => {
     setIsPaused(true);
   };
 
-  // Resume auto-scroll when user leaves testimonials
   const handleTestimonialLeave = () => {
     setIsPaused(false);
   };
