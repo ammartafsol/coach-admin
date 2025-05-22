@@ -23,7 +23,7 @@ export default function TestimonialCard({ testimonial }) {
           </svg>
         ))}
       </div>
-      <p className={mergeClass("maxLine3", classes.text)}>{text}</p>
+      <p className={mergeClass("maxLine4", classes.text)}>{text}</p>
       <div className={classes.reviewerInfo}>
         <Image
           src={avatar || "/placeholder.svg"}

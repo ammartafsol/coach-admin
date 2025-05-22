@@ -9,6 +9,8 @@ import Button from "@/component/atoms/Button";
 import DropDown from "@/component/molecules/DropDown/DropDown";
 import { Input } from "@/component/atoms/Input";
 import { IoSearchOutline } from "react-icons/io5";
+import UserProfile from "@/component/organisms/UserProfile/UserProfile";
+import Subscription from "@/component/organisms/Subscription/Subscription";
 
 const CoachDetailTemplate = () => {
   const [SelectedTabs, setSelectedTabs] = useState(coachTabs[0]);
@@ -33,22 +35,37 @@ const CoachDetailTemplate = () => {
             <DropDown placeholder={"Location"} />
             <DropDown placeholder={"Status"} />
           </div>
-        ):SelectedTabs.value === 'users'?
-        <div className={classes?.main}>
-        <Input
-          mainContClassName={classes?.mainContClassName}
-          placeholder={"Search By Name"}
-          rightIcon={<IoSearchOutline color="#B0CD6E" size={20} />}
-        />
-        <DropDown placeholder={"Location"} />
-        <DropDown placeholder={"Status"} />
-      </div>
-        : (
+        ) : SelectedTabs.value === "users" ? (
+          <div className={classes?.main}>
+            <Input
+              mainContClassName={classes?.mainContClassName}
+              placeholder={"Search By Name"}
+              rightIcon={<IoSearchOutline color="#B0CD6E" size={20} />}
+            />
+            <DropDown placeholder={"Location"} />
+            <DropDown placeholder={"Status"} />
+          </div>
+        ) : (
           ""
         )}
       </div>
       <div className={classes?.coachTop}>
-        {SelectedTabs.value === "users" ? <UsersTable /> : "dsa"}
+        {SelectedTabs.value === "users" ? (
+          <UsersTable />
+        ) : SelectedTabs.value === "profile" ? (
+          "profile"
+        ) : (
+          "dsa"
+        )}
+        {SelectedTabs.value === "users" ? (
+          <UsersTable />
+        ) : SelectedTabs.value === "profile" ? (
+          <UserProfile />
+        ) : SelectedTabs.value === "subscription" ? (
+          <Subscription />
+        ) : (
+          "dsa"
+        )}
       </div>
     </div>
   );
