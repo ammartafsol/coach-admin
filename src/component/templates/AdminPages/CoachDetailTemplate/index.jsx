@@ -9,6 +9,8 @@ import Button from "@/component/atoms/Button";
 import DropDown from "@/component/molecules/DropDown/DropDown";
 import { Input } from "@/component/atoms/Input";
 import { IoSearchOutline } from "react-icons/io5";
+import ButtonTabs from "@/component/atoms/ButtonTabs";
+import FeedsCom from "@/component/organisms/FeedsCom";
 
 const CoachDetailTemplate = () => {
   const [SelectedTabs, setSelectedTabs] = useState(coachTabs[0]);
@@ -48,7 +50,7 @@ const CoachDetailTemplate = () => {
         )}
       </div>
       <div className={classes?.coachTop}>
-        {SelectedTabs.value === "users" ? <UsersTable /> : "dsa"}
+        {SelectedTabs.value === "users" ? <UsersTable />:SelectedTabs.value === 'feeds'?<FeedsCom /> : "dsa"}
       </div>
     </div>
   );

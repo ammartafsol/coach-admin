@@ -7,7 +7,7 @@ import classes from "./Header.module.css"
 import { useRouter } from "next/navigation"
 
 export default function Navbar() {
-  const [activeTab, setActiveTab] = useState("Coaches");
+  const [activeTab, setActiveTab] = useState("Dashboard");
   const router = useRouter();
 
   return (
@@ -50,8 +50,8 @@ export default function Navbar() {
           Coaches
         </button>
         <button
-          className={`${classes.navItem} ${activeTab === "Feeds" ? classes.active : ""}`}
-          onClick={() => {setActiveTab("Feeds");router.push('/feeds')}}
+          className={`${classes.navItem} ${activeTab === "Feed" ? classes.active : ""}`}
+          onClick={() => {setActiveTab("Feed");router.push('/feed')}}
         >
           Feeds
         </button>
@@ -64,10 +64,10 @@ export default function Navbar() {
       </nav>
 
       <div className={classes.userSection}>
-        <button className={classes.notificationButton}>
+        <button onClick={()=>{router.push('/notification')}} className={classes.notificationButton}>
           <Bell size={20} />
         </button>
-        <div className={classes.userProfile}>
+        <div onClick={()=>{router.push('/profile')}} className={classes.userProfile}>
           <div className={classes.avatar}>JS</div>
           <span>Jenny Wilson</span>
           <ChevronDown size={16} />

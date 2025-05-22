@@ -1,0 +1,26 @@
+.buttons {
+  padding: 12px 32px;
+  border-radius: 10px;
+  width: fit-content;
+  font-family: var(--font-avenir-next);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 450;
+  line-height: normal;
+  letter-spacing: 0.36px;
+  border: 1px solid #454343 !important;
+  color: #454343 !important;
+  cursor: pointer;
+}
+
+.mainParent {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.buttonsNormal {
+    background: #f9e17a !important;
+  color: #344313 !important;
+ 
+}
