@@ -1,31 +1,49 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Image from "next/image"
-import { ChevronDown, Bell } from "lucide-react"
-import classes from "./Header.module.css"
-import { useRouter } from "next/navigation"
+import { useRef, useState } from "react";
+import Image from "next/image";
+import { ChevronDown, Bell } from "lucide-react";
+import classes from "./Header.module.css";
+import { useRouter } from "next/navigation";
+import { Overlay } from "react-bootstrap";
+import NotificationsPopup from "../NotificationsPopup/NotificationsPopup";
 
 export default function Navbar() {
+  const bellRef = useRef(null);
   const [activeTab, setActiveTab] = useState("Coaches");
   const router = useRouter();
-
+  const [showNotifications, setShowNotifications] = useState(false);
   return (
     <header className={classes.header}>
       <div className={classes.logo}>
-        <Image src="/images/app-images/logo.png" alt="The Coach Huddle Logo" width={100} height={40} />
+        <Image
+          src="/images/app-images/logo.png"
+          alt="The Coach Huddle Logo"
+          width={100}
+          height={40}
+        />
       </div>
 
       <nav className={classes.nav}>
         <button
-          className={`${classes.navItem} ${activeTab === "Dashboard" ? classes.active : ""}`}
-          onClick={() => {setActiveTab("Dashboard");router.push('/')}}
+          className={`${classes.navItem} ${
+            activeTab === "Dashboard" ? classes.active : ""
+          }`}
+          onClick={() => {
+            setActiveTab("Dashboard");
+            router.push("/");
+          }}
         >
           Dashboard
         </button>
         <button
-          className={`${classes.navItem} ${activeTab === "Users" ? classes.active : ""} ${classes.activeButton}`}
-          onClick={() => {setActiveTab("Users");router.push('/user')}}
+          className={`${classes.navItem} ${
+            activeTab === "Users" ? classes.active : ""
+          } ${classes.activeButton}`}
+          onClick={() => {
+            setActiveTab("Users");
+            router.push("/user");
+          }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -44,29 +62,68 @@ export default function Navbar() {
           Users
         </button>
         <button
-          className={`${classes.navItem} ${activeTab === "Coaches" ? classes.active : ""}`}
-          onClick={() => {setActiveTab("Coaches");router.push('/coach')}}
+          className={`${classes.navItem} ${
+            activeTab === "Coaches" ? classes.active : ""
+          }`}
+          onClick={() => {
+            setActiveTab("Coaches");
+            router.push("/coach");
+          }}
         >
           Coaches
         </button>
         <button
-          className={`${classes.navItem} ${activeTab === "Feeds" ? classes.active : ""}`}
-          onClick={() => {setActiveTab("Feeds");router.push('/feeds')}}
+          className={`${classes.navItem} ${
+            activeTab === "Feeds" ? classes.active : ""
+          }`}
+          onClick={() => {
+            setActiveTab("Feeds");
+            router.push("/feeds");
+          }}
         >
           Feeds
         </button>
         <button
-          className={`${classes.navItem} ${activeTab === "Transaction" ? classes.active : ""}`}
-          onClick={() => {setActiveTab("Transaction");router.push('transaction')}}
+          className={`${classes.navItem} ${
+            activeTab === "Transaction" ? classes.active : ""
+          }`}
+          onClick={() => {
+            setActiveTab("Transaction");
+            router.push("transaction");
+          }}
         >
           Transaction
         </button>
       </nav>
 
       <div className={classes.userSection}>
-        <button className={classes.notificationButton}>
+        <button
+          className={classes.notificationButton}
+          ref={bellRef}
+          onClick={() => setShowNotifications(!showNotifications)}
+        >
           <Bell size={20} />
         </button>
+        <Overlay
+          target={bellRef.current}
+          show={showNotifications}
+          placement="bottom"
+          rootClose
+          onHide={() => setShowNotifications(false)}
+        >
+          {({ placement, arrowProps, show: _show, popper, ...props }) => (
+            <div
+              {...props}
+              style={{
+                ...props.style,
+                zIndex: 9999,
+              }}
+            >
+              <NotificationsPopup />
+            </div>
+          )}
+        </Overlay>
+
         <div className={classes.userProfile}>
           <div className={classes.avatar}>JS</div>
           <span>Jenny Wilson</span>
@@ -74,5 +131,5 @@ export default function Navbar() {
         </div>
       </div>
     </header>
-  )
+  );
 }

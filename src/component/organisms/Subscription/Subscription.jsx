@@ -9,8 +9,12 @@ export default function Subscription() {
   const [isEdit, setIsEdit] = useState(false);
   return (
     <div className={classes.main}>
-      <div className={classes.header}>
-        <Button label={"Add Subscription"} />
+      <div className={isEdit ? classes.editHeader : classes.header}>
+        {isEdit ? (
+          <Button label={"Back"} onClick={() => setIsEdit(false)} />
+        ) : (
+          <Button label={"Add Subscription"} />
+        )}
       </div>
       {isEdit ? (
         <EditSubscription />

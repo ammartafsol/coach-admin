@@ -4,8 +4,15 @@
   align-items: center;
   margin-bottom: 20px;
 }
+.editHeader {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 20px;
+}
 
-.header button {
+.header button,
+.editHeader button {
   width: 180px !important;
 }
 
