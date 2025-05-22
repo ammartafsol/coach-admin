@@ -11,7 +11,7 @@ export const CoachTableBody = [
       coachName: "Emily Johnson",
       email: "emily.j@example.com",
       phoneNumber: "987-654-3210",
-      city: "Los Angeles",
+      city: "Houston",
       totalSubscriber: "85",
       action: "view / edit / delete"
     },
@@ -107,7 +107,7 @@ export const CoachTableBody = [
         coachName: "Emily Johnson",
         email: "emily.j@example.com",
         phoneNumber: "987-654-3210",
-        city: "Los Angeles",
+        city: "Houston",
         sports:"Basket ball",
         totalSubscriber: "85",
         action: "view / edit / delete"

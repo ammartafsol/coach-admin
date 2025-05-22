@@ -16,3 +16,24 @@ export const patientFilter = [
         value:"z-a"
     },
 ]
+
+export const coachTabs = [
+    {
+        label:"Profile",
+        value:"profile"
+    },
+    
+    {
+        label:"Feeds",
+        value:"feeds"
+    },
+    {
+        label:"Subscription",
+        value:"subscription"
+    },
+    {
+        label:"Users",
+        value:"user"
+    },
+    
+]

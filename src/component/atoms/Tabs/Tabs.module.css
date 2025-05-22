@@ -1,0 +1,54 @@
+.tabsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.tabs {
+  display: flex;
+  gap: 6px;
+  cursor: pointer;
+  width: fit-content;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.tab {
+  padding: 10px 20px;
+  border-bottom: 3px solid transparent;
+  transition: border-color 0.3s;
+  letter-spacing: 0.08px;
+  color: #333;
+  font-family: var(--font-aventa);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.tab:hover {
+  border-bottom: 3px solid #b0cd6e;
+}
+
+.active {
+  border-bottom: 3px solid #b0cd6e;
+  font-weight: bold;
+}
+
+.dropdownMenu {
+  position: absolute;
+  background-color: white;
+  border: 1px solid lightgray;
+  /* margin-top: 5px; */
+  padding: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  bottom: -4px;
+}
+
+.dropdownItem {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.dropdownItem:hover {
+  background-color: #b0cd6e;
+}

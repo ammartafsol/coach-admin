@@ -4,12 +4,12 @@ export const tableHeaders = [
   {
     title: "Coach Name",
     key: "coachName",
-    style: { width: "15%" },
+    style: { width: "20%" },
   },
   {
     title: "Email",
     key: "email",
-    style: { width: "20%" },
+    style: { width: "23%" },
     renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
   {
@@ -21,16 +21,16 @@ export const tableHeaders = [
   {
     title: "City",
     key: "city",
-    style: { width: "10%" },
+    style: { width: "12%" },
         renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
   {
     title: "Total Subscriber",
     key: "totalSubscriber",
-    style: { width: "20%" },
+    style: { width: "15%" },
     renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
-  { title: "", key: "action",width:"15%", },
+  { title: "", key: "action",width:"10%", },
 ];
 
 
@@ -84,7 +84,7 @@ export const tableHeadersData = [
   {
     title: "Phone Number",
     key: "phoneNumber",
-    style: { width: "20%" },
+    style: { width: "15%" },
     renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
   {
@@ -96,7 +96,7 @@ export const tableHeadersData = [
   {
     title: "Sports",
     key: "sports",
-    style: { width: "10%" },
+    style: { width: "15%" },
   },
   {
     title: "Total Subscriber",
