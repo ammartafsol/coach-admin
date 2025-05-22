@@ -37,7 +37,7 @@
   font-size: 34px;
   font-style: normal;
   font-weight: 400;
-  font-family: "AventaRegular";
+  font-family: "AventaBold";
   margin-bottom: 1rem;
 }
 
@@ -45,13 +45,13 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  font-family: "AventaRegular";
+  font-family: "AvenirRegular";
 }
 
 .contactItem {
   display: flex;
   align-items: center;
-  color: #4b5563;
+  color: #71717A;
 }
 
 .contactIcon {
