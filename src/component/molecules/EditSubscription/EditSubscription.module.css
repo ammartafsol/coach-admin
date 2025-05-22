@@ -1,0 +1,29 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.title {
+  color: #333;
+
+  font-family: var(--font-aventa);
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-bottom: 24px;
+}
+.btn {
+  width: 140px;
+}
+
+.btn label {
+  color: #344313 !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+}
+
+.inpMain label {
+  font-size: 16px !important;
+  font-weight: 400 !important;
+}

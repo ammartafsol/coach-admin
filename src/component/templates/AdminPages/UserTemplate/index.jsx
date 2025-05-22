@@ -7,12 +7,16 @@ import { Input } from "@/component/atoms/Input";
 import { IoSearchOutline } from "react-icons/io5";
 import AppTable from "@/component/organisms/AppTable/AppTable";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
-import { tableHeaders, tableUserHeaders } from "@/developmentContent/tableHeader";
+import {
+  tableHeaders,
+  tableUserHeaders,
+} from "@/developmentContent/tableHeader";
 import { CoachTableBody, tableUserData } from "@/developmentContent/tableBody";
 import ActionMenu from "@/component/molecules/ActionMenu/ActionMenu";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
+import UserProfile from "@/component/organisms/UserProfile/UserProfile";
 
 const UserTemplate = () => {
   const [showActionMenu, setShowActionMenu] = useState(false);
@@ -36,8 +40,8 @@ const UserTemplate = () => {
   };
 
   const menuOptions = [
-    { label: "Deactivate", action: () => router.push('/user/213') },
-    { label: "View Detail", action: () => router.push('/user/213')  },
+    { label: "Deactivate", action: () => router.push("/user/213") },
+    { label: "View Detail", action: () => router.push("/user/213") },
   ];
 
   return (
@@ -51,36 +55,50 @@ const UserTemplate = () => {
           rightIcon={<IoSearchOutline color="#B0CD6E" size={20} />}
         />
       </TopHeader>
-    <div>
-      <AppTable tableHeader={tableUserHeaders} data={tableUserData}
-            renderItem={({ item, key, rowIndex, renderValue }) => {
-              const rowItem = CoachTableBody[rowIndex];
-              if (renderValue) {
-                return renderValue(item, rowItem);
-              }
-              if(key === 'username'){
-                return(
-                    <div className={classes?.profileParent}>
-                        <div className={classes?.profile}>
-                            <Image src={"/images/cms-images/profile.png"} fill  alt="profile" />
-                        </div>
-                        <div className={classes?.userName}>
-                        Jenny Wilson
-                        </div>
-                    </div>
-                )
-              }
-              if (key == "action") {
-                return (
-                 <HiOutlineDotsHorizontal  size={25} className={classes.actionLink}
-                 onClick={(event) => handleActionClick(event, rowIndex)} />
-                );
-              }
-              return item || "";
-            }}
+      <div>
+        <AppTable
+          tableHeader={tableUserHeaders}
+          data={tableUserData}
+          renderItem={({ item, key, rowIndex, renderValue }) => {
+            const rowItem = CoachTableBody[rowIndex];
+            if (renderValue) {
+              return renderValue(item, rowItem);
+            }
+            if (key === "username") {
+              return (
+                <div className={classes?.profileParent}>
+                  <div className={classes?.profile}>
+                    <Image
+                      src={"/images/cms-images/profile.png"}
+                      fill
+                      alt="profile"
+                    />
+                  </div>
+                  <div className={classes?.userName}>Jenny Wilson</div>
+                </div>
+              );
+            }
+            if (key == "action") {
+              return (
+                <HiOutlineDotsHorizontal
+                  size={25}
+                  className={classes.actionLink}
+                  onClick={(event) => handleActionClick(event, rowIndex)}
+                />
+              );
+            }
+            return item || "";
+          }}
+        />
+        {showActionMenu && (
+          <ActionMenu
+            options={menuOptions}
+            onClose={handleCloseMenu}
+            x={menuX}
+            y={menuY}
           />
-      {showActionMenu && <ActionMenu options={menuOptions} onClose={handleCloseMenu} x={menuX} y={menuY} />}
-    </div>
+        )}
+      </div>
     </>
   );
 };
