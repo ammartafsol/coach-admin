@@ -52,7 +52,7 @@ const DropDown = ({
       borderRadius:10,
       color: "#3F78A3",
       boxShadow: "none",
-      fontFamily: ""AvenirRegular"",
+      fontFamily: "AvenirRegular",
       width: "120px",
       fontSize: "16px",
       cursor: "pointer",
@@ -80,7 +80,7 @@ const DropDown = ({
         ...defaultStyles,
         color: "#454545",
         textTransform: "capitalize",
-        fontFamily: ""AvenirRegular"",
+        fontFamily: "AvenirRegular",
         fontSize: "14px",
       };
     },
