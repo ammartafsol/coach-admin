@@ -117,14 +117,18 @@ export default function Navbar() {
               style={{
                 ...props.style,
                 zIndex: 9999,
+                transform: `${props.style?.transform ?? ""} translateX(-150px)`,
               }}
             >
-              <NotificationsPopup />
+              <NotificationsPopup setShowNotifications={setShowNotifications} />
             </div>
           )}
         </Overlay>
 
-        <div className={classes.userProfile}>
+        <div
+          className={classes.userProfile}
+          onClick={() => router.push("/profile")}
+        >
           <div className={classes.avatar}>JS</div>
           <span>Jenny Wilson</span>
           <ChevronDown size={16} />

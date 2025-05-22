@@ -13,7 +13,7 @@ export default function Subscription() {
         {isEdit ? (
           <Button label={"Back"} onClick={() => setIsEdit(false)} />
         ) : (
-          <Button label={"Add Subscription"} />
+          <Button label={"Add Subscription"} onClick={() => setIsEdit(true)} />
         )}
       </div>
       {isEdit ? (

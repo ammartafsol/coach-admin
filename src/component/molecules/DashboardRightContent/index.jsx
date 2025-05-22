@@ -109,17 +109,14 @@ export default function DashboardRightContent() {
       <div className={classes.registrationCard}>
         <h2 className={classes.cardTitle}>Registration Request</h2>
         <Row>
-          {
-            notificationCardData?.map((item)=>{
-              return(
-                <Col md={12}>
-                <NotificationCard  key={item.id} item={item} />
+          {notificationCardData?.slice(0, 2)?.map((item) => {
+            return (
+              <Col md={12}>
+                <NotificationCard key={item.id} item={item} />
                 <hr />
               </Col>
-              )
-            })
-          }
-         
+            );
+          })}
         </Row>
       </div>
     </div>
