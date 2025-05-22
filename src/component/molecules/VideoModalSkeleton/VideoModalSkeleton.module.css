@@ -7,8 +7,8 @@
 }
 
 .topHeadLeftText h3 {
-  color: #fff;
-  font-family: AventaRegular;
+  color: #333;
+  font-family: var(--font-aventa);
   font-size: 32px;
   font-style: normal;
   font-weight: 400;
@@ -21,6 +21,7 @@
   flex-direction: column;
   gap: 1.5rem;
   padding: 35px;
+  background-color: white;
 }
 
 .videoPlayer {
@@ -94,7 +95,7 @@
 
 .thumbnail {
   flex: 0 0 auto;
-  width: 482px;
+  flex: 1;
   height: 316px;
   border-radius: 0.5rem;
   overflow: hidden;
@@ -115,12 +116,47 @@
 }
 
 .modalContent {
-  color: rgba(255, 255, 255, 0.8);
-  font-family: "AvenirRegular";
+  color: #71717a;
+  font-family: var(--font-aventa);
   font-size: 16px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 450;
   line-height: 23px; /* 143.75% */
+  letter-spacing: 0.32px;
+}
+
+.profileParent {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.profile {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  position: relative;
+}
+.profile img {
+  border-radius: 50%;
+}
+
+.userName h4 {
+  margin-bottom: 0px !important;
+  color: #333;
+  font-family: var(--font-aventa);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.userName p {
+  margin-bottom: 0px;
+  color: #71717a;
+  font-family: var(--font-avenir-next);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 450;
+  line-height: normal;
   letter-spacing: 0.32px;
 }
 
@@ -132,7 +168,8 @@
   border-radius: 4px;
   background: rgba(255, 255, 255, 0.1);
   width: 304px;
-}
+  border-radius: 8px;
+  border: 1px solid #EAECF0;}
 
 .pdfIcon {
   display: flex;
@@ -141,11 +178,11 @@
 }
 
 .pdfLink {
-  color: #fff;
-  font-family: "AvenirRegular";
-  font-size: 18px;
+  color: #71717A;
+  font-family: var(--font-avenir-next);
+  font-size: 16px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 450;
   line-height: normal;
 }
 

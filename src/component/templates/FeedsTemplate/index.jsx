@@ -15,34 +15,37 @@ const FeedsTemplate = () => {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedDate, setSelectedDate] = useState("Jan 24, 2023")
   const [selectedFeed, setSelectedFeed] = useState("All")
-  const [activeVideo, setActiveVideo] = useState(null)
+  const [isOpenVideo, setIsOpenVideo] = useState(false)
+  const [activeFeedId, setActiveFeedId] = useState(null)
   const [showAllComments, setShowAllComments] = useState(false)
   const [newComment, setNewComment] = useState("")
+  const [isCommentsOpen, setIsCommentsOpen] = useState(false)
 
-  const openVideo = (feedId) => {
-    console.log("Opening video with ID:", feedId) // Add this for debugging
-    setActiveVideo(feedId)
-    setShowAllComments(false)
+  const handleOpenVideo = (feedId) => {
+    setActiveFeedId(feedId)
+    setIsOpenVideo(true)
   }
 
-  const closeVideo = () => {
-    console.log("Closing video") // Add this for debugging
-    setActiveVideo(null)
+  const handleCloseVideo = () => {
+    setIsOpenVideo(false)
+    setActiveFeedId(null)
+  }
+
+  const handleOpenComments = () => {
+    setIsCommentsOpen(true)
+  }
+
+  const handleCloseComments = () => {
+    setIsCommentsOpen(false)
   }
 
   const handleSubmitComment = (e) => {
     e.preventDefault()
     if (!newComment.trim()) return
-
-    // In a real app, you would add the comment to the database
-    // For now, we'll just clear the input
     setNewComment("")
   }
 
-  const activeFeed = activeVideo !== null ? feedsData.find((feed) => feed.id === activeVideo) : null
-
-  console.log("Active video:", activeVideo) // Add this for debugging
-  console.log("Active feed:", activeFeed) // Add this for debugging
+  const activeFeed = activeFeedId !== null ? feedsData.find((feed) => feed.id === activeFeedId) : null
 
   return (
     <>
@@ -58,26 +61,22 @@ const FeedsTemplate = () => {
         <div className={classes.feedsList}>
           {feedsData.map((feed, index) => (
             <BorderWrapper key={index}>
-              <FeedsCard key={feed.id} feed={feed} onOpenVideo={openVideo} />
+              <FeedsCard
+                key={index}
+                feed={feed}
+                setIsOpen={handleOpenVideo}
+              />
             </BorderWrapper>
           ))}
         </div>
       </div>
 
       <VideoModalSkeleton
-        isOpen={true} // Change this to be based on activeVideo
-        setShow={(show) => !show && closeVideo()}
-        header={activeFeed?.title}
-        width="900px"
-        onBack={closeVideo}
+        isOpen={isOpenVideo}
+        setIsOpenVideo={setIsOpenVideo}
+        onClose={handleCloseVideo}
         activeFeed={activeFeed}
-        showAllComments={showAllComments}
-        setShowAllComments={setShowAllComments}
-        handleSubmitComment={handleSubmitComment}
-        newComment={newComment}
-        setNewComment={setNewComment}
       />
-      
     </>
   )
 }

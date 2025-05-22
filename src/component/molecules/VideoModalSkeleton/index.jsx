@@ -10,6 +10,7 @@ import classes from "./VideoModalSkeleton.module.css";
 export default function VideoModalSkeleton({
   show,
   newComment,
+  setIsOpenVideo,
   setNewComment,
   handleSubmitComment,
   setShow,
@@ -38,7 +39,13 @@ export default function VideoModalSkeleton({
       <div className={classes.videoModalContent}>
         <div className={classes.topHead}>
           <div className={classes.topHeadLeftIcon}>
-            <FaArrowLeftLong color="#fff" />
+            <FaArrowLeftLong
+              color="#333"
+              onClick={() => {
+                setIsOpenVideo(false);
+              }}
+              cursor={"pointer"}
+            />
           </div>
           <div className={classes.topHeadLeftText}>
             <h3>Basketball Fundamentals for Beginners</h3>
@@ -111,7 +118,15 @@ export default function VideoModalSkeleton({
             <span className={classes.category}>{activeFeed.category}</span>
           </div>
         </div> */}
-
+        <div className={classes?.profileParent}>
+          <div className={classes?.profile}>
+            <Image src={"/images/cms-images/profile.png"} fill alt="profile" />
+          </div>
+          <div className={classes?.userName}>
+            <h4>Matthew Ward</h4>
+            <p>Workout</p>
+          </div>
+        </div>
         <div className={classes.modalContent}>
           <p>{activeFeed.content}</p>
         </div>
