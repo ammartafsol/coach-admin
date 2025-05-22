@@ -5,7 +5,6 @@ export const tableHeaders = [
     title: "Coach Name",
     key: "coachName",
     style: { width: "15%" },
-    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
   {
     title: "Email",
@@ -40,7 +39,6 @@ export const tableUserHeaders = [
     title: "Username",
     key: "username",
     style: { width: "15%" },
-    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
   {
     title: "Email",
@@ -64,6 +62,46 @@ export const tableUserHeaders = [
     title: "Location",
     key: "location",
     style: { width: "20%" },
+    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+  },
+  { title: "", key: "action",width:"15%", },
+];
+
+
+
+export const tableHeadersData = [
+  {
+    title: "Coach Name",
+    key: "coachName",
+    style: { width: "15%" },
+  },
+  {
+    title: "Email",
+    key: "email",
+    style: { width: "15%" },
+    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+  },
+  {
+    title: "Phone Number",
+    key: "phoneNumber",
+    style: { width: "20%" },
+    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+  },
+  {
+    title: "City",
+    key: "city",
+    style: { width: "10%" },
+        renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+  },
+  {
+    title: "Sports",
+    key: "sports",
+    style: { width: "10%" },
+  },
+  {
+    title: "Total Subscriber",
+    key: "totalSubscriber",
+    style: { width: "15%" },
     renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
   { title: "", key: "action",width:"15%", },

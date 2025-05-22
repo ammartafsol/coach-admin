@@ -89,3 +89,57 @@ export const CoachTableBody = [
       subscriber: "Yes",
     }
     ]  
+
+
+    export const CoachTableDataBody = [
+      {
+        _id:1,
+        coachName: "John Smith",
+        email: "john.smith@example.com",
+        phoneNumber: "123-456-7890",
+        city: "New York",
+        sports:"Basket ball",
+        totalSubscriber: "120",
+        action: "view / edit / delete"
+      },
+      {
+        _id:2,
+        coachName: "Emily Johnson",
+        email: "emily.j@example.com",
+        phoneNumber: "987-654-3210",
+        city: "Los Angeles",
+        sports:"Basket ball",
+        totalSubscriber: "85",
+        action: "view / edit / delete"
+      },
+      {
+        _id:3,
+        coachName: "Michael Carter",
+        email: "mike.carter@example.com",
+        phoneNumber: "555-123-4567",
+        city: "Chicago",
+        sports:"Basket ball",
+        totalSubscriber: "150",
+        action: "view / edit / delete"
+      },
+      {
+        _id:4,
+        coachName: "Sarah Williams",
+        email: "sarah.w@example.com",
+        phoneNumber: "321-555-9876",
+        city: "Houston",
+        sports:"Basket ball",
+        totalSubscriber: "73",
+        action: "view / edit / delete"
+      },
+      {
+        _id:5,
+        coachName: "David Lee",
+        email: "david.lee@example.com",
+        phoneNumber: "789-321-6540",
+        city: "Phoenix",
+        sports:"Basket ball",
+        totalSubscriber: "98",
+        action: "view / edit / delete"
+      }
+    ];

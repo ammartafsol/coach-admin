@@ -57,6 +57,18 @@ const UserTemplate = () => {
               if (renderValue) {
                 return renderValue(item, rowItem);
               }
+              if(key === 'coachName'){
+                return(
+                    <div className={classes?.profileParent}>
+                        <div className={classes?.profile}>
+                            <Image src={"/images/cms-images/profile.png"} fill  alt="profile" />
+                        </div>
+                        <div className={classes?.userName}>
+                        Jenny Wilson
+                        </div>
+                    </div>
+                )
+              }
               if (key == "action") {
                 return (
                  <HiOutlineDotsHorizontal  size={25} className={classes.actionLink}

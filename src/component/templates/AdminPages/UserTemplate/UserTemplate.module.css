@@ -3,3 +3,19 @@
 .mainContClassName{
     width:300px !important;
 }
+
+
+.profileParent{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .profile{
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    position: relative;
+  }
+  .profile img{
+    border-radius: 50%;
+  }

@@ -10,6 +10,7 @@ import { CoachTableBody } from "@/developmentContent/tableBody";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import BorderWrapper from "@/component/atoms/BorderWrapper";
 import { RiArrowDropRightLine } from "react-icons/ri";
+import Image from "next/image";
 
 
 const DashboardTemplate = () => {
@@ -32,6 +33,18 @@ const DashboardTemplate = () => {
               const rowItem = CoachTableBody[rowIndex];
               if (renderValue) {
                 return renderValue(item, rowItem);
+              }
+              if(key === 'coachName'){
+                return(
+                    <div className={classes?.profileParent}>
+                        <div className={classes?.profile}>
+                            <Image src={"/images/cms-images/profile.png"} fill  alt="profile" />
+                        </div>
+                        <div className={classes?.userName}>
+                        Jenny Wilson
+                        </div>
+                    </div>
+                )
               }
               if (key == "action") {
                 return (
