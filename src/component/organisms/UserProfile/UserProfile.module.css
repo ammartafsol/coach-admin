@@ -45,7 +45,7 @@
 
 .name {
   color: #333;
-  font-family: var(--font-aventa);
+  font-family: "AventaRegular";
   font-size: 34px;
 
   font-weight: 400;
@@ -56,7 +56,7 @@
   display: flex;
   align-items: center;
   color: #f29267;
-  font-family: var(--font-aventa);
+  font-family: "AventaRegular";
   font-size: 24px;
   font-weight: 400;
   gap: 5px;
@@ -73,7 +73,7 @@
 
 .sectionTitle {
   color: #333;
-  font-family: var(--font-aventa);
+  font-family: "AventaRegular";
   font-size: 18px;
   font-weight: 400;
   line-height: 29.279px;
@@ -82,7 +82,7 @@
 
 .bioText {
   color: #71717a;
-  font-family: var(--font-avenir-next);
+  font-family: "AvenirRegular";
   font-size: 16px;
   font-weight: 450;
   line-height: 26px; /* 162.5% */
@@ -96,7 +96,7 @@
 
 .contactItem {
   color: #71717a;
-  font-family: var(--font-avenir-next);
+  font-family: "AvenirRegular";
   font-size: 16px;
   font-weight: 450;
 }
@@ -118,7 +118,7 @@
 
 .socialTitle {
   color: #333;
-  font-family: var(--font-aventa);
+  font-family: "AventaRegular";
   font-size: 14px;
   font-weight: 700;
   line-height: 24px;
@@ -148,7 +148,7 @@
 
 .videoTitle {
   color: #b0cd6e;
-  font-family: var(--font-avenir-next);
+  font-family: "AvenirRegular";
   font-size: 30px;
   font-style: normal;
   font-weight: 450;
@@ -239,7 +239,7 @@
 
 .reviewsTitle {
   color: #333;
-  font-family: var(--font-aventa);
+  font-family: "AventaRegular";
   font-size: 24px;
   font-weight: 400;
   line-height: 32px;

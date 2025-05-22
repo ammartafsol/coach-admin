@@ -67,7 +67,7 @@
 
 .coachName {
   color: #333;
-  font-family: var(--font-aventa);
+  font-family: "AventaRegular";
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
@@ -107,7 +107,7 @@
 
 .subscriptionPlan {
   color: #333;
-  font-family: var(--font-aventa);
+  font-family: "AventaRegular";
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
@@ -123,7 +123,7 @@
 
 .statusBadge {
   color: #14532D;
-font-family: var(--font-aventa);
+font-family: "AventaRegular";
 font-size: 14px;
 font-style: normal;
 font-weight: 400;

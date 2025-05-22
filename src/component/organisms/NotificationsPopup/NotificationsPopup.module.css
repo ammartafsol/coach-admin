@@ -36,7 +36,7 @@
 }
 .seeAll > p {
   color: #333;
-  font-family: var(--font-avenir-next);
+  font-family: "AvenirRegular";
   font-size: 12px;
   font-weight: 450;
   line-height: 20px;

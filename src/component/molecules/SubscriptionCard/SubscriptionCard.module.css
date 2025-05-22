@@ -21,7 +21,7 @@
   color: var(--green-900, #14532d);
   leading-trim: both;
   text-edge: cap;
-  font-family: var(--font-aventa);
+  font-family: "AventaRegular";
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -49,7 +49,7 @@
 .info > p {
   color: #71717a;
   text-align: center;
-  font-family: var(--font-avenir-next);
+  font-family: "AvenirRegular";
   font-size: 16px;
   font-weight: 450;
   letter-spacing: 0.96px;
@@ -58,7 +58,7 @@
 }
 .subscriptionType {
   color: #333;
-  font-family: var(--font-aventa);
+  font-family: "AventaRegular";
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
@@ -72,7 +72,7 @@
   border-left: 1px solid rgba(113, 113, 122, 0.2);
   padding-left: 10px;
   color: rgba(113, 113, 122, 0.5);
-  font-family: var(--font-avenir-next);
+  font-family: "AvenirRegular";
   font-size: 16px;
   font-style: normal;
   font-weight: 450;

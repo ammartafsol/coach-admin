@@ -1,59 +1,37 @@
 @font-face {
-  font-family: "Avenir Next Cyr";
-  font-weight: 500; /* Medium */
+  font-family: "AventaRegular";
+  src: url("/fonts/Aventa-Regular.ttf") format("truetype");
+  font-weight: normal;
   font-style: normal;
-  src: url("/fonts/Avenir Next Cyr Medium.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "Aventa";
-  font-weight: 300; /* Light */
+  font-family: "AventaBold";
+  src: url("/fonts/Aventa-Bold.ttf") format("truetype");
+  font-weight: normal;
   font-style: normal;
-  src: url("/fonts/EllenLuff - Aventa Light.otf") format("opentype");
 }
 
 @font-face {
-  font-family: "Aventa";
-  font-weight: 300; /* Light */
-  font-style: italic;
-  src: url("/fonts/EllenLuff - Aventa Light Itallic.otf") format("opentype");
-}
-
-@font-face {
-  font-family: "Helvetica Neue";
-  font-weight: 300; /* Light */
+  font-family: "AventaLight";
+  src: url("/fonts/Aventa-Light.ttf") format("truetype");
+  font-weight: normal;
   font-style: normal;
-  src: url("/fonts/helvetica-light-587ebe5a59211.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "Helvetica Neue";
-  font-weight: 700; /* Bold */
+  font-family: "AvenirLight";
+  src: url("/fonts/AvenirNextCyr-Light.ttf") format("truetype");
+  font-weight: normal;
   font-style: normal;
-  src: url("/fonts/Helvetica-Bold.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "Helvetica Neue";
-  font-weight: 700; /* Bold */
-  font-style: italic;
-  src: url("/fonts/Helvetica-BoldOblique.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Helvetica Neue";
-  font-weight: 400; /* Regular */
+  font-family: "AvenirRegular";
+  src: url("/fonts/AvenirNextCyr-Regular.ttf") format("truetype");
+  font-weight: normal;
   font-style: normal;
-  src: url("/fonts/Helvetica.ttf") format("truetype");
 }
-
-@font-face {
-  font-family: "Helvetica Neue";
-  font-weight: 400; /* Regular */
-  font-style: italic;
-  src: url("/fonts/Helvetica-Oblique.ttf") format("truetype");
-}
-
 body {
   background-color: var(--light-gray-color);
 }

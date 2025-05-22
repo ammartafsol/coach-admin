@@ -38,7 +38,7 @@
 
 .modalTitle {
   color: #333;
-  font-family: var(--font-aventa);
+  font-family: "AventaRegular";
   font-size: 24px;
   font-style: normal;
   font-weight: 400;
@@ -126,7 +126,7 @@
 
 .commentAuthor {
   color: #333;
-  font-family: var(--font-avenir-next);
+  font-family: "AvenirRegular";
   font-size: 14px;
   font-style: normal;
   font-weight: 750;
@@ -135,7 +135,7 @@
 
 .commentText {
   color: #71717a;
-  font-family: var(--font-avenir-next);
+  font-family: "AvenirRegular";
   font-size: 12px;
   font-style: normal;
   font-weight: 450;
@@ -151,7 +151,7 @@
 
 .commentTime {
   color: rgba(113, 113, 122, 0.8);
-  font-family: var(--font-avenir-next);
+  font-family: "AvenirRegular";
   font-size: 12px;
   font-style: normal;
   font-weight: 450;
@@ -160,7 +160,7 @@
 
 .replyButton {
   color: #94ac5e;
-  font-family: var(--font-avenir-next);
+  font-family: "AvenirRegular";
   font-size: 12px;
   font-style: normal;
   font-weight: 450;
@@ -181,7 +181,7 @@
 
 .viewAllButton {
   color: #dbb40c;
-  font-family: var(--font-avenir-next);
+  font-family: "AvenirRegular";
   font-size: 14px;
   font-style: normal;
   font-weight: 450;
@@ -249,7 +249,7 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
   height: 40px;
   color: rgba(113, 113, 122, 0.5);
-  font-family: var(--font-avenir-next);
+  font-family: "AvenirRegular";
   font-size: 14px;
   font-style: normal;
   font-weight: 450;
@@ -260,7 +260,7 @@
   /* box-shadow: 0 0 0 2px #7ed957; */
 }
 .commentInput::placeholder{
-  font-family: var(--font-avenir-next);
+  font-family: "AvenirRegular";
   font-size: 14px;
   color: rgba(113, 113, 122, 0.50);
 

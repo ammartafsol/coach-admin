@@ -32,7 +32,7 @@
 
 .text {
   color: #6c6c72;
-  font-family: var(--font-avenir-next);
+  font-family: "AvenirRegular";
   font-size: 18px;
   font-style: normal;
   font-weight: 450;
@@ -54,7 +54,7 @@
 
 .name {
   color: #333;
-  font-family: var(--font-aventa);
+  font-family: "AventaRegular";
   font-size: 16px;
   font-style: normal;
   font-weight: 400;

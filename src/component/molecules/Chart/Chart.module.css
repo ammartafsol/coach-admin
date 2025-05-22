@@ -19,14 +19,14 @@
     font-weight: 600;
     margin: 0;
     color: #333;
-    font-family: var(--font-aventa);
+    font-family: "AventaRegular";
   }
   
   .label {
     font-size: 14px;
     color: #666;
     margin: 5px 0 0 0;
-    font-family: var(--font-avenir-next);
+    font-family: "AvenirRegular";
   }
   
   .yearSelector {

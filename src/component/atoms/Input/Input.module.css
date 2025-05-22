@@ -43,7 +43,7 @@
   border-radius: 10px;
   height: 40px;
   font-size: 14px !important;
-  font-family: var(--font-avenir-next);
+  font-family: "AvenirRegular";
 
   /* padding-left: 50px; */
   /* border: 1px solid var(--border-color); */
@@ -58,7 +58,7 @@
   font-style: normal;
   font-weight: 450 !important;
   line-height: 24px;
-  font-family: var(--font-avenir-next);
+  font-family: "AvenirRegular";
 }
 
 .mt2 {

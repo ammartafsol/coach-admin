@@ -22,13 +22,13 @@
   .statValue {
     font-size: 1.5rem;
     font-weight: 700;
-    font-family: var(--font-aventa);
+    font-family: "AventaRegular";
     font-weight: 600;
   }
   
   .statLabel {
     font-size: 0.875rem;
     color: #6d6d6d;
-    font-family: var(--font-avenir-next);
+    font-family: "AvenirRegular";
   }
   

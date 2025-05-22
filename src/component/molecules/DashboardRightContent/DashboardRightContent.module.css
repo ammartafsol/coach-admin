@@ -19,7 +19,7 @@
     font-size: 1.125rem;
     font-weight: 600;
     margin-bottom: 1rem;
-    font-family: var(--font-aventa);
+    font-family: "AventaRegular";
   }
   .main{
     display: flex;
@@ -38,7 +38,7 @@
   
   .subscriberLabel {
     font-size: 0.875rem;
-    font-family: var(--font-aventa);
+    font-family: "AventaRegular";
   }
   
   .subscriberBar {
@@ -56,7 +56,7 @@
   .subscriberValue {
     font-size: 0.875rem;
     text-align: right;
-    font-family: var(--font-avenir-next);
+    font-family: "AvenirRegular";
   }
   
   /* Feeds Card */
@@ -92,21 +92,21 @@
   .feedTitle {
     font-weight: 600;
     font-size: 0.875rem;
-    font-family: var(--font-aventa);
+    font-family: "AventaRegular";
     font-size: 14px;
   }
   
   .feedDescription {
     font-size: 0.75rem;
     color: #6d6d6d;
-    font-family: var(--font-aventa);
+    font-family: "AventaRegular";
     font-size: 13px;
   }
   
   .feedTime {
     font-size: 0.75rem;
     color: #6d6d6d;
-    font-family: var(--font-avenir-next);
+    font-family: "AvenirRegular";
     font-size: 14px;
   }
   
@@ -121,7 +121,7 @@
     cursor: pointer;
   }
   .seeAllLink span{
-    font-family: var(--font-aventa);
+    font-family: "AventaRegular";
     font-size: 11px;
   }
   

@@ -12,7 +12,7 @@
   color: #344313;
   padding: 10px 24px;
   height: 45px;
-  font-family: var(--font-avenir-next);
+  font-family: "AvenirRegular";
 }
 
 .btn:disabled {

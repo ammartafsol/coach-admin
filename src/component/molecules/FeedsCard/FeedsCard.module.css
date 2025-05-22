@@ -36,7 +36,7 @@
 
 .authorName {
 color: #333;
-font-family: var(--font-aventa);
+font-family: "AventaRegular";
 font-size: 18px;
 font-style: normal;
 font-weight: 400;
@@ -45,7 +45,7 @@ line-height: normal;
 
 .category {
   color: #71717A;
-font-family: var(--font-avenir-next);
+font-family: "AvenirRegular";
 font-size: 16px;
 font-style: normal;
 font-weight: 450;
@@ -55,7 +55,7 @@ letter-spacing: 0.32px;
 
 .feedDate {
   color: #71717A;
-font-family: var(--font-avenir-next);
+font-family: "AvenirRegular";
 font-size: 12px;
 font-style: normal;
 font-weight: 450;
@@ -70,7 +70,7 @@ line-height: normal;
 
 .feedText {
 color: rgba(113, 113, 122, 0.80);
-font-family: var(--font-avenir-next);
+font-family: "AvenirRegular";
 font-size: 14px;
 font-style: normal;
 font-weight: 450;
@@ -134,7 +134,7 @@ letter-spacing: 0.28px;
 }
 .viewsCount span{
     color: rgba(113, 113, 122, 0.80);
-font-family: var(--font-avenir-next);
+font-family: "AvenirRegular";
 font-size: 14px;
 font-style: normal;
 font-weight: 450;
