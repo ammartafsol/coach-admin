@@ -16,6 +16,7 @@ import ActionMenu from "@/component/molecules/ActionMenu/ActionMenu";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
+import UserProfile from "@/component/organisms/UserProfile/UserProfile";
 
 const UserTemplate = () => {
   const [showActionMenu, setShowActionMenu] = useState(false);

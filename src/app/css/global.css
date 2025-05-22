@@ -54,14 +54,13 @@
   src: url("/fonts/Helvetica-Oblique.ttf") format("truetype");
 }
 
-body{
+body {
   background-color: var(--light-gray-color);
 }
 
-.mainChild{
+.mainChild {
   padding-top: 40px;
 }
-
 
 h1,
 h2,
@@ -76,10 +75,17 @@ a {
   text-decoration: none;
 }
 
-
-.loading{
+.loading {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.maxLine4 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
 }

@@ -59,12 +59,12 @@
   font-family: var(--font-aventa);
   font-size: 24px;
   font-weight: 400;
+  gap: 5px;
 }
 
 .starIcon {
   width: 24px;
   height: 24px;
-  margin-right: 4px;
 }
 
 .bioSection {
@@ -120,7 +120,7 @@
   color: #333;
   font-family: var(--font-aventa);
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 24px;
 }
 
@@ -180,7 +180,7 @@
 }
 
 .playButton {
-  background-color: #4caf50;
+  background-color: #b0cd6e;
   border: none;
   border-radius: 50%;
   padding: 16px;
@@ -189,7 +189,7 @@
 }
 
 .playButton:hover {
-  background-color: #3d8b40;
+  background-color: #b0cd6e;
   transform: scale(1.1);
 }
 

@@ -9,9 +9,9 @@
   padding: 24px;
   flex-direction: column;
   align-items: flex-start;
-  gap: 16px;
   flex: 1 0 0;
   height: 284px;
+  justify-content: space-between;
 }
 
 .starsContainer {

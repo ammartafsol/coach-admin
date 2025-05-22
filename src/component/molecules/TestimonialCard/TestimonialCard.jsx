@@ -1,5 +1,6 @@
 import Image from "next/image";
 import classes from "./TestimonialCard.module.css";
+import { mergeClass } from "@/resources/utils/helper";
 
 export default function TestimonialCard({ testimonial }) {
   const { rating, text, name, avatar } = testimonial;
@@ -22,7 +23,7 @@ export default function TestimonialCard({ testimonial }) {
           </svg>
         ))}
       </div>
-      <p className={classes.text}>{text}</p>
+      <p className={mergeClass("maxLine3", classes.text)}>{text}</p>
       <div className={classes.reviewerInfo}>
         <Image
           src={avatar || "/placeholder.svg"}
