@@ -45,9 +45,8 @@
 
 .name {
   color: #333;
-  font-family: "AventaRegular";
+  font-family: "AventaBold";
   font-size: 34px;
-
   font-weight: 400;
   line-height: 32px;
 }
@@ -73,7 +72,7 @@
 
 .sectionTitle {
   color: #333;
-  font-family: "AventaRegular";
+  font-family: "AventaBold";
   font-size: 18px;
   font-weight: 400;
   line-height: 29.279px;
@@ -86,6 +85,7 @@
   font-size: 16px;
   font-weight: 450;
   line-height: 26px; /* 162.5% */
+  
 }
 
 .contactInfo {
@@ -118,7 +118,7 @@
 
 .socialTitle {
   color: #333;
-  font-family: "AventaRegular";
+  font-family: "AvenirRegular";
   font-size: 14px;
   font-weight: 700;
   line-height: 24px;
@@ -239,7 +239,7 @@
 
 .reviewsTitle {
   color: #333;
-  font-family: "AventaRegular";
+  font-family: "AventaBold";
   font-size: 24px;
   font-weight: 400;
   line-height: 32px;

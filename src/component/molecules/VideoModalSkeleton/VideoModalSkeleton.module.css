@@ -8,7 +8,7 @@
 
 .topHeadLeftText h3 {
   color: #333;
-  font-family: "AventaRegular";
+  font-family: "AventaBold";
   font-size: 32px;
   font-style: normal;
   font-weight: 400;
@@ -196,11 +196,12 @@
 
 .commentsTitle {
   color: #333;
-  font-family: "AventaRegular";
+  font-family: "AventaBold";
   font-size: 24px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  margin-bottom: 20px;
 }
 
 .commentsList {

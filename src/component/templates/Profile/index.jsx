@@ -111,7 +111,7 @@ const ProfileTemplate = () => {
           </Row>
           <div
             onClick={() => {
-              router.push("/update-password");
+              router.push("/update-Password");
             }}
             className={classes?.textBlodLeft}
           >
