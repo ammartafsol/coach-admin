@@ -1,4 +1,4 @@
-import NotificationTemplate from '@/component/templates/NotificationTemplate'
+import NotificationTemplate from '@/component/templates/AdminPages/NotificationTemplate'
 import React from 'react'
 
 const page = () => {

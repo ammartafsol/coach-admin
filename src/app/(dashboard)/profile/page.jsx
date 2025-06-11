@@ -1,4 +1,4 @@
-import ProfileTemplate from '@/component/templates/Profile'
+import ProfileTemplate from '@/component/templates/AdminPages/Profile'
 import React from 'react'
 
 const page = () => {

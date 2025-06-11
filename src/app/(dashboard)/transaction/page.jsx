@@ -1,4 +1,4 @@
-import TransansactionTemplate from '@/component/templates/TransansactionTemplate'
+import TransansactionTemplate from '@/component/templates/AdminPages/TransansactionTemplate'
 import React from 'react'
 
 const page = () => {

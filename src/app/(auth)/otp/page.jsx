@@ -1,10 +1,10 @@
-import FeedsTemplate from '@/component/templates/AdminPages/FeedsTemplate'
+import OTPTemplate from '@/component/templates/AuthPages/OTPTemplate'
 import React from 'react'
 
 const page = () => {
   return (
     <div>
-        <FeedsTemplate />
+        <OTPTemplate />
     </div>
   )
 }

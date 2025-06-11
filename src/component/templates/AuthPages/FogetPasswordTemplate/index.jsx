@@ -15,7 +15,7 @@ import { Container } from "react-bootstrap";
 import { MdEmail } from "react-icons/md";
 import classes from "./FogetPasswordTemplate.module.css";
 
-const FogetPasswordTemplate = () => {
+const ForgetPasswordTemplate = () => {
   const router = useRouter();
   const { Post } = useAxios();
   const [loading, setLoading] = useState("");
@@ -82,4 +82,4 @@ const FogetPasswordTemplate = () => {
   );
 };
 
-export default FogetPasswordTemplate;
+export default ForgetPasswordTemplate;

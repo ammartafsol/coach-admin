@@ -1,10 +1,10 @@
-import FeedsTemplate from '@/component/templates/AdminPages/FeedsTemplate'
+import ResetPassword from '@/component/templates/AuthPages/ResetPassword'
 import React from 'react'
 
 const page = () => {
   return (
     <div>
-        <FeedsTemplate />
+        <ResetPassword />
     </div>
   )
 }
