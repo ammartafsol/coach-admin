@@ -14,6 +14,8 @@ import { useState } from "react";
 import { Container } from "react-bootstrap";
 import { FaLock } from "react-icons/fa";
 import classes from "./ResetPassword.module.css";
+import Image from "next/image";
+import { ESLINT_DEFAULT_DIRS } from "next/dist/lib/constants";
 
 const ResetPassword = () => {
   const router = useRouter();
@@ -32,14 +34,20 @@ const ResetPassword = () => {
     setLoading("loading");
     const obj = {
       email: Cookies.get("email"),
-      otpCode: Cookies.get("otpCode"),
+      code: Cookies.get("code"),
       password: values?.newPassword,
       confirmPassword: values?.confirmPassword,
     };
-    const response = await Post({ route: "users/resetPasswordDone", data: obj });
+    const response = await Post({
+      route: "auth/reset/password",
+      data: obj,
+    });
     if (response) {
       RenderToast({ type: "success", message: "Password Reset Successfully" });
       router.push("/");
+    }
+    else{
+      RenderToast({ type: "error", message: "Something went wrong." });
     }
     setLoading("");
   };
@@ -48,15 +56,24 @@ const ResetPassword = () => {
     <LayoutWrapper>
       <Container>
         <div className={classes.loginContainer}>
-          <div className={classes.headingDiv}>
-            <h2>Reset Password</h2>
-            <p>Please type something you'll remember</p>
-          </div>
+          <Image
+            src={"/images/app-images/logo.png"}
+            alt="logo"
+            width={130}
+            height={50}
+          />
           <div className={classes.formContainer}>
+            <div className={classes.headingDiv}>
+              <h2>Reset Password</h2>
+              <p className="fs-16 dullGrey fw-400">
+                Please type something you'll remember
+              </p>
+            </div>
             <div className={classes.inputGroup}>
               <Input
                 type={"password"}
-                leftIcon={<FaLock color="#B0B7C3" fontSize={16} />}
+                label="Password"
+                // leftIcon={<FaLock color="#B0B7C3" fontSize={16} />}
                 placeholder={"New Password"}
                 setter={(e) => {
                   formikResetPassword.setFieldValue("newPassword", e);
@@ -66,10 +83,13 @@ const ResetPassword = () => {
                   formikResetPassword.touched.newPassword &&
                   formikResetPassword.errors.newPassword
                 }
+                inputBoxStyle={classes.inputColor}
+                labelStyle={classes.labelColor}
               />
               <Input
                 type={"password"}
-                leftIcon={<FaLock color="#B0B7C3" fontSize={16} />}
+                label="Confirm Password"
+                // leftIcon={<FaLock color="#B0B7C3" fontSize={16} />}
                 placeholder={"Confirm Password"}
                 setter={(e) => {
                   formikResetPassword.setFieldValue("confirmPassword", e);
@@ -79,12 +99,13 @@ const ResetPassword = () => {
                   formikResetPassword.touched.confirmPassword &&
                   formikResetPassword.errors.confirmPassword
                 }
+                inputBoxStyle={classes.inputColor}
+                labelStyle={classes.labelColor}
               />
             </div>
             <Button
               disabled={loading === "loading"}
               onClick={formikResetPassword.handleSubmit}
-              variant={"gradient"}
               label={loading === "loading" ? "loading..." : "Reset Password"}
             />
           </div>

@@ -4,4 +4,19 @@
   --light-gray-color:#FAFAFA;
   --light-gray-color-100:#EAECF0;
   --Wild-Willow-100:#EAECF0;
+  --Light-Green:#B0CD6E;
+  --Dark-Charcoal:#454343;
+  --Lemon-Yellow:#F9E17A;
+  --White:#ffffff;
+  --Dark-Brown:#343131;
+  --Dull-White:rgba(255, 255, 255, 0.8);
+  --Dull-Grey:#F5F5F5;
+  --Orange:#F29267;
 }
+
+
+/* text color */
+.white{color: var(--White);}
+.yellow{color: var(--Lemon-Yellow);}
+.dullWhite{color: var(--Dull-White);}
+.dullGrey{color: var(--Dull-Grey);}

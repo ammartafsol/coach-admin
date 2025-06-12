@@ -57,9 +57,11 @@ export const Input = ({
           className={`${[
             classes.labelText,
             disabled && classes.disabled,
-            labelOnTop ? classes.onTopLabel : "",
+            labelOnTop ? classes.onTopLabel : "", labelStyle
           ].join(" ")}`}
-          style={typeof labelStyle === "object" ? labelStyle : {}}
+          
+          // style={
+          //   typeof labelStyle === "object" ? labelStyle : {}}
         >
           {label} {label2 && label2}
         </label>

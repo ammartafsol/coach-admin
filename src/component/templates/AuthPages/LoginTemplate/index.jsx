@@ -17,12 +17,14 @@ import { useDispatch } from "react-redux";
 import classes from "./LoginTemplate.module.css";
 import Cookies from "js-cookie";
 import { handleEncrypt } from "@/resources/utils/helper";
+import Image from "next/image";
 
 export default function LoginTemplate() {
   const router = useRouter();
   const dispatch = useDispatch();
   const { Post } = useAxios();
   const [loading, setLoading] = useState(""); // submitLogin
+  const expiryDate = new Date(new Date().getTime() + 10 * 60 * 1000);
   // LoginFormik
   const LoginFormik = useFormik({
     initialValues: LOGIN_FORM_VALUES,
@@ -36,17 +38,15 @@ export default function LoginTemplate() {
     setLoading("submitLogin");
 
     const { response } = await Post({
-      route: "users/clinic/login",
-      data: values,
+      route: "auth/admin/login",
+       data: {
+        email: values.email,
+        password: values.password,
+      },
     });
     if (response) {
+      console.log(response);
       Cookies.set("_xpdx", handleEncrypt(response?.data?.token), {
-        expires: 90,
-      });
-      Cookies.set("_xpdx_rf", handleEncrypt(response?.data?.refreshToken), {
-        expires: 90,
-      });
-      Cookies.set("_xpdx_ur", handleEncrypt(response?.data?.user?.role), {
         expires: 90,
       });
       dispatch(saveLoginUserData(response?.data));
@@ -54,7 +54,7 @@ export default function LoginTemplate() {
         type: "success",
         message: "Login Successfully",
       });
-      router.push("/clinic/patient");
+      router.push("/");
       // router.push("/clinic/dashboard");
     }
     setLoading("");
@@ -63,26 +63,36 @@ export default function LoginTemplate() {
     <LayoutWrapper>
       <Container>
         <div className={classes.loginContainer}>
-          <Col md={12} className={classes.loginFormDiv}>
+          <Image
+            src={"/images/app-images/logo.png"}
+            alt="logo"
+            width={130}
+            height={50}
+          />
+          <div className={classes.loginFormDiv}>
             <div className={classes.headingDiv}>
               <h2>Login</h2>
-              <p>
+              {/* <p>
                 Welcome back! Log in to access your dashboard and take the next
                 step.
-              </p>
+              </p> */}
             </div>
             <Input
               type={"email"}
-              leftIcon={<MdEmail color="#B0B7C3" fontSize={20} />}
+              label="Email"
+              // leftIcon={<MdEmail color="#B0B7C3" fontSize={20} />}
               placeholder={"Email address"}
               value={LoginFormik.values.email}
               setter={LoginFormik.handleChange("email")}
               errorText={LoginFormik.touched.email && LoginFormik.errors.email}
               mainContClassName={"mb-0"}
+              inputBoxStyle={classes.inputColor}
+              labelStyle={classes.labelColor}
             />
             <Input
               type={"password"}
-              leftIcon={<FaLock color="#B0B7C3" fontSize={16} />}
+              label="Password"
+              // leftIcon={<FaLock color="#B0B7C3" fontSize={16} />}
               placeholder={"Password"}
               value={LoginFormik.values.password}
               setter={LoginFormik.handleChange("password")}
@@ -90,6 +100,8 @@ export default function LoginTemplate() {
                 LoginFormik.touched.password && LoginFormik.errors.password
               }
               mainContClassName={"mb-0"}
+              inputBoxStyle={classes.inputColor}
+              labelStyle={classes.labelColor}
             />
             <p
               onClick={() => {
@@ -101,11 +113,25 @@ export default function LoginTemplate() {
             </p>
             <Button
               label={loading == "submitLogin" ? "Please Wait..." : "Login"}
-              variant={"gradient"}
               onClick={LoginFormik.handleSubmit}
-              disabled={loading == "submitLogin"}
+              disabled={loading == "submitLogin"} type={"submit"}
             />
-          </Col>
+            <div className={classes.newAccount}>
+              <p
+                onClick={() => {
+                  router.push("/forget-password");
+                }}
+                className="white fs-18"
+              >
+                Don’t Have Account?
+              </p>
+              <p className="dullWhite fs-14">
+                Don't have an account? Sign up now and start your learning with
+                Coach Huddle!
+              </p>
+              <p className="yellow fs-14">Continue To Sign Up</p>
+            </div>
+          </div>
         </div>
       </Container>
     </LayoutWrapper>

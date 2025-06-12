@@ -2,14 +2,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 16px;
+  /* border-radius: 16px;
   border: 1px solid #ffffff80;
   background: #fff3;
   box-shadow: inset 0 3px 5px #ffffff80;
   backdrop-filter: blur(50px);
   width: 100%;
   padding: 80px 90px;
-  margin-bottom: 20px;
+  margin-bottom: 20px; */
+  height: 100vh;
+  flex-direction: column;
+    gap: 45px;
+        font-family: "AventaRegular";
 }
 
 .headingDiv {
@@ -20,10 +24,11 @@
 }
 
 .headingDiv h2 {
-  font-size: 44px;
-  font-weight: 700;
-  color: #000;
+  font-size: 48px;
+  font-weight: 400;
+  color: var(--Light-Green);
   line-height: 50px;
+  text-align: center;
 }
 
 .headingDiv p {
@@ -39,14 +44,27 @@
   flex-direction: column;
   gap: 18px;
   width: 70%;
+  background-color: var( --Dark-Charcoal);
+  padding: 64px;
+  align-items: center;
 }
 
 .forgetPassword {
   display: flex;
-  color: var(--deep-ocean-blue);
+  color: var(--White);
   font-size: 16px;
   font-weight: 400;
   cursor: pointer;
   width: max-content;
   align-self: flex-end;
+}
+.newAccount{text-align: center; max-width: 377px;display: flex;flex-direction: column;gap: 11px;}
+.inputColor{color: var(--White) !important;border-radius: 0 !important;border: none !important; padding: 10px 0px !important;border-bottom: 1px solid rgba(255, 255, 255, 0.50)!important;}
+.labelColor{color: var(--White) !important;}
+
+@media(max-width:1440px){
+  .loginFormDiv {padding: 10px 64px;gap: 10px;}
+  
+
+
 }

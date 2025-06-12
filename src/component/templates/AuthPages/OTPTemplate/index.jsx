@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import classes from "./OTPTemplate.module.css";
+import Image from "next/image";
 
 const OTPTemplate = () => {
   const { Post } = useAxios();
@@ -49,57 +50,85 @@ const OTPTemplate = () => {
   };
 
   // handle submit
+  // const handleSubmit = async () => {
+  //   setLoading("loading");
+  //   if (otpValues.some((value) => value === "")) {
+  //     setLoading("");
+  //     return setErrorMessage("Please fill in all OTP fields.");
+  //   }
+  //   const obj = {
+  //     email: userEmail || Cookies.get("email"),
+  //     otpCode: otpValues.join(""),
+  //     fromForgotPassword,
+  //   };
+  //   Cookies.set("otpCode", obj.otpCode);
+  //   const { response } = await Post({ route: "auth/verify/otp", data: obj });
+  //   console.log("reponse", response);
+  //   if (response.status === "success") {
+  //     if (!fromForgotPassword) {
+  //       Cookies.remove("_xpdx_ver");
+  //       Cookies.remove("email");
+  //       Cookies.remove("code");
+  //       router.push("/auth/sign-in");
+       
+  //     } else {
+  //       router.push("/reset-password");
+  //     }
+  //     RenderToast({ type: "success", message: "Success" });
+  //     setCanResend(false);
+  //   }
+  //   setLoading("");
+  // };
   const handleSubmit = async () => {
     setLoading("loading");
+  
     if (otpValues.some((value) => value === "")) {
       setLoading("");
       return setErrorMessage("Please fill in all OTP fields.");
+     
     }
+    console.log(otpValues)
+  
     const obj = {
       email: userEmail || Cookies.get("email"),
-      otpCode: otpValues.join(""),
+      code: otpValues.join(""),
       fromForgotPassword,
     };
-    Cookies.set("otpCode", obj.otpCode);
-    const { response } = await Post({ route: "users/verify-otp", data: obj });
-    console.log("reponse",response);
-    if (response.status === "success") {
-      if (!fromForgotPassword) {
-        Cookies.remove("_xpdx_ver");
-        Cookies.remove("email");
-        Cookies.remove("code");
-        router.push("/auth/sign-in");
-        // const user = response?.data?.data;
-        // const userForCookie = {
-        //   role,
-        //   _id: user?._id,
-        //   email: user?.email,
-        //   isVerified: user?.isVerified,
-        // };
-
-        // Cookies.set("_xpdx_u", JSON.stringify(userForCookie), { expires: 90 });
-        // dispatch(UpdateUser(user));
-
-        // if (role === "customer") {
-        //   router.push("/customer");
-        // }
-        // if (role === "freelancer") {
-        //   router.push("/service-provider");
-
-        //   let profileCompletion = calculateProfileCompletion(user);
-        //   dispatch(setPortfolioProgress(profileCompletion));
-        // }
+    console.log("obj", obj);
+  
+    Cookies.set("otpCode", obj.code);
+  
+    try {
+      const { response } = await Post({ route: "auth/verify/otp", data: obj });
+      console.log("response", response);
+  
+      if (response.status === "success") {
+        if (!fromForgotPassword) {
+          Cookies.remove("_xpdx_ver");
+          Cookies.remove("email");
+          Cookies.remove("code");
+          router.push("/auth/sign-in");
+        } else {
+          router.push("/reset-password");
+        }
+  
+        RenderToast({ type: "success", message: "Success" });
+        setCanResend(false);
       } else {
-        router.push("/reset-password");
+        RenderToast({ type: "error", message: response?.message || "Verification failed" });
       }
-      RenderToast({ type: "success", message: "Success" });
-      setCanResend(false);
+    } catch (err) {
+      console.log("err", err);
+      RenderToast({ type: "error", message: "Something went wrong." });
+    } finally {
+      setLoading("");
     }
-    setLoading("");
   };
+  
 
   // handle resend otp
   const handleResendOTP = async () => {
+    // console.log("handleResendOTP");
     if (loading) return;
     const obj = {
       email: userEmail || Cookies.get("email"),
@@ -107,12 +136,14 @@ const OTPTemplate = () => {
     };
     setLoading("otp");
     const response = await Post({ route: "auth/resend/otp", data: obj });
+  
     setLoading("");
     if (response) {
       setOtpValues(new Array(6).fill(""));
       RenderToast({ type: "info", message: "OTP resent successfully" });
       setTimer(60);
       setCanResend(false);
+      console.log("response", response);
     }
   };
 
@@ -146,13 +177,19 @@ const OTPTemplate = () => {
     <LayoutWrapper>
       <Container>
         <div className={classes.loginContainer}>
-          <div className={classes.headingDiv}>
-            <h2>Email Verification</h2>
-            <p>
-              Enter the OTP sent to your email address to reset your password.
-            </p>
-          </div>
+          <Image
+            src={"/images/app-images/logo.png"}
+            alt="logo"
+            width={130}
+            height={50}
+          />
           <div className={classes.formContainer}>
+            <div className={classes.headingDiv}>
+              <h2>Email Verification</h2>
+              <p className="fs-16 dullGrey fw-400">
+                Enter the OTP sent to your email address to reset your password.
+              </p>
+            </div>
             <div className={classes.otpContainer}>
               {otpValues.map((value, idx) => (
                 <Input
@@ -193,7 +230,6 @@ const OTPTemplate = () => {
             <Button
               disabled={loading === "loading"}
               onClick={handleSubmit}
-              variant={"gradient"}
               label={loading === "loading" ? "loading..." : "Submit"}
             />
           </div>

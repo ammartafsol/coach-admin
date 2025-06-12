@@ -6,7 +6,7 @@
   width: 100%;
   transition: 0.5s all;
   border-radius: 6px !important;
-  border: none;
+  border: 1px solid var(--White) !important;
   outline: none !important;
   background-color: #B0CD6E;
   color: #344313;
