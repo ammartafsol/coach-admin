@@ -13,17 +13,19 @@ import { useState } from "react";
 import { Col, Container } from "react-bootstrap";
 import { FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import classes from "./LoginTemplate.module.css";
 import Cookies from "js-cookie";
 import { handleEncrypt } from "@/resources/utils/helper";
 import Image from "next/image";
 
 export default function LoginTemplate() {
+  const { Post } = useAxios();
   const router = useRouter();
   const dispatch = useDispatch();
-  const { Post } = useAxios();
+  // const userData =useSelector(state=>state.authReducer.user);
   const [loading, setLoading] = useState(""); // submitLogin
+  
   const expiryDate = new Date(new Date().getTime() + 10 * 60 * 1000);
   // LoginFormik
   const LoginFormik = useFormik({
@@ -45,17 +47,16 @@ export default function LoginTemplate() {
       },
     });
     if (response) {
-      console.log(response);
       Cookies.set("_xpdx", handleEncrypt(response?.data?.token), {
         expires: 90,
       });
       dispatch(saveLoginUserData(response?.data));
+      // console.log("reducer:",userData);
       RenderToast({
         type: "success",
         message: "Login Successfully",
       });
       router.push("/");
-      // router.push("/clinic/dashboard");
     }
     setLoading("");
   };

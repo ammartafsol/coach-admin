@@ -22,6 +22,9 @@ const ResetPassword = () => {
   const { Post } = useAxios();
   const [loading, setLoading] = useState("");
 
+  const email = Cookies.get("email");
+  const code = Cookies.get("code");
+
   const formikResetPassword = useFormik({
     initialValues: RESET_PASSWORD_FORM_VALUES,
     validationSchema: ResetPasswordSchema,
@@ -32,18 +35,21 @@ const ResetPassword = () => {
 
   const handleSubmit = async (values) => {
     setLoading("loading");
-    const obj = {
-      email: Cookies.get("email"),
-      code: Cookies.get("code"),
+    const body = {
+      email: email,
+      code: code,
       password: values?.newPassword,
       confirmPassword: values?.confirmPassword,
     };
     const response = await Post({
       route: "auth/reset/password",
-      data: obj,
+      data: body,
     });
     if (response) {
       RenderToast({ type: "success", message: "Password Reset Successfully" });
+      Cookies.remove("_xpdx_ver");
+      Cookies.remove("email");
+     Cookies.remove("code");
       router.push("/");
     }
     else{

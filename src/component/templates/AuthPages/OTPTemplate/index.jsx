@@ -87,42 +87,25 @@ const OTPTemplate = () => {
       return setErrorMessage("Please fill in all OTP fields.");
      
     }
-    console.log(otpValues)
-  
-    const obj = {
+
+    const body = {
       email: userEmail || Cookies.get("email"),
       code: otpValues.join(""),
       fromForgotPassword,
     };
-    console.log("obj", obj);
   
-    Cookies.set("otpCode", obj.code);
-  
-    try {
-      const { response } = await Post({ route: "auth/verify/otp", data: obj });
+      const { response } = await Post({ route: "auth/verify/otp", data: body });
       console.log("response", response);
   
-      if (response.status === "success") {
-        if (!fromForgotPassword) {
-          Cookies.remove("_xpdx_ver");
-          Cookies.remove("email");
-          Cookies.remove("code");
-          router.push("/auth/sign-in");
-        } else {
-          router.push("/reset-password");
-        }
-  
+      if (response) {
+        Cookies.set("code", body.code);
+        router.push("/reset-password");
         RenderToast({ type: "success", message: "Success" });
         setCanResend(false);
-      } else {
-        RenderToast({ type: "error", message: response?.message || "Verification failed" });
-      }
-    } catch (err) {
-      console.log("err", err);
-      RenderToast({ type: "error", message: "Something went wrong." });
-    } finally {
+      } 
+    
       setLoading("");
-    }
+    
   };
   
 
@@ -143,7 +126,6 @@ const OTPTemplate = () => {
       RenderToast({ type: "info", message: "OTP resent successfully" });
       setTimer(60);
       setCanResend(false);
-      console.log("response", response);
     }
   };
 

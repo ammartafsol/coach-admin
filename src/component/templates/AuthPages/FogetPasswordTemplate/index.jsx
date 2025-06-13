@@ -17,8 +17,9 @@ import classes from "./FogetPasswordTemplate.module.css";
 import Image from "next/image";
 
 const ForgetPasswordTemplate = () => {
-  const router = useRouter();
   const { Post } = useAxios();
+  const router = useRouter();
+
   const [loading, setLoading] = useState("");
 
   const formikForgetPassword = useFormik({
@@ -31,13 +32,13 @@ const ForgetPasswordTemplate = () => {
 
   const handleSignUp = async (values) => {
     setLoading("loading");
-    const obj = {
+    const body = {
       email: values?.email,
     };
-    const response = await Post({ route: "auth/forgot/password", data: obj });
+    const response = await Post({ route: "auth/forgot/password", data: body });
     if (response) {
       console.log(response);
-      Cookies.set("email", obj.email);
+      Cookies.set("email", body?.email);
       RenderToast({ type: "success", message: "success" });
       router.push("/otp");
     }
