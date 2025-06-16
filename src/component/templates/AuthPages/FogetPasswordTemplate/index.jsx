@@ -35,9 +35,8 @@ const ForgetPasswordTemplate = () => {
     const body = {
       email: values?.email,
     };
-    const response = await Post({ route: "auth/forgot/password", data: body });
+    const {response} = await Post({ route: "auth/forgot/password", data: body });
     if (response) {
-      console.log(response);
       Cookies.set("email", body?.email);
       RenderToast({ type: "success", message: "success" });
       router.push("/otp");

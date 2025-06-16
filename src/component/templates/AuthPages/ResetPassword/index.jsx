@@ -9,13 +9,11 @@ import { ResetPasswordSchema } from "@/formik/formikSchema/formik-schemas";
 import useAxios from "@/interceptor/axiosInterceptor";
 import { useFormik } from "formik";
 import Cookies from "js-cookie";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Container } from "react-bootstrap";
-import { FaLock } from "react-icons/fa";
 import classes from "./ResetPassword.module.css";
-import Image from "next/image";
-import { ESLINT_DEFAULT_DIRS } from "next/dist/lib/constants";
 
 const ResetPassword = () => {
   const router = useRouter();
@@ -41,7 +39,7 @@ const ResetPassword = () => {
       password: values?.newPassword,
       confirmPassword: values?.confirmPassword,
     };
-    const response = await Post({
+    const { response } = await Post({
       route: "auth/reset/password",
       data: body,
     });
@@ -49,11 +47,8 @@ const ResetPassword = () => {
       RenderToast({ type: "success", message: "Password Reset Successfully" });
       Cookies.remove("_xpdx_ver");
       Cookies.remove("email");
-     Cookies.remove("code");
+      Cookies.remove("code");
       router.push("/");
-    }
-    else{
-      RenderToast({ type: "error", message: "Something went wrong." });
     }
     setLoading("");
   };
