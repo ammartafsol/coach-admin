@@ -130,7 +130,6 @@ export default function LoginTemplate() {
                 Don't have an account? Sign up now and start your learning with
                 Coach Huddle!
               </p>
-              <p className="yellow fs-14">Continue To Sign Up</p>
             </div>
           </div>
         </div>

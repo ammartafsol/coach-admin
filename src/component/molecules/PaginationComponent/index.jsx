@@ -7,21 +7,22 @@ import classes from "./PaginationComponent.module.css";
 import { RECORDS_LIMIT } from "@/const";
 
 export default function PaginationComponent({
-  totalRecords = 50,
   currentPage = 1,
-  setCurrentPage = () => {},
+  totalItems,
+  itemsPerPage = RECORDS_LIMIT,
+  onPageChange = () => {},
 }) {
-  const totalPages = Math.ceil(totalRecords / RECORDS_LIMIT);
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const goToNextPage = () => {
     if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
+      onPageChange(currentPage + 1);
     }
   };
 
   const goToPrevPage = () => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+      onPageChange(currentPage - 1);
     }
   };
 
@@ -48,3 +49,4 @@ export default function PaginationComponent({
     </div>
   );
 }
+

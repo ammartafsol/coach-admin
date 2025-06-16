@@ -11,7 +11,7 @@ export default function AppTable({
   noDataText = "",
   renderItem = null,
   renderTableHeader = null,
-  hasPagination,
+  hasPagination = false,
   ...props
 }) {
   return (

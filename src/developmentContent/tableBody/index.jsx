@@ -193,4 +193,82 @@ export const CoachTableBody = [
         action: "",
       },
     ];
-    
+
+    export const categoryTableData = [
+      {
+        categoryName:"Cricket",
+        categoryType:"Sports",
+      
+      },
+      {
+        categoryName:"Cricket",
+        categoryType:"Sports",
+      
+      },
+      {
+        categoryName:"Cricket",
+        categoryType:"Sports",
+      
+      },
+      {
+        categoryName:"Cricket",
+        categoryType:"Sports",
+      
+      },
+      {
+        categoryName:"Cricket",
+        categoryType:"Sports",
+      
+      },
+      {
+        categoryName:"Cricket",
+        categoryType:"Sports",
+      
+      },
+      {
+        categoryName:"Cricket",
+        categoryType:"Sports",
+      
+      },
+      {
+        categoryName:"Cricket",
+        categoryType:"Sports",
+      
+      },
+      {
+        categoryName:"Cricket",
+        categoryType:"Sports",
+      
+      },
+      {
+        categoryName:"Football",
+        categoryType:"Sports",
+      
+      },
+      {
+        categoryName:"Basketball",
+        categoryType:"Sports",
+      
+      },
+      {
+        categoryName:"Tennis",
+        categoryType:"Sports",
+      
+      },
+        {
+          categoryName:"Hockey",
+          categoryType:"Sports",
+        
+        },
+      {
+        categoryName:"Baseball",
+        categoryType:"Sports",
+      
+      },
+      {
+        categoryName:"Golf",
+        categoryType:"Sports",
+      
+      }
+      
+    ];

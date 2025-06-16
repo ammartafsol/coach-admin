@@ -22,7 +22,7 @@ export const tableHeaders = [
     title: "City",
     key: "city",
     style: { width: "12%" },
-        renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
   {
     title: "Total Subscriber",
@@ -30,9 +30,8 @@ export const tableHeaders = [
     style: { width: "15%" },
     renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
-  { title: "", key: "action",width:"10%", },
+  { title: "", key: "action", width: "10%" },
 ];
-
 
 export const tableUserHeaders = [
   {
@@ -56,7 +55,7 @@ export const tableUserHeaders = [
     title: "Subscriber",
     key: "subscriber",
     style: { width: "10%" },
-        renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
   {
     title: "Location",
@@ -64,10 +63,8 @@ export const tableUserHeaders = [
     style: { width: "20%" },
     renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
-  { title: "", key: "action",width:"15%", },
+  { title: "", key: "action", width: "15%" },
 ];
-
-
 
 export const tableHeadersData = [
   {
@@ -91,7 +88,7 @@ export const tableHeadersData = [
     title: "City",
     key: "city",
     style: { width: "10%" },
-        renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
   {
     title: "Sports",
@@ -104,9 +101,8 @@ export const tableHeadersData = [
     style: { width: "15%" },
     renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
-  { title: "", key: "action",width:"15%", },
+  { title: "", key: "action", width: "15%" },
 ];
-
 
 export const coachtableHeaders = [
   {
@@ -130,7 +126,7 @@ export const coachtableHeaders = [
     title: "Date",
     key: "date",
     style: { width: "10%" },
-        renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
   {
     title: "Status",
@@ -142,5 +138,23 @@ export const coachtableHeaders = [
     key: "location",
     style: { width: "15%" },
   },
-  { title: "", key: "action",width:"15%", },
+  { title: "", key: "action", width: "15%" },
+];
+
+export const categoryTableHeaders = [
+  {
+    title: "Category Name",
+    key: "categoryName",
+    style: { width: "15%" },
+    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+  },
+  {
+    title: "Category Type",
+    key: "categoryType",
+    style: { width: "15%" },
+    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+  },
+  { title: "Category Image", key: "categoryImage", width: "15%" },
+
+  { title: "Status", key: "action", width: "15%" },
 ];
