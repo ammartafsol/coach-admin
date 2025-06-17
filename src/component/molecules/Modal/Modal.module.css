@@ -29,9 +29,9 @@
 
 .mainDivModal{
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  justify-content: center;
+  /* flex-direction: column;
+  gap: 20px; */
+  justify-content: space-between;
   align-items: center;
   width: 100% !important;
 }
@@ -41,11 +41,11 @@
   background-color: var(--modal-background);
   border-radius: 10px;
   /* max-width: 55% !important; */
-  width: 55%;
   max-height: 80vh;
   overflow-y: auto;
   position: relative;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  padding: 20px;
 }
 
 .modalContent::-webkit-scrollbar {
@@ -83,6 +83,16 @@
   z-index: 10;
 }
 
+.modalOverlay {
+  z-index: 1050; /* Bootstrap's modal default */
+  opacity: 1 !important;
+  display: block !important;
+}
+
+.modalContent {
+  opacity: 1 !important;
+  transform: none !important;
+}
 .bodyWithModal {
   overflow: hidden;
 }

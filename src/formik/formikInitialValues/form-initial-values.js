@@ -81,3 +81,9 @@ export const ADD_EDIT_PATIENT_FORM_VALUES = {
   timeSpentAlone: "", // input
   useOfElectronicDevice: "", //dropdown
 };
+
+export const CATEGORY_MODAL_FORM_VALUES = {
+  name: "",
+  type: "",
+  image: "",
+};

@@ -135,3 +135,8 @@ export const getAddPatientValidationSchema = (slug) => {
 
   return Yup.object().shape(baseSchema);
 };
+export const CategoryModalSchema = Yup.object({
+  name: Yup.string().required("Category name is required"),
+  type: Yup.string().required("Category type is required"),
+  image: Yup.string().optional(),
+});

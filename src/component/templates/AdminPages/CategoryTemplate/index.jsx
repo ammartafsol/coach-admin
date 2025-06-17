@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import classes from "./CategoryTemplate.module.css";
 import TopHeader from "@/component/atoms/TopHeader";
 import DropDown from "@/component/molecules/DropDown/DropDown";
@@ -15,49 +15,25 @@ import ActionMenu from "@/component/molecules/ActionMenu/ActionMenu";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
-import UserProfile from "@/component/organisms/UserProfile/UserProfile";
 import useAxios from "@/interceptor/axiosInterceptor";
 import useDebounce from "@/resources/hooks/useDebounce";
+import Button from "@/component/atoms/Button";
+import AddCategoryModal from "@/component/molecules/Modal/AddCategory";
 
 const CategoryTemplate = () => {
 
-  const { get } = useAxios();
+  const { Get } = useAxios();
   const [showModal, setShowModal] = useState(false);
 
-  const [data, setData] = useState(categoryTableData ?? []);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState("");
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const debounceSearch = useDebounce(search, 500);
   const [totalRecords, setTotalRecords] = useState(data?.length ?? 0);
-  const [filter, setFilter] = useState({
-    status: "all",
-  });
-
-  const getData = async ({ pg = page, _search = debounceSearch }) => {
-    const params = {
-      page: pg,
-      search: _search,
-      status: filter.status,
-    };
-    const query = new URLSearchParams(params).toString();
-
-    if (loading === "loading") return;
-
-    setLoading("loading");
-
-    const response = await get({
-      route: `admin/category/all?${query}`,
-    });
-
-    if (response) {
-      setData(response.data);
-      setPage(pg);
-      setTotalRecords(response.totalRecords);
-    }
-
-    setLoading("");
-  };
+  const [status, setStatus] = useState("all");
+  const [selectedItem, setSelectedItem] = useState(null);
+  // STATUS_OPTIONS[0]
 
   const [showActionMenu, setShowActionMenu] = useState(false);
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
@@ -65,6 +41,38 @@ const CategoryTemplate = () => {
   const [menuY, setMenuY] = useState(0);
 
   const router = useRouter();
+  const getData = async ({ pg = page, _search = debounceSearch, _status = status?.value }) => {
+    if (loading === "loading") return;
+
+    const params = {
+      page: pg,
+      search: _search,
+      isActive: _status,
+    };
+    const query = new URLSearchParams(params).toString();
+  
+  
+    setLoading("loading");
+  
+    const {response} = await Get({
+      route: `admin/categories?${query}&limit=10`,
+    });
+    console.log("🚀 ~ getData ~ response:", response)
+
+
+    if (response) {
+      setData(response.data);
+      setPage(pg);
+      setTotalRecords(response.totalRecords);
+    }
+  
+    setLoading("");
+  };
+
+  useEffect(() => {
+    getData({  _search: debounceSearch , _status: status?.value});
+  }, [debounceSearch, page, status]);
+
 
   const handleActionClick = (event, rowIndex) => {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -80,8 +88,12 @@ const CategoryTemplate = () => {
   };
 
   const menuOptions = [
-    { label: "Deactivate", action: () => router.push("/user/213") },
-    { label: "View Detail", action: () => router.push("/user/213") },
+    // { label: "Deactivate", action: () => router.push("/user/213") },
+    // { label: "View Detail", action: () => router.push("/user/213") },
+    { label: "Edit", action: () => {
+        setSelectedItem(data[selectedRowIndex]);
+        setShowModal(true);
+    } },
   ];
 
   return (
@@ -94,6 +106,8 @@ const CategoryTemplate = () => {
           placeholder={"Search By Category"}
           rightIcon={<IoSearchOutline color="#B0CD6E" size={20} />}
         />
+        <Button onClick={() => {setSelectedItem(null);
+                setShowModal(true)}} label="Add Category" />
       </TopHeader>
       <div>
         <AppTable
@@ -102,16 +116,14 @@ const CategoryTemplate = () => {
           hasPagination={true}
           loading={loading === "loading"}
           totalItems={totalRecords}
-          onPageChange={(pg) => {
-            setPage(pg);
-            getData({ pg });
+          onPageChange={(p) => {
+            setPage(p);
+            getData({ pg: p });
           }}
           currentPage={page}
           renderItem={({ item, key, rowIndex, renderValue }) => {
             const rowItem = data[rowIndex];
-            if (renderValue) {
-              return renderValue(item, rowItem);
-            }
+            if (renderValue) return renderValue(rowItem[key]);
             if (key === "action") {
               return (
               
@@ -135,6 +147,7 @@ const CategoryTemplate = () => {
           />
         )}
       </div>
+      {showModal && <AddCategoryModal isOpen={showModal} onClose={() => setShowModal(false)} itemData={selectedItem} />}
     </>
   );
 };

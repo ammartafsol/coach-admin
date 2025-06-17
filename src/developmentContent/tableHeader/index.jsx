@@ -144,17 +144,18 @@ export const coachtableHeaders = [
 export const categoryTableHeaders = [
   {
     title: "Category Name",
-    key: "categoryName",
+    key: "name",
     style: { width: "15%" },
     renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
   {
     title: "Category Type",
-    key: "categoryType",
+    key: "type",
     style: { width: "15%" },
     renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
-  { title: "Category Image", key: "categoryImage", width: "15%" },
+  { title: "Category Image", key: "image", width: "15%" },
+  { title: "Last Updated", key: "updatedAt", width: "15%" },
 
   { title: "Status", key: "action", width: "15%" },
 ];

@@ -1,9 +1,10 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { Modal as BootstrapModal } from "react-bootstrap"
 import styles from "./Modal.module.css"
 
-export default function Modal({ isOpen, onClose, children, customModalContent }) {
+export default function Modal({ isOpen, onClose, children, customModalContent, heading }) {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
@@ -25,18 +26,24 @@ export default function Modal({ isOpen, onClose, children, customModalContent })
   if (!isVisible) return null
 
   return (
-    <div className={`${styles.modalOverlay} ${isOpen ? styles.open : styles.closing}`}>
-     <div className={styles.mainDivModal}>
-       <div className={styles.logo}>
+    <BootstrapModal
+      show={isOpen}
+      onHide={onClose}
+      centered
+      className={styles.modalOverlay}
+    >
+      <BootstrapModal.Header className={styles.mainDivModal}>
+        {/* <div className={styles.logo}>
           <img src="/Images/app-images/logo-text.png" alt="Coach Huddle Logo" />
-        </div>
-       <div className={`${customModalContent || ""} ${styles.modalContent}`}>
+        </div> */}
+        <BootstrapModal.Title className={styles.heading}>{heading}</BootstrapModal.Title>
         <button className={styles.closeButton} onClick={onClose}>
           ×
         </button>
+      </BootstrapModal.Header>
+      <BootstrapModal.Body className={`${customModalContent || ""} ${styles.modalContent}`}>
         {children}
-      </div>
-     </div>
-    </div>
+      </BootstrapModal.Body>
+    </BootstrapModal>
   )
 }
