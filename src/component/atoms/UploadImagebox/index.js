@@ -2,7 +2,7 @@ import Image from "next/image";
 import { useRef } from "react";
 import { MdClose, MdModeEdit, MdUpload } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
-import { MediaUrl } from "../../../resources/utils/helper";
+import { mediaUrl } from "../../../resources/utils/helper";
 import RenderToast from "../RenderToast";
 import classes from "./UploadImageBox.module.css";
 
@@ -82,8 +82,8 @@ function UploadImageBox({
               ) : (
                 <Image
                   src={""}
-                  className={classes.icon}
                   layout="fill"
+                  className={classes.icon}
                   objectFit="contain"
                   alt=""
                 />

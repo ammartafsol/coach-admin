@@ -86,14 +86,14 @@ export const getMediaType = (file) => {
   return "photo";
 };
 
-export const uploadImages = async (images,token,Post) => {
+export const uploadImages = async (images,Post) => {
   if (!images.length) return null;
   const formData = new FormData();
   images.forEach((image) => {
     formData.append(getMediaType(image), image);
   });
 
-  const res = await Post({
+  const {res} = await Post({
     route: `users/media/upload`,
     data: formData,
     isFormData: true,

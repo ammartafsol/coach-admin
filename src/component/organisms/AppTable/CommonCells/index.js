@@ -1,6 +1,8 @@
 import moment from "moment";
 import classes from "./CommonCells.module.css";
 import { capitalizeFirstLetter, mergeClass } from "@/resources/utils/helper";
+import Image from "next/image";
+import { mediaUrl } from "@/resources/utils/helper";
 
 export const RenderTextCell = ({ cellValue: item }) => {
   return (
@@ -31,5 +33,22 @@ export const IconButton = ({ icon, onClick }) => {
     <div className={classes?.iconButton} onClick={onClick}>
       {icon}
     </div>
+  );
+};
+
+export const RenderImageCell = ({ cellValue }) => {
+  const imageSrc = mediaUrl(cellValue);
+
+  return imageSrc ? (
+    <Image
+      src={imageSrc}
+      alt="Category"
+      width={50}
+      height={50}
+      objectFit="contain"
+      className={classes.image}
+    />
+  ) : (
+    <span className="text-muted">No Image</span>
   );
 };

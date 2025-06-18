@@ -45,7 +45,7 @@ export const apiHeader = (token, isFormData) => {
   }
 };
 export const BaseURL = (link) => `${API_URL}/api/v1/${link}`;
-export const MediaUrl = (url) => {
+export const mediaUrl = (url) => {
   if (!url) return "";
   const result = url.indexOf("http");
   if (result === -1) return `${S3_URL}/${url}`;
@@ -343,6 +343,7 @@ export const validateEmail = (email) => {
 };
 
 export const CreateFormData = (data) => {
+  console.log("🚀 ~ data:", data);
   const formData = new FormData();
   for (let key in data) {
     if (Array.isArray(data[key])) {

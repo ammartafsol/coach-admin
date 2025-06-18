@@ -37,10 +37,10 @@
   background: var(--black);
   color: var(--white);
 }
-.btn[color-variant="black-outlined"] {
+.btn[color-variant="green-outlined"] {
   background: var(--white);
-  color: var(--black);
-  border: 1px solid var(--black) !important;
+  color: var(--Light-Green);
+  border: 1px solid var(--Light-Green) !important;
 }
 
 .btn[color-variant="tertiary"] {

@@ -6,91 +6,165 @@ import { Input } from "@/component/atoms/Input";
 import { CATEGORY_MODAL_FORM_VALUES } from "@/formik/formikInitialValues/form-initial-values";
 import { CategoryModalSchema } from "@/formik/formikSchema/formik-schemas";
 import classes from "./AddCategory.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAxios from "@/interceptor/axiosInterceptor";
 import UploadImageBox from "@/component/atoms/UploadImagebox";
-// import MultiFileUpload from "@/component/molecules/MultiFileUpload/MultiFileUpload";
+import RenderToast from "@/component/atoms/RenderToast";
+import DropDown from "../../DropDown/DropDown";
+import { CATEGORY_TYPE_OPTIONS } from "@/developmentContent/dropdownOption";
+import { CreateFormData } from "@/resources/utils/helper";
+import { Row, Col } from "react-bootstrap";
+import clsx from "clsx";
 
-const AddCategoryModal = ({ isOpen, onClose, itemData }) => {
-  const { Post } = useAxios();
-  const [loading, setLoading] = useState(""); // addOrUpdate
-  const [categoryImage, setCategoryImage] = useState(null); // Add state for category image
+const AddCategoryModal = ({ show, setShow, itemData }) => {
+  const { Post, Patch } = useAxios();
+  const [loading, setLoading] = useState("");
 
   const categoryFormik = useFormik({
-    initialValues: {
-      ...CATEGORY_MODAL_FORM_VALUES,
-      ...itemData, // itemData may contain name, type, etc.
-      image: "", // file inputs must always start empty
-    },
+    initialValues: CATEGORY_MODAL_FORM_VALUES,
     validationSchema: CategoryModalSchema,
     onSubmit: (values) => {
-      console.log("🚀 ~ values:", values);
-      addCategory(values);
+      handleAddEditCategory(values);
     },
   });
-  console.log("🚀 ~ categoryFormik:", categoryFormik.values);
-  const addCategory = async (values) => {
-    const response = await Post({
-      route: "admin/categories",
-      data: values,
+  const handleAddEditCategory = async (values) => {
+    setLoading("loading");
+
+    const payload = {
+      ...values,
+      type: values.type?.value,
+    };
+
+    const route = itemData?._id
+      ? `admin/categories/${itemData.slug}`
+      : "admin/categories";
+    const responseHandler = itemData?.slug ? Patch : Post;
+
+    console.log("🚀 ~ vroute:", route);
+    const { response } = await responseHandler({
+      route,
+      data: payload,
     });
-    console.log("🚀 ~ addCategory ~ response:", response);
-  };
-  const handleImageChange = async (e) => {
-    const response = await Post({
-      route: "media/upload",
-      data: {
-        file: e.target.files[0],
-      },
-      isFormData: true,
-    });
+
     if (response) {
-      setCategoryImage(response.data.media);
+      RenderToast({
+        message: response.message,
+        type: response.status,
+      });
+      setLoading("");
     }
   };
+  const handleImageChange = async (file) => {
+    console.log("🚀 ~ file:", file);
+    const data = {
+      media: file,
+    };
+
+    const formData = CreateFormData(data);
+
+    const { response } = await Post({
+      route: "media/upload",
+      data: formData,
+      isFormData: true,
+    });
+    console.log("🚀 ~ response:", response);
+    if (response) {
+      console.log(response);
+
+      categoryFormik.setFieldValue("image", response.data?.media[0].key);
+    }
+  };
+  useEffect(() => {
+    if (itemData?.image) {
+      categoryFormik.setFieldValue("image", itemData.image);
+    }
+    if (itemData?.type) {
+      categoryFormik.setFieldValue("type", itemData.type);
+    }
+    if (itemData?.name) {
+      categoryFormik.setFieldValue("name", itemData.name);
+    }
+  }, [itemData]);
 
   return (
     <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      customModalContent={classes.customModalContent}
+      setShow={setShow}
+      show={show}
+      showCloseIcon={true}
+      modalBodyClass={classes.modal}
       heading={`${itemData?.slug ? "Edit" : "Add New"} Category`}
+      footerData={
+        <Col md={12} className={classes?.formCol}>
+          <div className={clsx(classes?.buttonContainer)}>
+            <Button
+              variant="green-outlined"
+              label="Cancel"
+              onClick={() => setShow(false)}
+              type="button"
+            />
+            <Button
+              label={
+                loading === "loading"
+                  ? "Please Wait..."
+                  : itemData?.slug
+                  ? "Edit Category"
+                  : "Add Category"
+              }
+              type="submit"
+              disabled={loading !== ""}
+              onClick={() => categoryFormik.handleSubmit()}
+            />
+          </div>
+        </Col>
+      }
     >
       <div className={classes.container}>
-        <form onSubmit={categoryFormik.handleSubmit} className={classes.form}>
-          <Input
-            label="Category Name"
-            type="text"
-            name="name"
-            value={categoryFormik.values.name}
-            onChange={categoryFormik.handleChange}
-            onBlur={categoryFormik.handleBlur}
-            errorText={
-              categoryFormik.touched.name && categoryFormik.errors.name
-            }
-          />
+        {/* <form onSubmit={categoryFormik.handleSubmit} className={classes.form}> */}
+          <Row>
+            <Col md={12}>
+              <Input
+                label="Category Name"
+                type="text"
+                name="name"
+                value={categoryFormik.values.name}
+                onChange={categoryFormik.handleChange}
+                onBlur={categoryFormik.handleBlur}
+                errorText={
+                  categoryFormik.touched.name && categoryFormik.errors.name
+                }
+              />
+            </Col>
+            <Col md={12}>
+              <DropDown
+                label="Category Type"
+                name="type"
+                options={CATEGORY_TYPE_OPTIONS}
+                value={categoryFormik.values.type}
+                setValue={(value) =>
+                  categoryFormik.setFieldValue("type", value)
+                }
+                onBlur={categoryFormik.handleBlur}
+                errorText={
+                  categoryFormik.touched.type && categoryFormik.errors.type
+                }
+              />
+            </Col>
+            <Col md={12}>
+              <UploadImageBox
+                label="Category Image"
+                state={categoryFormik.values.image}
+                setter={(value) => {
+                  handleImageChange(value);
+                }}
+                onBlur={categoryFormik.handleBlur}
+                errorText={
+                  categoryFormik.touched.image && categoryFormik.errors.image
+                }
+              />
+            </Col>
+          </Row>
 
-          <Input
-            label="Category Type"
-            type="text"
-            name="type"
-            value={categoryFormik.values.type}
-            onChange={categoryFormik.handleChange}
-            onBlur={categoryFormik.handleBlur}
-            errorText={
-              categoryFormik.touched.type && categoryFormik.errors.type
-            }
-          />
-
-          <UploadImageBox
-            state={categoryImage}
-            setter={setCategoryImage}
-            label="Category Image"
-            edit={false}
-            onEdit={handleImageChange}
-          />
-
-          <div className={classes.buttonContainer}>
+          {/* <div className={classes.buttonContainer}>
             <Button
               type="submit"
               label={
@@ -100,10 +174,9 @@ const AddCategoryModal = ({ isOpen, onClose, itemData }) => {
                   ? "Edit Category"
                   : "Add Category"
               }
-              loading={loading}
             />
-          </div>
-        </form>
+          </div> */}
+        {/* </form> */}
       </div>
     </Modal>
   );

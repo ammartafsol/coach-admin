@@ -1,4 +1,4 @@
-.modalOverlay {
+/* .modalOverlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -11,12 +11,6 @@
   opacity: 0;
   transition: opacity 0.3s ease;
   background-color: rgba(0, 0, 0, 0.5);
-
-  /* width: 100%;
-  height: 100%;
-  background-image: url("/Images/app-images/bgImage.png");
-  background-size: cover;
-  background-position: center; */
 }
 
 .open {
@@ -29,22 +23,16 @@
 
 .mainDivModal{
   display: flex;
-  /* flex-direction: column;
-  gap: 20px; */
   justify-content: space-between;
   align-items: center;
   width: 100% !important;
 }
 
 .modalContent {
-  /* background-color: var(--card-background); */
-  background-color: var(--modal-background);
-  border-radius: 10px;
-  /* max-width: 55% !important; */
   max-height: 80vh;
   overflow-y: auto;
   position: relative;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+
   padding: 20px;
 }
 
@@ -84,7 +72,7 @@
 }
 
 .modalOverlay {
-  z-index: 1050; /* Bootstrap's modal default */
+  z-index: 1050;
   opacity: 1 !important;
   display: block !important;
 }
@@ -101,4 +89,105 @@
   .modalContent {
     width: 95%;
   }
+} */
+.modal {
+  background: var(--modal-bg);
+}
+
+.header {
+  padding: 15px;
+  position: static;
+  width: 100%;
+}
+
+.header h2 {
+  color: var(--text-color-v8);
+}
+
+.body {
+  padding: 18px;
+  height: calc(100vh - 230px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.body::-webkit-scrollbar {
+  display: none;
+}
+.iconBox svg {
+  color: var(--text-color-v1);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.headingBox {
+  display: flex;
+  justify-content: space-between;
+  background-color: transparent;
+  align-items: center;
+  padding: 16px 18px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.heading {
+  color: var(--zinc-950);
+}
+
+.subheading {
+  color: var(--text-color);
+  margin-bottom: 1.5rem;
+}
+.modal :global(.modal-content) {
+  background: var(--white-color);
+  border-radius: 8px;
+  border: 1px solid #e9eaeb;
+
+  /* Shadow/xs */
+  box-shadow: 0px 1px 2px 0px rgba(10, 13, 18, 0.05);
+}
+.footer {
+  border-top: 1px solid #e9eaeb;
+  background: #f9f9f9;
+  padding: var(--fs14);
+}
+/* modalSkeleton.module.css */
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutToRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.modalEnter {
+  animation: slideInFromRight 0.4s ease forwards;
+}
+
+.modalExit {
+  animation: slideOutToRight 0.4s ease forwards;
+}
+
+.modalDialog {
+  margin: 0; 
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  max-width: 100%;
 }

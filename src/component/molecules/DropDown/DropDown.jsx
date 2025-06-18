@@ -59,6 +59,8 @@ const DropDown = ({
       border: `1px solid #B8B6B6`,
       padding: "1px 15px",
       height: "40px",
+      width: "100%",
+      minWidth:"100px",
       ...customStyle,
 
       ":hover": {

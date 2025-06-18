@@ -1,3 +1,5 @@
+import { CATEGORY_TYPE_OPTIONS } from "@/developmentContent/dropdownOption";
+
 export const LOGIN_FORM_VALUES = {
   email: "",
   password: "",
@@ -82,8 +84,10 @@ export const ADD_EDIT_PATIENT_FORM_VALUES = {
   useOfElectronicDevice: "", //dropdown
 };
 
-export const CATEGORY_MODAL_FORM_VALUES = {
-  name: "",
-  type: "",
-  image: "",
-};
+export const CATEGORY_MODAL_FORM_VALUES = (itemData) => ({
+  name: itemData?.name ?? "",
+  type: CATEGORY_TYPE_OPTIONS?.find(
+    (option) => option.value === itemData?.type
+  ) ?? null ,
+  image: itemData?.image ?? null,
+});

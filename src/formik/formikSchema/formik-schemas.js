@@ -137,6 +137,13 @@ export const getAddPatientValidationSchema = (slug) => {
 };
 export const CategoryModalSchema = Yup.object({
   name: Yup.string().required("Category name is required"),
-  type: Yup.string().required("Category type is required"),
-  image: Yup.string().optional(),
+  type: Yup.object()
+    .nullable()
+    .required("At least one category type is required")
+    .test(
+      "has-members",
+      "At least one category type is required",
+      (value) => value && Object.keys(value).length > 0
+    ),
+  image: Yup.string().required("Image is required"),
 });

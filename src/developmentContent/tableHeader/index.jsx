@@ -1,4 +1,4 @@
-import { RenderTextCell } from "@/component/organisms/AppTable/CommonCells";
+import { RenderTextCell , RenderImageCell } from "@/component/organisms/AppTable/CommonCells";
 
 export const tableHeaders = [
   {
@@ -154,7 +154,7 @@ export const categoryTableHeaders = [
     style: { width: "15%" },
     renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
-  { title: "Category Image", key: "image", width: "15%" },
+  { title: "Category Image", key: "image", width: "15%" , renderValue: (cellValue) => <RenderImageCell {...{ cellValue }} />},
   { title: "Last Updated", key: "updatedAt", width: "15%" },
 
   { title: "Status", key: "action", width: "15%" },
