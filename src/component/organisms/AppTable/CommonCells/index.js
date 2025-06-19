@@ -6,7 +6,7 @@ import { mediaUrl } from "@/resources/utils/helper";
 
 export const RenderTextCell = ({ cellValue: item }) => {
   return (
-    <span className={mergeClass("maxLine2 t-t-c")}>
+    <span className={mergeClass("maxLine1 t-t-c")}>
       {item ? capitalizeFirstLetter(item) : "-"}
     </span>
   );
@@ -50,5 +50,31 @@ export const RenderImageCell = ({ cellValue }) => {
     />
   ) : (
     <span className="text-muted">No Image</span>
+  );
+};
+
+export const RenderStatusCell = ({ cellValue }) => {
+  const isBoolean = typeof cellValue === "boolean";
+  const displayValue = isBoolean ? (cellValue ? "Active" : "Inactive") : String(cellValue);
+
+  return (
+    <span className="fs-12 fw-500 lh-18 text-capitalize">
+      {displayValue}
+    </span>
+  );
+};
+export const RenderUserDataCell = ({ cellValue }) => {
+  if (!cellValue) return null;
+  const { name, avatar, id } = cellValue;
+  return (
+    <div className={classes.userDataCell}>
+      <div className={classes.avatarDiv}>
+        <img src={avatar} alt={name} className={classes.userAvatar} />
+      </div>
+      <div className={classes.userInfo}>
+        <div className={classes.userName}>{name}</div>
+        <div className={classes.userId}>{id}</div>
+      </div>
+    </div>
   );
 };

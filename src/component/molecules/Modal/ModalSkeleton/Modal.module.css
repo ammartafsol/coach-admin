@@ -1,95 +1,3 @@
-/* .modalOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.open {
-  opacity: 1;
-}
-
-.closing {
-  opacity: 0;
-}
-
-.mainDivModal{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100% !important;
-}
-
-.modalContent {
-  max-height: 80vh;
-  overflow-y: auto;
-  position: relative;
-
-  padding: 20px;
-}
-
-.modalContent::-webkit-scrollbar {
-  width: 3px;
-}
-
-.modalContent::-webkit-scrollbar-thumb {
-  background-color: var(--modal-background);
-  border-radius: 10px;
-}
-
-.modalContent::-webkit-scrollbar-button {
-  display: none;
-}
-
-.logo {
-  margin-bottom: 10px;
-  text-align: center;
-}
-
-.logo img {
-  height: 58px;
-  width: 140px;
-}
-
-.closeButton {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: transparent;
-  border: none;
-  color: var(--text-color);
-  font-size: 24px;
-  cursor: pointer;
-  z-index: 10;
-}
-
-.modalOverlay {
-  z-index: 1050;
-  opacity: 1 !important;
-  display: block !important;
-}
-
-.modalContent {
-  opacity: 1 !important;
-  transform: none !important;
-}
-.bodyWithModal {
-  overflow: hidden;
-}
-
-@media (max-width: 768px) {
-  .modalContent {
-    width: 95%;
-  }
-} */
 .modal {
   background: var(--modal-bg);
 }
@@ -124,7 +32,7 @@
 .headingBox {
   display: flex;
   justify-content: space-between;
-  background-color: transparent;
+  background-color: #EAF2D5;
   align-items: center;
   padding: 16px 18px;
   text-align: left;
@@ -148,34 +56,12 @@
   box-shadow: 0px 1px 2px 0px rgba(10, 13, 18, 0.05);
 }
 .footer {
-  border-top: 1px solid #e9eaeb;
-  background: #f7f7f7;
+  border-top: 0.5px solid var(--Border-Color);
+  background: var(--white-color);
   /* padding: var(--fs14); */
   padding: 18px;
   align-items: center;
   justify-content: center;
-}
-/* modalSkeleton.module.css */
-@keyframes slideInFromRight {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideOutToRight {
-  from {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  to {
-    transform: translateX(100%);
-    opacity: 0;
-  }
 }
 
 .modalEnter {
@@ -186,11 +72,3 @@
   animation: slideOutToRight 0.4s ease forwards;
 }
 
-.modalDialog {
-  margin: 0;
-  position: fixed;
-  top: 0;
-  right: 0;
-  height: 100vh;
-  max-width: 100%;
-}

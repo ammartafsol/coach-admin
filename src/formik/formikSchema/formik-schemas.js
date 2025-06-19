@@ -141,9 +141,56 @@ export const CategoryModalSchema = Yup.object({
     .nullable()
     .required("At least one category type is required")
     .test(
-      "has-members",
+      "has-category-type",
       "At least one category type is required",
       (value) => value && Object.keys(value).length > 0
     ),
   image: Yup.string().required("Image is required"),
+  isActive  : Yup.object()
+    .nullable()
+    .required("Status is required")
+    .test(
+      "has-category-status",
+      "Status is required",
+      (value) => value && Object.keys(value).length > 0
+    ),
+});
+
+export const FaqModalSchema = Yup.object({
+  title: Yup.string().required("Question is required"),
+  description: Yup.string().required("Answer is required"),
+  isActive: Yup.object()
+    .nullable()
+    .required("Status is required")
+    .test(
+      "has-faq-status",
+      "Status is required",
+      (value) => value && Object.keys(value).length > 0
+    ),
+  type: Yup.object()
+    .nullable()
+    .required("FAQ type is required")
+    .test(
+      "has-faq-type",
+      "FAQ type is required",
+      (value) => value && Object.keys(value).length > 0
+    ),
+});
+
+export const UserModalSchema = Yup.object({
+  firstName: Yup.string().required("First name is required"),
+  lastName: Yup.string().required("Last name is required"),
+  email: Yup.string()
+    .email("Invalid email address")
+    .required("Email is required"),
+  phoneNumber: Yup.string().optional(),
+  location: Yup.string().optional(),
+  isActive: Yup.object()
+    .nullable()
+    .required("Status is required")
+    .test(
+      "has-user-status",
+      "Status is required",
+      (value) => value && Object.keys(value).length > 0
+    ),
 });

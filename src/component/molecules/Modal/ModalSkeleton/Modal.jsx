@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import classes from "./Modal.module.css";
 
 export default function ModalSkeleton({
-  size = "lg",
+  size = "md",
   show,
   setShow,
   heading,

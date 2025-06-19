@@ -1,4 +1,4 @@
-import { RenderTextCell , RenderImageCell } from "@/component/organisms/AppTable/CommonCells";
+import { RenderTextCell , RenderImageCell, RenderDateCell, RenderStatusCell, RenderUserDataCell } from "@/component/organisms/AppTable/CommonCells";
 
 export const tableHeaders = [
   {
@@ -36,8 +36,9 @@ export const tableHeaders = [
 export const tableUserHeaders = [
   {
     title: "Username",
-    key: "username",
+    key: "fullName",
     style: { width: "15%" },
+    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
   {
     title: "Email",
@@ -52,14 +53,14 @@ export const tableUserHeaders = [
     renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
   {
-    title: "Subscriber",
-    key: "subscriber",
+    title: "Subscribers",
+    key: "noOfSubscribers",
     style: { width: "10%" },
     renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
   {
     title: "Location",
-    key: "location",
+    key: "country",
     style: { width: "20%" },
     renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
@@ -155,7 +156,25 @@ export const categoryTableHeaders = [
     renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
   { title: "Category Image", key: "image", width: "15%" , renderValue: (cellValue) => <RenderImageCell {...{ cellValue }} />},
-  { title: "Last Updated", key: "updatedAt", width: "15%" },
+  { title: "Last Updated", key: "updatedAt", width: "15%" , renderValue: (cellValue) => <RenderDateCell {...{ cellValue }} />},
+  { title: "Status", key: "isActive", width: "15%" , renderValue: (cellValue) => <RenderStatusCell {...{ cellValue }} />},
+  { title: "", key: "action", width: "15%" },
+];
 
-  { title: "Status", key: "action", width: "15%" },
+export const faqTableHeaders = [
+  {
+    title: "Question",
+    key: "title",
+    style: { width: "30%" },
+    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+  },
+  {
+    title: "Answer",
+    key: "description",
+    style: { width: "35%" },
+    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+  },
+  { title: "Last Updated", key: "updatedAt", width: "15%" , renderValue: (cellValue) => <RenderDateCell {...{ cellValue }} />},
+  { title: "Status", key: "isActive", width: "10%" , renderValue: (cellValue) => <RenderStatusCell {...{ cellValue }} />},
+  { title: "", key: "action", width: "10%" },
 ];

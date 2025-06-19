@@ -1,41 +1,14 @@
-// import React from 'react';
-// import classes from './ActionMenu.module.css';
-
-// const ActionMenu = ({ options, onClose, x, y }) => {
-//   return (
-//     <div className={classes.overlay} onClick={onClose}>
-//       <div className={classes.menu} style={{ top: y, left: x }} onClick={(e) => e.stopPropagation()}>
-//         {options.map((option, index) => (
-//           <div
-//             key={index}
-//             className={classes.menuItem}
-//             onClick={() => {
-//               option.action();
-//               onClose();
-//             }}
-//           >
-//             {option.label}
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ActionMenu; 
 
 "use client";
 
 import { ClickAwayListener } from "@mui/material";
 import { useState } from "react";
 import { OverlayTrigger, Popover } from "react-bootstrap";
-import { BsThreeDots } from "react-icons/bs";
 import { IoMdCheckmark } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 import Style from "./ActionMenu.module.css";
 import clsx from "clsx";
-import { HiOutlineDotsCircleHorizontal, HiOutlineDotsHorizontal, HiOutlineDotsVertical } from "react-icons/hi";
-import { ClassNames } from "@emotion/react";
+import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import Button from "@/component/atoms/Button";
 
 export default function ActionMenu({

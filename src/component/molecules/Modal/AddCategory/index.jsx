@@ -9,7 +9,7 @@ import classes from "./AddCategory.module.css";
 import { useEffect } from "react";
 import UploadImageBox from "@/component/atoms/UploadImagebox";
 import DropDown from "../../DropDown/DropDown";
-import { CATEGORY_TYPE_OPTIONS } from "@/developmentContent/dropdownOption";
+import { CATEGORY_STATUS_OPTIONS, CATEGORY_TYPE_OPTIONS } from "@/developmentContent/dropdownOption";
 import { Row, Col } from "react-bootstrap";
 import clsx from "clsx";
 
@@ -107,6 +107,19 @@ const AddCategoryModal = ({
               onBlur={categoryFormik.handleBlur}
               errorText={
                 categoryFormik.touched.image && categoryFormik.errors.image
+              }
+            />
+          </Col>
+          <Col md={12}>
+            <DropDown
+              label="Status"
+              name="isActive"
+              options={CATEGORY_STATUS_OPTIONS}
+              value={categoryFormik.values.isActive}
+              setValue={(option) => categoryFormik.setFieldValue("isActive", option)}
+              onBlur={categoryFormik.handleBlur}
+              errorText={
+                categoryFormik.touched.isActive && categoryFormik.errors.isActive
               }
             />
           </Col>

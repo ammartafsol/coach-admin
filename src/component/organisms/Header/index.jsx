@@ -85,6 +85,17 @@ export default function Navbar() {
         </button>
         <button
           className={`${classes.navItem} ${
+            activeTab === "FAQ" ? classes.active : ""
+          }`}
+          onClick={() => {
+            setActiveTab("FAQ");
+            router.push("/faq");
+          }}
+        >
+          FAQ
+        </button>
+        <button
+          className={`${classes.navItem} ${
             activeTab === "Transaction" ? classes.active : ""
           }`}
           onClick={() => {

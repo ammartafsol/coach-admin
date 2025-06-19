@@ -1,6 +1,6 @@
 export const CATEGORY_TYPE_OPTIONS = [
     { label: "Sport", value: "sport" },
-    { label: "Event", value: "event" },
+    { label: "Feed", value: "feed" },
   ];
 
   export const STATUS_OPTIONS = [
@@ -10,9 +10,44 @@ export const CATEGORY_TYPE_OPTIONS = [
   ];
 
   export const CATEGORY_ACTION_OPTIONS = [
-    { label: "View Details", value: "viewDetails" },
     { label: "Edit", value: "edit" },
     { label: "Delete", value: "delete" },
   ];
 
-  
+  export const CATEGORY_STATUS_OPTIONS = [
+    { label: "Active", value: true },
+    { label: "Inactive", value: false },
+  ];
+
+  export const FAQ_ACTION_OPTIONS = [
+    { label: "Edit", value: "edit" },
+    { label: "Delete", value: "delete" },
+  ];
+
+  export const FAQ_STATUS_OPTIONS = [
+    { label: "Active", value: true },
+    { label: "Inactive", value: false },
+  ];
+
+  export const FAQ_TYPE_OPTIONS = [
+    { label: "User", value: "user" },
+    { label: "Admin", value: "admin" },
+  ];
+
+  export const USER_ACTION_OPTIONS = [
+    { label: "Edit", value: "edit" },
+    { label: "View Detail", value: "view" },
+    { label: "Deactivate", value: "deactivate" },
+  ];
+
+  export const COACH_STATUS_OPTIONS = [
+    { label: "All", value: "all" },
+    { label: "Approved", value: "approved" },
+    { label: "Pending", value: "pending" },
+    { label: "Rejected", value: "rejected" },
+  ];
+  export const USER_STATUS_OPTIONS = [
+    { label: "All", value: "all" },
+    { label: "Active", value: true },
+    { label: "Inactive", value: false },
+  ];

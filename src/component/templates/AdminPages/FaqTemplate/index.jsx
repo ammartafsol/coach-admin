@@ -1,20 +1,19 @@
 "use client";
 import TopHeader from "@/component/atoms/TopHeader";
 import ActionMenu from "@/component/molecules/ActionMenu/ActionMenu";
-import AddCategoryModal from "@/component/molecules/Modal/AddCategory";
+import AddFaqModal from "@/component/molecules/Modal/AddFaq";
 import AppTable from "@/component/organisms/AppTable/AppTable";
-import { CATEGORY_ACTION_OPTIONS, STATUS_OPTIONS } from "@/developmentContent/dropdownOption";
-import { categoryTableHeaders } from "@/developmentContent/tableHeader";
+import { FAQ_ACTION_OPTIONS, STATUS_OPTIONS } from "@/developmentContent/dropdownOption";
+import { faqTableHeaders } from "@/developmentContent/tableHeader";
 import useAxios from "@/interceptor/axiosInterceptor";
 import useDebounce from "@/resources/hooks/useDebounce";
 import { useEffect, useState } from "react";
-import classes from "./CategoryTemplate.module.css";
-import { CreateFormData } from "@/resources/utils/helper";
+import classes from "./FaqTemplate.module.css";
 import RenderToast from "@/component/atoms/RenderToast";
 import FilterHeader from "@/component/molecules/FilterHeader/FilterHeader";
 
-const CategoryTemplate = () => {
-  const { Post, Patch , Get} = useAxios();
+const FaqTemplate = () => {
+  const { Post, Patch, Get } = useAxios();
   
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState([]);
@@ -40,14 +39,12 @@ const CategoryTemplate = () => {
     };
     const query = new URLSearchParams(params).toString();
 
-    console.log(query);
     setLoading("loading");
 
     const { response } = await Get({
-      route: `admin/categories?${query}&limit=10`,
+      route: `admin/faqs?${query}&limit=10`,
     });
 
-  console.log(response);
     if (response) {
       setData(response.data);
       setPage(pg);
@@ -61,7 +58,6 @@ const CategoryTemplate = () => {
     getData({ _search: debounceSearch, _status: status?.value });
   }, [debounceSearch, page, status]);
 
-
   const onClickPopover = (label = "", item = rowItem) => {
     if(label === "Edit"){
       setSelectedItem(item);
@@ -74,20 +70,19 @@ const CategoryTemplate = () => {
     }
   };
 
-
-  // add/edit category
-  const handleAddEditCategory = async (values) => {
+  // add/edit faq
+  const handleAddEditFaq = async (values) => {
     setLoading("loading");
 
     const payload = {
       ...values,
-      type: values.type?.value,
       isActive: values.isActive?.value,
+      type: values.type?.value,
     };
 
     const route = selectedItem?._id
-      ? `admin/categories/${selectedItem.slug}`
-      : "admin/categories";
+      ? `admin/faqs/${selectedItem.slug}`
+      : "admin/faqs";
     const responseHandler = selectedItem?.slug ? Patch : Post;
 
     const { response } = await responseHandler({
@@ -99,37 +94,18 @@ const CategoryTemplate = () => {
       RenderToast({
         type: "success",
         message: selectedItem?.slug
-          ? "Category Updated Successfully"
-          : "Category Added Successfully",
+          ? "FAQ Updated Successfully"
+          : "FAQ Added Successfully",
       });
       setShowModal(false);
       setLoading("");
       getData({ _search: debounceSearch, _status: status?.value });
     }
   };
-  const handleImageChange = async (file) => {
-    const data = {
-      media: file,
-    };
-
-    const formData = CreateFormData(data);
-
-    const { response } = await Post({
-      route: "media/upload",
-      data: formData,
-      isFormData: true,
-    });
-    if (response) {
-      setSelectedItem({
-        ...selectedItem,
-        image: response.data?.media[0].key,
-      });
-    }
-  };
 
   return (
     <main>
-      <TopHeader title="Category">
+      <TopHeader title="FAQ Management">
         <FilterHeader
           dropdownOption={STATUS_OPTIONS}
           placeholder={"Status"}
@@ -139,12 +115,11 @@ const CategoryTemplate = () => {
           }}
           inputPlaceholder="Search"
           customStyle={{ width: "300px" }}
-          
           onChange={(e) => {
             setSearch(e.target.value);
             setPage(1);
           }}
-          buttonLabel="Add Category"
+          buttonLabel="Add FAQ"
           buttonOnClick={() => {
             setSelectedItem(null);
             setShowModal(true);
@@ -153,7 +128,7 @@ const CategoryTemplate = () => {
       </TopHeader>
       <div>
         <AppTable
-          tableHeader={categoryTableHeaders}
+          tableHeader={faqTableHeaders}
           data={data}
           hasPagination={true}
           loading={loading === "loading"}
@@ -170,7 +145,7 @@ const CategoryTemplate = () => {
               return (
                 <div className={classes.actionButtons}>
                     <ActionMenu
-                      popover={CATEGORY_ACTION_OPTIONS}
+                      popover={FAQ_ACTION_OPTIONS}
                       onClick={(label) => {
                         onClickPopover(label, rowItem);
                       }}
@@ -183,15 +158,14 @@ const CategoryTemplate = () => {
         />
       </div>
       {showModal && (
-        <AddCategoryModal
+        <AddFaqModal
           show={showModal}
           setShow={() => {
             setShowModal(false);
             setSelectedItem(null);
           }}
           itemData={selectedItem}
-          handleAddEditCategory={handleAddEditCategory}
-          handleImageChange={handleImageChange}
+          handleAddEditFaq={handleAddEditFaq}
           loading={loading}
           setLoading={setLoading}
         />
@@ -200,4 +174,4 @@ const CategoryTemplate = () => {
   );
 };
 
-export default CategoryTemplate;
+export default FaqTemplate; 
