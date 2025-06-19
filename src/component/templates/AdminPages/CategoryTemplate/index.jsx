@@ -1,18 +1,13 @@
 "use client";
-import Button from "@/component/atoms/Button";
-import { Input } from "@/component/atoms/Input";
 import TopHeader from "@/component/atoms/TopHeader";
 import ActionMenu from "@/component/molecules/ActionMenu/ActionMenu";
-import DropDown from "@/component/molecules/DropDown/DropDown";
 import AddCategoryModal from "@/component/molecules/Modal/AddCategory";
 import AppTable from "@/component/organisms/AppTable/AppTable";
-import { STATUS_OPTIONS } from "@/developmentContent/dropdownOption";
+import { CATEGORY_ACTION_OPTIONS, STATUS_OPTIONS } from "@/developmentContent/dropdownOption";
 import { categoryTableHeaders } from "@/developmentContent/tableHeader";
 import useAxios from "@/interceptor/axiosInterceptor";
 import useDebounce from "@/resources/hooks/useDebounce";
 import { useEffect, useState } from "react";
-import { HiOutlineDotsHorizontal } from "react-icons/hi";
-import { IoSearchOutline } from "react-icons/io5";
 import classes from "./CategoryTemplate.module.css";
 import { CreateFormData } from "@/resources/utils/helper";
 import RenderToast from "@/component/atoms/RenderToast";
@@ -31,12 +26,6 @@ const CategoryTemplate = () => {
   const [status, setStatus] = useState(STATUS_OPTIONS[0]);
   const [selectedItem, setSelectedItem] = useState(null);
  
-
-  const [showActionMenu, setShowActionMenu] = useState(false);
-  const [selectedRowIndex, setSelectedRowIndex] = useState(null);
-  const [menuX, setMenuX] = useState(0);
-  const [menuY, setMenuY] = useState(0);
-
   const getData = async ({
     pg = page,
     _search = debounceSearch,
@@ -70,31 +59,18 @@ const CategoryTemplate = () => {
     getData({ _search: debounceSearch, _status: status?.value });
   }, [debounceSearch, page, status]);
 
-  const handleActionClick = (event, rowIndex) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    setMenuX(rect.left);
-    setMenuY(rect.bottom);
-    setShowActionMenu(true);
-    setSelectedRowIndex(rowIndex);
-  };
 
-  const handleCloseMenu = () => {
-    setShowActionMenu(false);
-    setSelectedRowIndex(null);
+  const onClickPopover = (label = "", item = rowItem) => {
+    if(label === "Edit"){
+      setSelectedItem(item);
+      setTimeout(() => {
+        setShowModal(true);
+      }, 0);
+    }
+    if(label === "Delete"){
+      console.log("delete");
+    }
   };
-
-  const menuOptions = [
-    {
-      label: "Edit",
-      action: () => {
-        const item = data[selectedRowIndex];
-        setSelectedItem(item);
-        setTimeout(() => {
-          setShowModal(true);
-        }, 0);
-      },
-    },
-  ];
 
 
   // add/edit category
@@ -189,24 +165,19 @@ const CategoryTemplate = () => {
             if (renderValue) return renderValue(rowItem[key]);
             if (key === "action") {
               return (
-                <HiOutlineDotsHorizontal
-                  size={25}
-                  className={classes.actionLink}
-                  onClick={(event) => handleActionClick(event, rowIndex)}
-                />
+                <div className={classes.actionButtons}>
+                    <ActionMenu
+                      popover={CATEGORY_ACTION_OPTIONS}
+                      onClick={(label) => {
+                        onClickPopover(label, rowItem);
+                      }}
+                    />
+                  </div>
               );
             }
             return item || "";
           }}
         />
-        {showActionMenu && (
-          <ActionMenu
-            options={menuOptions}
-            onClose={handleCloseMenu}
-            x={menuX}
-            y={menuY}
-          />
-        )}
       </div>
       {showModal && (
         <AddCategoryModal

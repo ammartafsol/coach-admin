@@ -9,4 +9,10 @@ export const CATEGORY_TYPE_OPTIONS = [
     { label: "Inactive", value: false },
   ];
 
+  export const CATEGORY_ACTION_OPTIONS = [
+    { label: "View Details", value: "viewDetails" },
+    { label: "Edit", value: "edit" },
+    { label: "Delete", value: "delete" },
+  ];
+
   

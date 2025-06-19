@@ -75,6 +75,7 @@ const AddCategoryModal = ({
               label="Category Name"
               type="text"
               name="name"
+              placeholder="Enter Category Name"
               value={categoryFormik.values.name}
               onChange={categoryFormik.handleChange}
               onBlur={categoryFormik.handleBlur}
