@@ -149,8 +149,11 @@
 }
 .footer {
   border-top: 1px solid #e9eaeb;
-  background: #f9f9f9;
-  padding: var(--fs14);
+  background: #f7f7f7;
+  /* padding: var(--fs14); */
+  padding: 18px;
+  align-items: center;
+  justify-content: center;
 }
 /* modalSkeleton.module.css */
 @keyframes slideInFromRight {
@@ -184,7 +187,7 @@
 }
 
 .modalDialog {
-  margin: 0; 
+  margin: 0;
   position: fixed;
   top: 0;
   right: 0;

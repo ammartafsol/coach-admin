@@ -7,19 +7,19 @@ import DropDown from "@/component/molecules/DropDown/DropDown";
 import AddCategoryModal from "@/component/molecules/Modal/AddCategory";
 import AppTable from "@/component/organisms/AppTable/AppTable";
 import { STATUS_OPTIONS } from "@/developmentContent/dropdownOption";
-import {
-  categoryTableHeaders,
-} from "@/developmentContent/tableHeader";
+import { categoryTableHeaders } from "@/developmentContent/tableHeader";
 import useAxios from "@/interceptor/axiosInterceptor";
 import useDebounce from "@/resources/hooks/useDebounce";
 import { useEffect, useState } from "react";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { IoSearchOutline } from "react-icons/io5";
 import classes from "./CategoryTemplate.module.css";
+import { CreateFormData } from "@/resources/utils/helper";
+import RenderToast from "@/component/atoms/RenderToast";
+import FilterHeader from "@/component/molecules/FilterHeader/FilterHeader";
 
 const CategoryTemplate = () => {
-
-  const { Get } = useAxios();
+  const { Post, Patch , Get} = useAxios();
   
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState([]);
@@ -30,15 +30,18 @@ const CategoryTemplate = () => {
   const [totalRecords, setTotalRecords] = useState(data?.length ?? 0);
   const [status, setStatus] = useState(STATUS_OPTIONS[0]);
   const [selectedItem, setSelectedItem] = useState(null);
+ 
 
-  // STATUS_OPTIONS[0]\
   const [showActionMenu, setShowActionMenu] = useState(false);
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
   const [menuX, setMenuX] = useState(0);
   const [menuY, setMenuY] = useState(0);
 
-
-  const getData = async ({ pg = page, _search = debounceSearch, _status = status?.value }) => {
+  const getData = async ({
+    pg = page,
+    _search = debounceSearch,
+    _status = status?.value,
+  }) => {
     if (loading === "loading") return;
 
     const params = {
@@ -49,8 +52,8 @@ const CategoryTemplate = () => {
     const query = new URLSearchParams(params).toString();
 
     setLoading("loading");
-  
-    const {response} = await Get({
+
+    const { response } = await Get({
       route: `admin/categories?${query}&limit=10`,
     });
 
@@ -59,14 +62,13 @@ const CategoryTemplate = () => {
       setPage(pg);
       setTotalRecords(response.totalRecords);
     }
-  
+
     setLoading("");
   };
 
   useEffect(() => {
-    getData({  _search: debounceSearch , _status: status?.value});
+    getData({ _search: debounceSearch, _status: status?.value });
   }, [debounceSearch, page, status]);
-
 
   const handleActionClick = (event, rowIndex) => {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -83,37 +85,92 @@ const CategoryTemplate = () => {
 
   const menuOptions = [
     {
-        label: "Edit", action: () => {
+      label: "Edit",
+      action: () => {
         const item = data[selectedRowIndex];
         setSelectedItem(item);
         setTimeout(() => {
           setShowModal(true);
         }, 0);
-    }},
-    
+      },
+    },
   ];
 
+
+  // add/edit category
   const handleAddEditCategory = async (values) => {
-    console.log("🚀 ~ handleAddEditCategory ~ values:", values)
-  }
+    setLoading("loading");
+
+    const payload = {
+      ...values,
+      type: values.type?.value,
+    };
+
+    const route = selectedItem?._id
+      ? `admin/categories/${selectedItem.slug}`
+      : "admin/categories";
+    const responseHandler = selectedItem?.slug ? Patch : Post;
+
+    const { response } = await responseHandler({
+      route,
+      data: payload,
+    });
+
+    if (response) {
+      RenderToast({
+        type: "success",
+        message: selectedItem?.slug
+          ? "Category Updated Successfully"
+          : "Category Added Successfully",
+      });
+      setShowModal(false);
+      setLoading("");
+      getData({ _search: debounceSearch, _status: status?.value });
+    }
+  };
+  const handleImageChange = async (file) => {
+    const data = {
+      media: file,
+    };
+
+    const formData = CreateFormData(data);
+
+    const { response } = await Post({
+      route: "media/upload",
+      data: formData,
+      isFormData: true,
+    });
+    if (response) {
+      setSelectedItem({
+        ...selectedItem,
+        image: response.data?.media[0].key,
+      });
+    }
+  };
 
   return (
     <main>
-        <TopHeader title="Category">
-
-        <DropDown placeholder={"Category"} options={STATUS_OPTIONS} setValue={(value) => {
-          setStatus(value);
-          setPage(1);
-        }}/>
-        <Input
-          mainContClassName={classes?.mainContClassName}
-          placeholder={"Search By Category"}
-          rightIcon={<IoSearchOutline color="#B0CD6E" size={20} 
-          />}
+      <TopHeader title="Category">
+        <FilterHeader
+          dropdownOption={STATUS_OPTIONS}
+          placeholder={"Category"}
+          setValue={(value) => {
+            setStatus(value);
+            setPage(1);
+          }}
+          inputPlaceholder="Search By Category"
           customStyle={{ width: "300px" }}
+          
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setPage(1);
+          }}
+          buttonLabel="Add Category"
+          buttonOnClick={() => {
+            setSelectedItem(null);
+            setShowModal(true);
+          }}
         />
-        <Button onClick={() => {setSelectedItem(null);
-                setShowModal(true)}} label="Add Category" />
       </TopHeader>
       <div>
         <AppTable
@@ -132,13 +189,11 @@ const CategoryTemplate = () => {
             if (renderValue) return renderValue(rowItem[key]);
             if (key === "action") {
               return (
-              
-                  <HiOutlineDotsHorizontal
-                    size={25}
-                    className={classes.actionLink}
-                    onClick={(event) => handleActionClick(event, rowIndex)}
-                  />
-                
+                <HiOutlineDotsHorizontal
+                  size={25}
+                  className={classes.actionLink}
+                  onClick={(event) => handleActionClick(event, rowIndex)}
+                />
               );
             }
             return item || "";
@@ -153,11 +208,7 @@ const CategoryTemplate = () => {
           />
         )}
       </div>
-      {/* {showModal && <AddCategoryModal isOpen={showModal} onClose={() => {
-        setShowModal(false);
-        setSelectedItem(null);
-      }} itemData={selectedItem} handleAddEditCategory={handleAddEditCategory}/>} */}
-       {showModal && (
+      {showModal && (
         <AddCategoryModal
           show={showModal}
           setShow={() => {
@@ -166,6 +217,9 @@ const CategoryTemplate = () => {
           }}
           itemData={selectedItem}
           handleAddEditCategory={handleAddEditCategory}
+          handleImageChange={handleImageChange}
+          loading={loading}
+          setLoading={setLoading}
         />
       )}
     </main>
