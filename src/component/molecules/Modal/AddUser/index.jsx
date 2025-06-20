@@ -11,6 +11,7 @@ import DropDown from "../../DropDown/DropDown";
 import { USER_STATUS_OPTIONS } from "@/developmentContent/dropdownOption";
 import { Row, Col } from "react-bootstrap";
 import clsx from "clsx";
+import { Country, State, City } from "country-state-city";
 
 const AddUserModal = ({
   show,
@@ -50,11 +51,7 @@ const AddUserModal = ({
               type="button"
             />
             <Button
-              label={
-                loading === "loading"
-                  ? "Please Wait..."
-                  : "Update User"
-              }
+              label={loading === "loading" ? "Please Wait..." : "Update User"}
               type="submit"
               disabled={loading !== ""}
               onClick={() => userFormik.handleSubmit()}
@@ -102,9 +99,7 @@ const AddUserModal = ({
               value={userFormik.values.email}
               onChange={userFormik.handleChange}
               onBlur={userFormik.handleBlur}
-              errorText={
-                userFormik.touched.email && userFormik.errors.email
-              }
+              errorText={userFormik.touched.email && userFormik.errors.email}
             />
           </Col>
           <Col md={6}>
@@ -122,17 +117,19 @@ const AddUserModal = ({
             />
           </Col>
           <Col md={6}>
-            <Input
-              label="Location"
-              type="text"
-              name="location"
-              placeholder="Enter Location"
-              value={userFormik.values.location}
+            <DropDown
+              label="Country"
+              name="country"
+              value={userFormik.values.country}
               onChange={userFormik.handleChange}
               onBlur={userFormik.handleBlur}
               errorText={
-                userFormik.touched.location && userFormik.errors.location
+                userFormik.touched.country && userFormik.errors.country
               }
+              options={Country.getAllCountries().map((country) => ({
+                label: country.name,
+                value: country.isoCode,
+              }))}
             />
           </Col>
           <Col md={12}>
@@ -141,7 +138,9 @@ const AddUserModal = ({
               name="isActive"
               options={USER_STATUS_OPTIONS}
               value={userFormik.values.isActive}
-              setValue={(option) => userFormik.setFieldValue("isActive", option)}
+              setValue={(option) =>
+                userFormik.setFieldValue("isActive", option)
+              }
               onBlur={userFormik.handleBlur}
               errorText={
                 userFormik.touched.isActive && userFormik.errors.isActive
@@ -154,4 +153,4 @@ const AddUserModal = ({
   );
 };
 
-export default AddUserModal; 
+export default AddUserModal;

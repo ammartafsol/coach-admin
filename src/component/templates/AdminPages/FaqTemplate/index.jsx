@@ -119,6 +119,7 @@ const FaqTemplate = () => {
             setSearch(e.target.value);
             setPage(1);
           }}
+          showButton={true}
           buttonLabel="Add FAQ"
           buttonOnClick={() => {
             setSelectedItem(null);

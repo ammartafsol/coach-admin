@@ -15,6 +15,7 @@ export default function FilterHeader({
   buttonOnClick,
   inputPlaceholder,
   customStyle,
+  showButton = false,
 }) {
   return (
     <div className={classes.filterHeader}>
@@ -29,7 +30,7 @@ export default function FilterHeader({
         customStyle={customStyle}
         rightIcon={<IoSearchOutline color="#B0CD6E" size={20} />}
       />
-      <Button label={buttonLabel} onClick={buttonOnClick} />
+      {showButton && <Button label={buttonLabel} onClick={buttonOnClick} />}
     </div>
   );
 }

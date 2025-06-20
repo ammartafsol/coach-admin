@@ -193,4 +193,14 @@ export const UserModalSchema = Yup.object({
       "Status is required",
       (value) => value && Object.keys(value).length > 0
     ),
+    city: Yup.string().optional(),
+    state: Yup.string().optional(),
+    country: Yup.object()
+    .shape({
+      label: Yup.string().required(),
+      value: Yup.string().required("Country is required."),
+    })
+});
+export const RejectionReasonSchema = Yup.object({
+  rejectReason: Yup.string().required("Rejection Reason is required"),
 });

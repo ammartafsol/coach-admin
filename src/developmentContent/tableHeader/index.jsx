@@ -1,4 +1,4 @@
-import { RenderTextCell , RenderImageCell, RenderDateCell, RenderStatusCell, RenderUserDataCell } from "@/component/organisms/AppTable/CommonCells";
+import { RenderTextCell , RenderImageCell, RenderDateCell, RenderStatusCell, RenderUserDataCell, RenderNumberCell } from "@/component/organisms/AppTable/CommonCells";
 
 export const tableHeaders = [
   {
@@ -38,7 +38,12 @@ export const tableUserHeaders = [
     title: "Username",
     key: "fullName",
     style: { width: "15%" },
-    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+    renderValue: (_, rowData) => (
+      <RenderUserDataCell
+        fullName={rowData.fullName}
+        photo={rowData.photo}
+      />
+    ),
   },
   {
     title: "Email",
@@ -56,13 +61,21 @@ export const tableUserHeaders = [
     title: "Subscribers",
     key: "noOfSubscribers",
     style: { width: "10%" },
-    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+    renderValue: (cellValue) => <RenderNumberCell {...{ cellValue }} />,
   },
   {
     title: "Location",
     key: "country",
-    style: { width: "20%" },
+    style: { width: "15%" },
     renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+  },
+
+  
+  {
+    title: "Status",
+    key: "status",
+    style: { width: "10%" },
+    renderValue: (cellValue) => <RenderStatusCell {...{ cellValue }} />,
   },
   { title: "", key: "action", width: "15%" },
 ];

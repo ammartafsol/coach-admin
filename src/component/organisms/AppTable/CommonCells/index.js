@@ -63,18 +63,55 @@ export const RenderStatusCell = ({ cellValue }) => {
     </span>
   );
 };
-export const RenderUserDataCell = ({ cellValue }) => {
-  if (!cellValue) return null;
-  const { name, avatar, id } = cellValue;
+// export const RenderUserDataCell = ({ cellValue }) => {
+//   if (!cellValue) return null;
+//   const { name, avatar, id } = cellValue;
+//   return (
+//     <div className={classes.userDataCell}>
+//       <div className={classes.avatarDiv}>
+//         <img src={avatar} alt={name} className={classes.userAvatar} />
+//       </div>
+//       <div className={classes.userInfo}>
+//         <div className={classes.userName}>{name}</div>
+//         <div className={classes.userId}>{id}</div>
+//       </div>
+//     </div>
+//   );
+// };
+
+
+export const RenderUserDataCell = ({ fullName, photo }) => {
+  const defaultAvatar = "/images/app-images/user-avatar.png";
+  if (!fullName && ! photo) return null;
+
+  const resolvedImage = photo ? mediaUrl(photo) : defaultAvatar;
+
   return (
     <div className={classes.userDataCell}>
       <div className={classes.avatarDiv}>
-        <img src={avatar} alt={name} className={classes.userAvatar} />
+        <Image
+          src={resolvedImage}
+          alt={fullName || "User"}
+          width={30}
+          height={30}
+          objectFit="contain"
+          className={classes.userAvatar}
+        />
       </div>
       <div className={classes.userInfo}>
-        <div className={classes.userName}>{name}</div>
-        <div className={classes.userId}>{id}</div>
+        <div className={classes.userName}>{fullName}</div>
       </div>
     </div>
   );
 };
+
+export const RenderNumberCell = ({ cellValue }) => {
+  if (cellValue === null || cellValue === undefined) return "-";
+
+  return (
+    <div className={classes.numberCell}>
+      {Number(cellValue).toLocaleString()} {/* adds comma separators */}
+    </div>
+  );
+};
+

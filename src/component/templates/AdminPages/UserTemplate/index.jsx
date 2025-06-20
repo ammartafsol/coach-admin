@@ -2,64 +2,57 @@
 import React, { useState, useEffect } from "react";
 import classes from "./UserTemplate.module.css";
 import TopHeader from "@/component/atoms/TopHeader";
-import { Input } from "@/component/atoms/Input";
-import { IoSearchOutline } from "react-icons/io5";
 import AppTable from "@/component/organisms/AppTable/AppTable";
-import { HiOutlineDotsHorizontal } from "react-icons/hi";
-import {
-  tableHeaders,
-  tableUserHeaders,
-} from "@/developmentContent/tableHeader";
-import { CoachTableBody, tableUserData } from "@/developmentContent/tableBody";
+import { tableUserHeaders } from "@/developmentContent/tableHeader";
 import ActionMenu from "@/component/molecules/ActionMenu/ActionMenu";
-import { useRouter } from "next/navigation";
-import { COACH_STATUS_OPTIONS, USER_ACTION_OPTIONS, USER_STATUS_OPTIONS } from "@/developmentContent/dropdownOption";
+import {
+  COACH_STATUS_OPTIONS,
+  USER_ACTION_OPTIONS,
+  USER_STATUS_OPTIONS,
+} from "@/developmentContent/dropdownOption";
 import { USER_ROLE_TABS_DATA } from "@/developmentContent/tabsData";
 import useAxios from "@/interceptor/axiosInterceptor";
 import useDebounce from "@/resources/hooks/useDebounce";
 import RenderToast from "@/component/atoms/RenderToast";
 import FilterHeader from "@/component/molecules/FilterHeader/FilterHeader";
-import AddUserModal from "@/component/molecules/Modal/AddUser";
-import Image from "next/image";
+import AreYouSureModal from "@/component/molecules/Modal/AreYouSureModal";
 
 const UserTemplate = () => {
   const { Patch, Get } = useAxios();
-  const [showModal, setShowModal] = useState(false);
+  const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState("");
+  const [acceptingId, setAcceptingId] = useState(null);
+  const [rejectingId, setRejectingId] = useState(null);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const debounceSearch = useDebounce(search, 500);
   const [totalRecords, setTotalRecords] = useState(data?.length ?? 0);
-  const [status, setStatus] = useState(USER_STATUS_OPTIONS[0]);
+  const [status, setStatus] = useState(USER_STATUS_OPTIONS[1]);
   const [coachStatus, setCoachStatus] = useState(COACH_STATUS_OPTIONS[0]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [role, setRole] = useState(USER_ROLE_TABS_DATA[0].value);
-  const router = useRouter();
 
   const getData = async ({
     pg = page,
     _search = debounceSearch,
     _coachStatus = coachStatus?.value,
-    role = role,
-    status = status?.value,
+    _role = role,
+    _status = status?.value,
   }) => {
     if (loading === "loading") return;
     const params = {
       page: pg,
       search: _search,
       coachStatus: _coachStatus,
-      role: role,
-      status: status,
+      role: _role,
+      status: _status,  
     };
     const query = new URLSearchParams(params).toString();
-    console.log("query", query);
     setLoading("loading");
     const { response } = await Get({
-      // route: `admin/users?role=${role}&limit=10`,
       route: `admin/users?${query}&limit=10`,
     });
-    console.log(response);
     if (response) {
       setData(response.data);
       setPage(pg);
@@ -69,57 +62,120 @@ const UserTemplate = () => {
   };
 
   useEffect(() => {
-    getData({ _search: debounceSearch, _coachStatus: coachStatus?.value,  role: role, status: status?.value });
-  }, [debounceSearch, page, coachStatus, role, status]);
+    getData({
+      _search: debounceSearch,
+      _coachStatus: coachStatus?.value,
+      role: role,
+      status: status?.value
+    });
+  }, [
+    debounceSearch,
+    page,
+    coachStatus,
+    role,
+    status
+  ]);
 
   const onClickPopover = (label = "", item = null) => {
-    if (label === "Edit") {
+    if (label === "Status") {
       setSelectedItem(item);
-      setTimeout(() => {
-        setShowModal(true);
-      }, 0);
-    }
-    if (label === "View Detail") {
-      router.push(`/user/${item?._id}`);
-    }
-    if (label === "Deactivate") {
-      // Implement deactivate logic here
+      setShowAreYouSureModal(true);
     }
   };
 
-  // edit user
-  const handleAddEditUser = async (values) => {
-    setLoading("loading");
-    const payload = {
-      ...values,
-      isActive: values.isActive?.value,
-    };
-    const route = selectedItem?._id ? `admin/users/${selectedItem._id}` : null;
-    if (!route) return;
+  const handleCoachStatusChange = async (
+    itemData,
+    status,
+    rejectionReason = ""
+  ) => {
+    if (!itemData?._id || !status) return;
+
+    if (status === "approved") {
+      setAcceptingId(itemData._id);
+    } else if (status === "rejected") {
+      setRejectingId(itemData._id);
+    }
+
+    const payload = { status };
+    if (status === "rejected") {
+      let reasonText = "";
+      if (typeof rejectionReason === "string") {
+        reasonText = rejectionReason.trim();
+      } else if (rejectionReason && typeof rejectionReason === "object") {
+        reasonText = (rejectionReason.rejectReason || "").trim();
+      }
+      
+      payload.rejectionReason = reasonText;
+      if (!payload.rejectionReason) {
+        RenderToast({
+          type: "error",
+          message: "Rejection Reason is required",
+        });
+        return;
+      }
+    }
+
     const { response } = await Patch({
-      route,
+      route: `admin/users/coach/status/${itemData.slug}`,
       data: payload,
     });
+
     if (response) {
       RenderToast({
         type: "success",
-        message: "User Updated Successfully",
+        message: `User ${status} successfully`,
       });
-      setShowModal(false);
+      getData({
+        _search: debounceSearch,
+        _coachStatus: coachStatus?.value,
+        role,
+      });
       setLoading("");
-      getData({ _search: debounceSearch, _coachStatus: coachStatus?.value, role: role, status: status?.value });
     }
+    setAcceptingId(null);
+    setRejectingId(null);
   };
+
+  const handleStatusChange = async (itemData, statusObj) => {
+    setLoading("loading");
+    if (!itemData?._id || !statusObj) return;
+    
+    const statusValue = statusObj.value; 
+    
+    const { response } = await Patch({
+      route: `admin/users/block-unblock/${itemData.slug}`,
+      data: { status: statusValue },
+    });
+  
+    if (response) {
+      const statusText = statusValue ? "blocked" : "unblocked";
+      RenderToast({
+        type: "success",
+        message: `User ${statusText} successfully`,
+      });
+      setLoading("");
+      
+      getData({
+        _search: debounceSearch,
+        _coachStatus: coachStatus?.value,
+        role,
+        status: status?.value
+      });
+    } else {
+      setLoading("");
+    }
+  }
 
   return (
     <>
-      <TopHeader title="User"
-      tabsData={USER_ROLE_TABS_DATA}
-      selected={role}
-      setSelected={(value) => {
-        setRole(value);
-        setPage(1);
-      }}
+      <TopHeader
+        title="User"
+        tabsData={USER_ROLE_TABS_DATA}
+        selected={role}
+        setSelected={(value) => {
+          setRole(value);
+          setPage(1);
+        }}
       >
         <FilterHeader
           dropdownOption={COACH_STATUS_OPTIONS}
@@ -128,15 +184,12 @@ const UserTemplate = () => {
             setCoachStatus(value);
             setPage(1);
           }}
-          
-
           inputPlaceholder="Search By Name"
           customStyle={{ width: "300px" }}
           onChange={(e) => {
             setSearch(e.target.value);
             setPage(1);
           }}
-
         />
       </TopHeader>
       <div>
@@ -154,21 +207,9 @@ const UserTemplate = () => {
           renderItem={({ item, key, rowIndex, renderValue }) => {
             const rowItem = data[rowIndex];
             if (renderValue) return renderValue(item, rowItem);
-            if (key === "username") {
-              return (
-                <div className={classes?.profileParent}>
-                  <div className={classes?.profile}>
-                    <Image
-                      src={rowItem?.image || "/images/cms-images/profile.png"}
-                      fill
-                      alt="profile"
-                    />
-                  </div>
-                  <div className={classes?.userName}>{rowItem?.firstName} {rowItem?.lastName}</div>
-                </div>
-              );
-            }
             if (key === "action") {
+              const isPending = rowItem?.status === "pending";
+
               return (
                 <div className={classes.actionButtons}>
                   <ActionMenu
@@ -176,6 +217,16 @@ const UserTemplate = () => {
                     onClick={(label) => {
                       onClickPopover(label, rowItem);
                     }}
+                    showButtons={isPending}
+                    itemData={rowItem}
+                    onAccept={() =>
+                      handleCoachStatusChange(rowItem, "approved")
+                    }
+                    onReject={(reason) =>
+                      handleCoachStatusChange(rowItem, "rejected", reason)
+                    }
+                    acceptLoading={acceptingId === rowItem._id}
+                    rejectLoading={rejectingId === rowItem._id}
                   />
                 </div>
               );
@@ -183,17 +234,29 @@ const UserTemplate = () => {
             return item || "";
           }}
         />
-        {showModal && (
-          <AddUserModal
-            show={showModal}
+        {showAreYouSureModal && (
+          <AreYouSureModal
+            show={showAreYouSureModal}
             setShow={() => {
-              setShowModal(false);
+              setShowAreYouSureModal(false);
               setSelectedItem(null);
             }}
-            itemData={selectedItem}
-            handleAddEditUser={handleAddEditUser}
-            loading={loading}
-            setLoading={setLoading}
+            heading={selectedItem?.isBlockedByAdmin ? "⚠️ Unblock User" : "⚠️ Block User"}
+            subheading={
+              selectedItem?.isBlockedByAdmin 
+                ? "Are you sure you want to unblock this user? This will restore their access to the platform."
+                : "Are you sure you want to block this user? This action will affect their access to the platform."
+            }
+            confirmButtonLabel={selectedItem?.isBlockedByAdmin ? "Unblock" : "Block"}
+            cancelButtonLabel="Cancel"
+            confirmButtonVariant="danger"
+            cancelButtonVariant="green-outlined"
+            onConfirm={() => {
+              if (selectedItem) {
+                const newStatus = selectedItem.isBlockedByAdmin ? false : true;
+                handleStatusChange(selectedItem, { value: newStatus });
+              }
+            }}
           />
         )}
       </div>

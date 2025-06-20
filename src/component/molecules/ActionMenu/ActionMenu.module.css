@@ -90,9 +90,11 @@ background: #B0CD6E;
 }
 .btnDiv {
   display: flex;
-  padding: 5px;
-  border-top: 1px solid #d5d7da;
+  /* padding: 5px; */
+  /* border-top: 1px solid #d5d7da; */
   flex-direction: column;
+  margin-top: 10px;
+  gap: 10px;
 }
 .btnDiv button {
   border: none !important;

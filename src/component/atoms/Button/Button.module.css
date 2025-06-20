@@ -59,6 +59,27 @@
   background-color: transparent;
 }
 
+.btn[color-variant="danger"] {
+  background: linear-gradient(135deg, #B0CD6E 0%, #9BC53D 100%);
+  color: #344313;
+  border: 1px solid #B0CD6E !important;
+  box-shadow: 0 4px 12px rgba(176, 205, 110, 0.3);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.btn[color-variant="danger"]:hover {
+  background: linear-gradient(135deg, #9BC53D 0%, #8AB92E 100%);
+  border-color: #9BC53D !important;
+  box-shadow: 0 6px 16px rgba(176, 205, 110, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn[color-variant="danger"]:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(176, 205, 110, 0.3);
+}
+
 @media screen and (max-width: 767px) {
   .btn {
     font-size: 14px;

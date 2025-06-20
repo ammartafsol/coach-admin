@@ -12,3 +12,9 @@
   color: var(--white-color);
   cursor: pointer;
 }
+
+.userDataCell{
+  display: flex; 
+  align-items: center;
+  gap: 10px;
+}

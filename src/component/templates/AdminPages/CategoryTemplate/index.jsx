@@ -144,6 +144,7 @@ const CategoryTemplate = () => {
             setSearch(e.target.value);
             setPage(1);
           }}
+          showButton={true}
           buttonLabel="Add Category"
           buttonOnClick={() => {
             setSelectedItem(null);

@@ -66,9 +66,16 @@ export default function ModalSkeleton({
         </div>
       )}
       <Modal.Body className={clsx(classes.body, modalBodyClass)}>
+        {subheading && (
+          <p className={classes.subheading}>
+            {subheading}
+          </p>
+        )}
         {children}
       </Modal.Body>
-      <Modal.Footer className={classes.footer}>{footerData}</Modal.Footer>
+        {footerData && (
+        <Modal.Footer className={classes.footer}>{footerData}</Modal.Footer>
+      )}
     </Modal>
   );
 }
