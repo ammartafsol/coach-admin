@@ -16,20 +16,32 @@ export default function FilterHeader({
   inputPlaceholder,
   customStyle,
   showButton = false,
+  secondDropdownOption = false,
+  secondPlaceholder,
+  setSecondValue,
+  secondValue,
 }) {
   return (
     <div className={classes.filterHeader}>
-      <DropDown
-        options={dropdownOption}
-        placeholder={placeholder}
-        setValue={setValue}
-      />
-      <Input
+       <Input
         placeholder={inputPlaceholder}
         onChange={onChange}
         customStyle={customStyle}
         rightIcon={<IoSearchOutline color="#B0CD6E" size={20} />}
       />
+      <DropDown
+        options={dropdownOption}
+        placeholder={placeholder}
+        setValue={setValue}
+      />
+      {secondDropdownOption && (
+        <DropDown
+          options={secondDropdownOption}
+          placeholder={secondPlaceholder}
+          setValue={setSecondValue}
+        />
+      )}
+     
       {showButton && <Button label={buttonLabel} onClick={buttonOnClick} />}
     </div>
   );

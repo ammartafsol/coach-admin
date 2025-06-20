@@ -47,7 +47,24 @@ export const COACH_STATUS_OPTIONS = [
   { label: "Rejected", value: "rejected" },
 ];
 export const USER_STATUS_OPTIONS = [
-  // { label: "All", value: "all" },
-  { label: "Active", value: true },
-  { label: "Inactive", value: false },
+  { label: "All", value: "all" },
+  { label: "Blocked", value: true },
+  { label: "Unblocked", value: false },
+];
+
+export const SPORTS_OPTIONS = [
+  { label: "All", value: "all" },
+  { label: "Cricket", value: "cricket" },
+  { label: "Football", value: "football" },
+  { label: "Tennis", value: "tennis" },
+  { label: "Basketball", value: "basketball" },
+];
+
+export const COACH_RATING_OPTIONS = [
+  { label: "All", value: "all" },
+  { label: "1 +", value: 1 },
+  { label: "2 +", value: 2 },
+  { label: "3 +", value: 3 },
+  { label: "4 +", value: 4 },
+  { label: "5 +", value: 5 },
 ];

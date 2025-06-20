@@ -28,10 +28,11 @@ const UserTemplate = () => {
   const [search, setSearch] = useState("");
   const debounceSearch = useDebounce(search, 500);
   const [totalRecords, setTotalRecords] = useState(data?.length ?? 0);
-  const [status, setStatus] = useState(USER_STATUS_OPTIONS[1]);
+  const [status, setStatus] = useState(USER_STATUS_OPTIONS[0]);
   const [coachStatus, setCoachStatus] = useState(COACH_STATUS_OPTIONS[0]);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [role, setRole] = useState(USER_ROLE_TABS_DATA[0].value);
+  // const [role, setRole] = useState(USER_ROLE_TABS_DATA[0].value);
+  const role = "user";
 
   const getData = async ({
     pg = page,
@@ -53,6 +54,7 @@ const UserTemplate = () => {
     const { response } = await Get({
       route: `admin/users?${query}&limit=10`,
     });
+    console.log("status", response);
     if (response) {
       setData(response.data);
       setPage(pg);
@@ -170,20 +172,27 @@ const UserTemplate = () => {
     <>
       <TopHeader
         title="User"
-        tabsData={USER_ROLE_TABS_DATA}
-        selected={role}
-        setSelected={(value) => {
-          setRole(value);
-          setPage(1);
-        }}
+        // tabsData={USER_ROLE_TABS_DATA}
+        // selected={role}
+        // setSelected={(value) => {
+        //   setRole(value);
+        //   setPage(1);
+        // }}
       >
         <FilterHeader
-          dropdownOption={COACH_STATUS_OPTIONS}
+          dropdownOption={USER_STATUS_OPTIONS}
           placeholder={"Status"}
           setValue={(value) => {
-            setCoachStatus(value);
+            setStatus(value);
             setPage(1);
           }}
+          // secondDropdownOption={USER_STATUS_OPTIONS}
+          // secondPlaceholder={"Status"}
+          // setSecondValue={(value) => {
+          //   setStatus(value);
+          //   setPage(1);
+          // }}
+          // secondValue={status}
           inputPlaceholder="Search By Name"
           customStyle={{ width: "300px" }}
           onChange={(e) => {

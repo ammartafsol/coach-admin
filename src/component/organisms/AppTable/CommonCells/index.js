@@ -3,6 +3,19 @@ import classes from "./CommonCells.module.css";
 import { capitalizeFirstLetter, mergeClass } from "@/resources/utils/helper";
 import Image from "next/image";
 import { mediaUrl } from "@/resources/utils/helper";
+import clsx from "clsx";
+import { GoDotFill } from "react-icons/go";
+import Rating from "@mui/material/Rating";
+
+const statusClassMap = {
+  true: "statusTrue",
+  false: "statusFalse",
+  approved: "statusApproved",
+  pending: "statusPending",
+  rejected: "statusRejected",
+  paid: "statusPaid",
+  unpaid: "statusUnpaid",
+};
 
 export const RenderTextCell = ({ cellValue: item }) => {
   return (
@@ -53,31 +66,41 @@ export const RenderImageCell = ({ cellValue }) => {
   );
 };
 
-export const RenderStatusCell = ({ cellValue }) => {
-  const isBoolean = typeof cellValue === "boolean";
-  const displayValue = isBoolean ? (cellValue ? "Active" : "Inactive") : String(cellValue);
 
-  return (
-    <span className="fs-12 fw-500 lh-18 text-capitalize">
-      {displayValue}
-    </span>
-  );
+export const RenderStatusCell = ({ cellValue: item }) => {
+  const isBoolean = typeof item === "boolean";
+  const displayValue = isBoolean ? (item ? "Active" : "Inactive") : item;
+
+  let normalized = String(item).toLowerCase();
+  if (normalized === "paid leaves") {
+    normalized = "paid"; 
+  } else if (normalized === "unpaid") {
+    normalized = "unpaid"; 
+  }
+
+  const statusClass = statusClassMap[normalized];
+
+  const shouldShowDot =
+    normalized !== "paid" &&
+    normalized !== "unpaid" 
+
+    return (
+      <span
+        className={clsx(
+          classes.status,
+          "fs-14 fw-500 lh-18 text-capitalize",
+          statusClass && classes[statusClass]
+        )}
+      >
+        {shouldShowDot && (
+          <GoDotFill className={clsx(classes.dotIcon, classes[`${statusClass}Icon`])} />
+        )}
+        <span className={clsx(classes.text, classes[`${statusClass}Text`])}>
+          {displayValue}
+        </span>
+      </span>
+    );
 };
-// export const RenderUserDataCell = ({ cellValue }) => {
-//   if (!cellValue) return null;
-//   const { name, avatar, id } = cellValue;
-//   return (
-//     <div className={classes.userDataCell}>
-//       <div className={classes.avatarDiv}>
-//         <img src={avatar} alt={name} className={classes.userAvatar} />
-//       </div>
-//       <div className={classes.userInfo}>
-//         <div className={classes.userName}>{name}</div>
-//         <div className={classes.userId}>{id}</div>
-//       </div>
-//     </div>
-//   );
-// };
 
 
 export const RenderUserDataCell = ({ fullName, photo }) => {
@@ -114,4 +137,47 @@ export const RenderNumberCell = ({ cellValue }) => {
     </div>
   );
 };
+
+
+export const RenderRatingCell = ({ cellValue }) => {
+  return (
+    <div className={classes.ratingCell}>
+      <Rating
+        value={Number(cellValue) || 0}
+        readOnly
+        precision={1}
+        size="medium"
+        sx={{
+          color: "var(--slate-950)",
+          fontSize: 24,
+          "& .MuiRating-iconEmpty": {
+            color: "var(--slate-950)", 
+          },
+        }}
+      />
+    </div>
+  );
+};
+
+// export const RenderSportsCell = ({cellValue : item, rowData : rowItem}) => {
+//   console.log("cellValue in RenderSportsCell:", item);
+
+//   if (!Array.isArray(item) || item.length === 0) {
+//     return "-";
+//   }
+
+//   // const firstSport = cellValue[0];
+//   // const extraCount = cellValue.length - 1;
+
+//   return (
+//     <span className={classes.sportLabel}>{item[0]}</span>
+//     // <div className={classes.sportsCell}>
+//     //   <span className={classes.sportLabel}>{firstSport}</span>
+//     //   {extraCount > 0 && (
+//     //     <span className={classes.countBadge}>+{extraCount}</span>
+//     //   )}
+//     // </div>
+//   );
+// };
+
 
