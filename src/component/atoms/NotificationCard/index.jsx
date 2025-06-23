@@ -1,32 +1,57 @@
 import React from "react";
 import classes from "./NotificationCard.module.css";
 import Image from "next/image";
+import { timeAgo } from "@/resources/utils/helper";
+import Button from "@/component/atoms/Button";
 
-const NotificationCard = ({ item, left,className }) => {
+const NotificationCard = ({ item, left, className, onAction, loading ,showButton=true,}) => {
+  const time = timeAgo(item?.createdAt);
+  const isActioned = item?.status === "accepted" || item?.status === "rejected";
+
   return (
     <div className={`${classes.registrationContent} ${className}`}>
       <div className={classes.registrationUser}>
-        <Image
-          src="/images/cms-images/user.png"
-          alt="Jenny Wilson"
-          width={40}
-          height={40}
-          className={classes.registrationAvatar}
-        />
         <div className={classes?.notificationMain}>
-        <div >
-          <div className={classes.registrationName}>{item?.name}</div>
-          <div className={classes.registrationText}>{item?.description}</div>
-          <div className={classes.registrationTime}>5min</div>
-        </div>
-        <div
-          className={`${classes.registrationActions} ${
-            left ? classes.left : ""
-          }`}
-        >
-          <button className={classes.rejectButton}>Reject</button>
-          <button className={classes.acceptButton}>Accept</button>
-        </div>
+          <div className={classes.notificationText}>
+            <div className={classes.registrationText}>{item?.message}</div>
+            <div className={classes.registrationTime}>{time}</div>
+          </div>
+          <div
+            className={`${classes.registrationActions} ${
+              left ? classes.left : ""
+            }`}
+          >
+            {isActioned ? (
+              <div className={classes.statusText}>
+                {item?.status === "accepted" ? "Accepted" : "Rejected"}
+              </div>
+            ) : (
+              <>
+              
+                {showButton && (
+                  <>
+                  <Button
+                  label="Reject"
+                  className={classes.actionButton}
+                  onClick={() => onAction("reject", item?._id)}
+                  disabled={loading}
+                  variant="outlined"
+                  
+                  
+                />
+                 
+                <Button
+                  label="Accept"
+                  className={classes.actionButton}
+                  onClick={() => onAction("accept", item?._id)}
+                  disabled={loading} 
+                  variant="success"
+                />
+                </>
+                )}
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -107,6 +107,7 @@ const FaqTemplate = () => {
     <main>
       <TopHeader title="FAQ Management">
         <FilterHeader
+          showDropDown={true}
           dropdownOption={STATUS_OPTIONS}
           placeholder={"Status"}
           setValue={(value) => {

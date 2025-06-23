@@ -10,12 +10,14 @@ import {
   USER_ACTION_OPTIONS,
   USER_STATUS_OPTIONS,
   COACH_RATING_OPTIONS,
+  COACH_ACTION_OPTIONS,
 } from "@/developmentContent/dropdownOption";
 import useAxios from "@/interceptor/axiosInterceptor";
 import useDebounce from "@/resources/hooks/useDebounce";
 import RenderToast from "@/component/atoms/RenderToast";
 import FilterHeader from "@/component/molecules/FilterHeader/FilterHeader";
 import AreYouSureModal from "@/component/molecules/Modal/AreYouSureModal";
+import { useRouter } from "next/navigation";
 
 const CoachesTemplate = () => {
   const { Patch, Get } = useAxios();
@@ -32,6 +34,7 @@ const CoachesTemplate = () => {
   const [coachStatus, setCoachStatus] = useState(COACH_STATUS_OPTIONS[0]);
   const [selectedItem, setSelectedItem] = useState(null);
   const role = "coach";
+  const router = useRouter();
 
   const getData = async ({
     pg = page,
@@ -81,6 +84,9 @@ const CoachesTemplate = () => {
     if (label === "Status") {
       setSelectedItem(item);
       setShowAreYouSureModal(true);
+    }
+    if (label === "View Details") {
+      router.push(`/coach/${item.slug}`);
     }
   };
 
@@ -173,6 +179,7 @@ const CoachesTemplate = () => {
         title="Coaches"
       >
         <FilterHeader
+          showDropDown={true}
           dropdownOption={COACH_RATING_OPTIONS}
           placeholder={"Rating"}
           setValue={(value) => {
@@ -215,7 +222,7 @@ const CoachesTemplate = () => {
               return (
                 <div className={classes.actionButtons}>
                   <ActionMenu
-                    popover={USER_ACTION_OPTIONS}
+                    popover={COACH_ACTION_OPTIONS}
                     onClick={(label) => {
                       onClickPopover(label, rowItem);
                     }}

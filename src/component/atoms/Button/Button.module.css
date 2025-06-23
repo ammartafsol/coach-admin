@@ -3,7 +3,7 @@
   font-size: 14px;
   font-weight: 400;
   cursor: pointer;
-  width: 100%;
+  /* width: 100%; */
   transition: 0.5s all;
   border-radius: 6px !important;
   border: 1px solid var(--White) !important;
@@ -13,6 +13,7 @@
   padding: 10px 24px;
   height: 45px;
   font-family: "AvenirRegular";
+  width: fit-content;
 }
 
 .btn:disabled {
@@ -54,9 +55,15 @@
 
 .btn[color-variant="outlined"] {
   /* border: 1px solid var(--royal-navy-blue) !important; */
-  color:  linear-gradient(225deg, #e04018 0%, #f8d11d 100%), #0a2147;
+  color:  var(--black-color);
   box-shadow: none !important;
   background-color: transparent;
+  border: 1px solid #B0CD6E !important;
+
+}
+.btn[color-variant="outlined"]:hover {
+  background-color: #B0CD6E !important;
+  color: var(--white-color) !important;
 }
 
 .btn[color-variant="danger"] {

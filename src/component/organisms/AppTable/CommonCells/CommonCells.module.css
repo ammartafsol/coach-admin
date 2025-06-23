@@ -43,11 +43,11 @@
 /* === Status Colors === */
 
 /* Approved/Paid */
-.statusApproved,
+/* .statusApproved,
 .statusPaid,
 .statusTrue {
   background-color: #ecfdf3;
-}
+} */
 .statusApprovedIcon,
 .statusPaidIcon,
 .statusTrueIcon {

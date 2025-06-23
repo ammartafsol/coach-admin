@@ -1,59 +1,63 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./UserDetailTemplate.module.css";
 import TopHeader from "@/component/atoms/TopHeader";
 import Coaches from "@/component/molecules/Coaches";
 import BorderWrapper from "@/component/atoms/BorderWrapper";
 import CoachesDetail from "@/component/molecules/CoachesDetails";
+import useAxios from "@/interceptor/axiosInterceptor";
+import { Loader } from "@/component/atoms/Loader";
+import RenderToast from "@/component/atoms/RenderToast";
 
 const UserDetailTemplate = ({ slug }) => {
-  const coachesData = [
-    {
-      id: 1,
-      name: "Terry Hickle",
-      rating: 5,
-      members: 300,
-      subscription: {
-        plan: "Monthly - $20",
-        startDate: "Jan 2, 2023",
-        status: "Active",
-      },
-      image: "/images/cms-images/profile.png",
-    },
-    {
-      id: 2,
-      name: "Terry Hickle",
-      rating: 5,
-      members: 300,
-      subscription: {
-        plan: "Yearly - $200",
-        startDate: "Feb 15, 2023",
-        status: "Active",
-      },
-      image: "/images/cms-images/profile.png",
-    },
-    {
-      id: 3,
-      name: "Terry Hickle",
-      rating: 5,
-      members: 300,
-      subscription: {
-        plan: "Quarterly - $50",
-        startDate: "Mar 10, 2023",
-        status: "Active",
-      },
-      image: "/images/cms-images/profile.png",
-    },
-  ];
-  const user = {
-    name: "Ashley Farms",
-    email: "ashleyfarms@mail.com",
-    phone: "+1 235 5548 945214",
-    location: "New York, NY, USA",
-    image: "/images/cms-images/profile.png",
-  };
+const {Get, Patch} = useAxios();
+const [usersData, setUsersData] = useState(null);
+const [loading, setLoading] = useState(true);
 
-  const [expandedCoach, setExpandedCoach] = useState(1);
+  const getData = async () => {
+    setLoading(true);
+    const { response } = await Get({
+      route: `admin/users/${slug}`,
+    });
+    console.log("response", response);
+    if(response){
+      setUsersData(response.data);
+    }
+    setLoading(false);
+  }
+  console.log("usersData", usersData);
+
+  useEffect(() => {
+    console.log("slug", slug);
+    getData();
+  }, [slug]);
+
+  const handleStatusChange = async (itemData, statusObj) => {
+    setLoading("loading");
+    if (!itemData?._id || !statusObj) return;
+    
+    const statusValue = statusObj.value; 
+    
+    const { response } = await Patch({
+      route: `admin/users/block-unblock/${itemData.slug}`,
+      data: { status: statusValue },
+    });
+  
+    if (response) {
+      const statusText = statusValue ? "blocked" : "unblocked";
+      RenderToast({
+        type: "success",
+        message: `User ${statusText} successfully`,
+      });
+      setLoading("");
+      
+      getData();
+    } else {
+      setLoading("");
+    }
+  }
+
+  const [expandedCoach, setExpandedCoach] = useState(null);
 
   const toggleCoach = (coachId) => {
     if (expandedCoach === coachId) {
@@ -63,28 +67,45 @@ const UserDetailTemplate = ({ slug }) => {
     }
   };
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <div>
       <div className={classes?.TopHeader}>
-        <TopHeader title={"Users"} />
-      </div>
+        <TopHeader title={`users`} slug={`/${usersData?.fullName}` } />
+      </div> 
       <BorderWrapper>
-        <Coaches item={user} />
-        <h4 className={classes?.coach}>Coach</h4>
-        <div className={classes.coachesList}>
-          {coachesData?.map((item) => {
-            return (
-              <BorderWrapper>
-                <CoachesDetail
-                  toggleCoach={toggleCoach}
-                  expandedCoach={expandedCoach}
-                  item={item}
-                  key={item.id}
-                />
-              </BorderWrapper>
-            );
-          })}
-        </div>
+        <Coaches item={usersData} key={usersData?._id} handleStatusChange={handleStatusChange} />
+        {usersData?.coaches && (
+          <>
+            <h4 className={classes?.coach}>Coach</h4>
+            <div className={classes.coachesList}>
+              {Array.isArray(usersData.coaches) ? (
+                // Multiple coaches from API
+                usersData.coaches.map((coach) => (
+                  <BorderWrapper key={coach._id}>
+                    <CoachesDetail 
+                      toggleCoach={toggleCoach}
+                      expandedCoach={expandedCoach}
+                      item={coach}
+                    />
+                  </BorderWrapper>
+                ))
+              ) : (
+                // Single coach object from API
+                <BorderWrapper key={usersData.coaches._id}>
+                  <CoachesDetail 
+                    toggleCoach={toggleCoach}
+                    expandedCoach={expandedCoach}
+                    item={usersData.coaches}
+                  />
+                </BorderWrapper>
+              )}
+            </div>
+          </>
+        )}
       </BorderWrapper>
     </div>
   );

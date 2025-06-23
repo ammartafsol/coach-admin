@@ -16,6 +16,7 @@ export default function FilterHeader({
   inputPlaceholder,
   customStyle,
   showButton = false,
+  showDropDown = false,
   secondDropdownOption = false,
   secondPlaceholder,
   setSecondValue,
@@ -29,11 +30,13 @@ export default function FilterHeader({
         customStyle={customStyle}
         rightIcon={<IoSearchOutline color="#B0CD6E" size={20} />}
       />
-      <DropDown
-        options={dropdownOption}
-        placeholder={placeholder}
-        setValue={setValue}
-      />
+      {showDropDown && (
+        <DropDown
+          options={dropdownOption}
+          placeholder={placeholder}
+          setValue={setValue}
+        />
+      )}
       {secondDropdownOption && (
         <DropDown
           options={secondDropdownOption}

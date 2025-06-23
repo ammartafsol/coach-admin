@@ -4,7 +4,7 @@ import React from 'react'
 const page = ({params}) => {
   return (
     <div>
-      <UserDetailTemplate />
+      <UserDetailTemplate slug={params.slug} />
     </div>
   )
 }

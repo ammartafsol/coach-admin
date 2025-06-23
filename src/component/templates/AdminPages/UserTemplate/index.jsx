@@ -16,6 +16,7 @@ import useDebounce from "@/resources/hooks/useDebounce";
 import RenderToast from "@/component/atoms/RenderToast";
 import FilterHeader from "@/component/molecules/FilterHeader/FilterHeader";
 import AreYouSureModal from "@/component/molecules/Modal/AreYouSureModal";
+import { useRouter } from "next/navigation";
 
 const UserTemplate = () => {
   const { Patch, Get } = useAxios();
@@ -33,6 +34,7 @@ const UserTemplate = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   // const [role, setRole] = useState(USER_ROLE_TABS_DATA[0].value);
   const role = "user";
+  const router = useRouter();
 
   const getData = async ({
     pg = page,
@@ -82,6 +84,9 @@ const UserTemplate = () => {
     if (label === "Status") {
       setSelectedItem(item);
       setShowAreYouSureModal(true);
+    }
+    else if (label == "View Details"){
+      router.push(`/user/${item.slug}`);
     }
   };
 
@@ -172,27 +177,15 @@ const UserTemplate = () => {
     <>
       <TopHeader
         title="User"
-        // tabsData={USER_ROLE_TABS_DATA}
-        // selected={role}
-        // setSelected={(value) => {
-        //   setRole(value);
-        //   setPage(1);
-        // }}
       >
         <FilterHeader
+          showDropDown={true}
           dropdownOption={USER_STATUS_OPTIONS}
           placeholder={"Status"}
           setValue={(value) => {
             setStatus(value);
             setPage(1);
           }}
-          // secondDropdownOption={USER_STATUS_OPTIONS}
-          // secondPlaceholder={"Status"}
-          // setSecondValue={(value) => {
-          //   setStatus(value);
-          //   setPage(1);
-          // }}
-          // secondValue={status}
           inputPlaceholder="Search By Name"
           customStyle={{ width: "300px" }}
           onChange={(e) => {

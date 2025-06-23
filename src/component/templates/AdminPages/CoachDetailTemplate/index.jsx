@@ -3,7 +3,7 @@ import classes from "./CoachDetailTemplate.module.css";
 import TopHeader from "@/component/atoms/TopHeader";
 import Tabs from "@/component/atoms/Tabs/Tabs";
 import { coachTabs } from "@/developmentContent/enums/enum";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UsersTable from "@/component/molecules/UsersTable";
 import Button from "@/component/atoms/Button";
 import DropDown from "@/component/molecules/DropDown/DropDown";
@@ -13,12 +13,35 @@ import ButtonTabs from "@/component/atoms/ButtonTabs";
 import FeedsCom from "@/component/organisms/FeedsCom";
 import UserProfile from "@/component/organisms/UserProfile/UserProfile";
 import Subscription from "@/component/organisms/Subscription/Subscription";
+import useAxios from "@/interceptor/axiosInterceptor";
 
-const CoachDetailTemplate = () => {
+
+const CoachDetailTemplate = ({slug}) => {
   const [SelectedTabs, setSelectedTabs] = useState(coachTabs[0]);
+
+
+  const {Get} = useAxios();
+  const [usersData, setUsersData] = useState(null);
+  
+  
+    const getData = async () => {
+      const { response } = await Get({
+        route: `admin/coach/${slug}`,
+      });
+      console.log("response", response);
+      if(response){
+        setUsersData(response.data);
+      }
+    }
+    console.log("usersData", usersData);
+  
+    useEffect(() => {
+      console.log("slug", slug);
+      getData();
+    }, [slug]);
   return (
     <div>
-      <TopHeader title={"Mathew Ward"}></TopHeader>
+      <TopHeader title={"coaches"} slug={`/${usersData?.fullName}`}></TopHeader>
       <div className={classes?.tabs}>
         <Tabs
           activeTab={SelectedTabs}

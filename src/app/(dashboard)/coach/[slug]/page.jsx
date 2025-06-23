@@ -1,10 +1,10 @@
 import CoachDetailTemplate from '@/component/templates/AdminPages/CoachDetailTemplate'
 import React from 'react'
 
-const page = () => {
+const page = ({ params }) => {
   return (
     <div>
-        <CoachDetailTemplate />
+        <CoachDetailTemplate slug={params.slug} />
     </div>
   )
 }

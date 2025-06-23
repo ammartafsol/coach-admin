@@ -1,4 +1,4 @@
-import { RenderTextCell , RenderImageCell, RenderDateCell, RenderStatusCell, RenderUserDataCell, RenderNumberCell,  } from "@/component/organisms/AppTable/CommonCells";
+import { RenderTextCell , RenderImageCell, RenderDateCell, RenderStatusCell, RenderUserDataCell, RenderNumberCell, RenderSportsCell,  } from "@/component/organisms/AppTable/CommonCells";
 
 export const tableHeaders = [
   {
@@ -110,17 +110,13 @@ export const tableHeadersData = [
     style: { width: "10%" },
     renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
-  // {
-  //   title: "Sports",
-  //   key: "categories", 
-  //   style: { width: "15%" },
-  //   // renderValue: (cellValue, rowData) => {
-  //   //   // const sportNames = row.categories?.map((cat) => cat.name) || [];
-  //   //   // console.log("sportNames in tableHeadersData:", sportNames);
-  //   //   return <RenderSportsCell cellValue={cellValue} rowData={rowData} />;
-  //   // },
-  //   // renderValue: (cellValue) => <RenderSportsCell {...{ cellValue }} />,
-  // },
+  {
+    title: "Sports",
+    key: "categories", 
+    style: { width: "15%" },
+   
+    renderValue: (cellValue) => <RenderSportsCell {...{ cellValue }} />,
+  },
   {
     title: "Total Subscriber",
     key: "noOfSubscribers",

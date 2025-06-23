@@ -131,6 +131,7 @@ const CategoryTemplate = () => {
     <main>
       <TopHeader title="Category">
         <FilterHeader
+          showDropDown={true}
           dropdownOption={STATUS_OPTIONS}
           placeholder={"Status"}
           setValue={(value) => {

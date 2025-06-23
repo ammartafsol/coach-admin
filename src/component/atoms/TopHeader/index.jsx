@@ -2,11 +2,11 @@ import React from "react";
 import classes from "./TopHeader.module.css";
 import Tabs from "@/component/molecules/TabsComponent";
 
-const TopHeader = ({ children, title, tabsData, selected, setSelected }) => {
+const TopHeader = ({ children, title, tabsData, selected, setSelected , slug}) => {
   return (
     <div className={classes?.TopHeader}>
       <div className={classes?.mainPoint}>
-        Dashboard / <span>{title}</span>
+        Dashboard / <span>{title}  {slug}</span>
         <div className={classes?.route}>{title}</div>
         {tabsData && (
           <Tabs

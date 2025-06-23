@@ -35,9 +35,14 @@ export const FAQ_TYPE_OPTIONS = [
 ];
 
 export const USER_ACTION_OPTIONS = [
-  // { label: "Deactivate", value: "deactivate" },
-  // { label: "Activate", value: "activate" },
+  {label:"View Details" , value: "viewDetails"},
   { label: "Status", value: "status" },
+
+];
+export const USER_STATUS_OPTIONS = [
+  { label: "All", value: "all" },
+  { label: "Blocked", value: true },
+  { label: "Unblocked", value: false },
 ];
 
 export const COACH_STATUS_OPTIONS = [
@@ -46,11 +51,11 @@ export const COACH_STATUS_OPTIONS = [
   { label: "Pending", value: "pending" },
   { label: "Rejected", value: "rejected" },
 ];
-export const USER_STATUS_OPTIONS = [
-  { label: "All", value: "all" },
-  { label: "Blocked", value: true },
-  { label: "Unblocked", value: false },
+export const COACH_ACTION_OPTIONS = [
+  { label: "View Details", value: "viewDetails" },
+  { label: "Status", value: "status" },
 ];
+
 
 export const SPORTS_OPTIONS = [
   { label: "All", value: "all" },

@@ -159,25 +159,22 @@ export const RenderRatingCell = ({ cellValue }) => {
   );
 };
 
-// export const RenderSportsCell = ({cellValue : item, rowData : rowItem}) => {
-//   console.log("cellValue in RenderSportsCell:", item);
+export const RenderSportsCell = ({ cellValue: item }) => {
+  if (!Array.isArray(item) || item.length === 0) {
+    return "-";
+  }
 
-//   if (!Array.isArray(item) || item.length === 0) {
-//     return "-";
-//   }
+  const firstSportName = item[0]?.name ?? "-";
+  const extraCount = item.length - 1;
 
-//   // const firstSport = cellValue[0];
-//   // const extraCount = cellValue.length - 1;
-
-//   return (
-//     <span className={classes.sportLabel}>{item[0]}</span>
-//     // <div className={classes.sportsCell}>
-//     //   <span className={classes.sportLabel}>{firstSport}</span>
-//     //   {extraCount > 0 && (
-//     //     <span className={classes.countBadge}>+{extraCount}</span>
-//     //   )}
-//     // </div>
-//   );
-// };
+  return (
+    <div className={classes.sportsCell}>
+      <span className={classes.sportLabel}>{firstSportName}</span>
+      {extraCount > 0 && (
+        <span className={classes.countBadge}>+{extraCount}</span>
+      )}
+    </div>
+  );
+};
 
 
