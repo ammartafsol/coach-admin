@@ -7,7 +7,7 @@ import { notificationCardData } from "@/developmentContent/dummyData";
 import { mediaUrl, timeAgo } from "@/resources/utils/helper";
 import Link from "next/link";
 
-export default function DashboardRightContent({ dataSubscribers, dataFeeds }) {
+export default function DashboardRightContent({ dataSubscribers, dataFeeds, dataRequests }) {
   const widthSubscribers =
     (dataSubscribers?.totalUsersSubscribed /
       dataSubscribers?.totalUserRegistered) *
