@@ -5,7 +5,7 @@ import NotificationCard from "@/component/atoms/NotificationCard";
 import { Col, Row } from "react-bootstrap";
 import { notificationCardData } from "@/developmentContent/dummyData";
 
-export default function DashboardRightContent() {
+export default function DashboardRightContent({ dataSubscribers }) {
   return (
     <div className={classes.rightColumn}>
       <div className={classes.subscribersCard}>
@@ -13,7 +13,7 @@ export default function DashboardRightContent() {
         <div className={classes.subscriberItem}>
           <div className={classes?.main}>
             <div className={classes.subscriberLabel}>Total Subscriber</div>
-            <div className={classes.subscriberValue}>1,43,382</div>
+            <div className={classes.subscriberValue}>{dataSubscribers?.totalUsersSubscribed || '0'}</div>
           </div>
 
           <div className={classes.subscriberBar}>
@@ -27,7 +27,7 @@ export default function DashboardRightContent() {
         <div className={classes.subscriberItem}>
           <div className={classes?.main}>
             <div className={classes.subscriberLabel}>Total Non Subscriber</div>
-            <div className={classes.subscriberValue}>87,974</div>
+            <div className={classes.subscriberValue}>{dataSubscribers?.totalUserRegistered - dataSubscribers?.totalUsersSubscribed || '0'}</div>
           </div>
 
           <div className={classes.subscriberBar}>
