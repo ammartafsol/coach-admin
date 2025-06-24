@@ -6,6 +6,11 @@ import { Col, Row } from "react-bootstrap";
 import { notificationCardData } from "@/developmentContent/dummyData";
 
 export default function DashboardRightContent({ dataSubscribers }) {
+  const widthSubscribers = dataSubscribers?.totalUsersSubscribed/dataSubscribers?.totalUserRegistered * 100;
+  const widthNonSubscribers = (dataSubscribers?.totalUserRegistered - dataSubscribers?.totalUsersSubscribed)/dataSubscribers?.totalUserRegistered * 100;
+  console.log("🚀 ~ DashboardRightContent ~ widthNonSubscribers:", widthNonSubscribers)
+  console.log("🚀 ~ DashboardRightContent ~ widthSubscribers:", widthSubscribers)
+
   return (
     <div className={classes.rightColumn}>
       <div className={classes.subscribersCard}>
@@ -19,7 +24,7 @@ export default function DashboardRightContent({ dataSubscribers }) {
           <div className={classes.subscriberBar}>
             <div
               className={classes.subscriberBarFill}
-              style={{ width: "80%", backgroundColor: "#6caadd" }}
+              style={{ width: widthSubscribers + '%', backgroundColor: "#6caadd" }}
             ></div>
           </div>
         </div>
@@ -33,7 +38,7 @@ export default function DashboardRightContent({ dataSubscribers }) {
           <div className={classes.subscriberBar}>
             <div
               className={classes.subscriberBarFill}
-              style={{ width: "40%", backgroundColor: "#f5b5d1" }}
+              style={{ width: widthNonSubscribers + '%', backgroundColor: "#f5b5d1" }}
             ></div>
           </div>
         </div>
