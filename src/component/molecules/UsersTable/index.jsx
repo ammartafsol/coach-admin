@@ -1,15 +1,11 @@
 import AppTable from "@/component/organisms/AppTable/AppTable";
-import { coachTableData } from "@/developmentContent/tableBody";
 import { coachtableHeaders } from "@/developmentContent/tableHeader";
-import Image from "next/image";
 import React from "react";
-import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import classes from "./UsersTable.module.css";
 import { USER_ACTION_OPTIONS } from "@/developmentContent/dropdownOption";
 import ActionMenu from "../ActionMenu/ActionMenu";
 
 const UsersTable = ({subscribersData, loading, page, setPage, totalRecords}) => {
-  console.log("subscribersData", subscribersData);
   return (
     <div>
        <AppTable

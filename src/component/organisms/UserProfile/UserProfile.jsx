@@ -241,7 +241,7 @@ export default function UserProfile({ userData }) {
             key={currentPage}
           >
             {getCurrentTestimonials().map((testimonial) => (
-              <TestimonialCard key={testimonial.id} testimonial={testimonial} />
+              <TestimonialCard key={testimonial.id} testimonial={testimonial} userData={userData}/>
             ))}
           </div>
 

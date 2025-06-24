@@ -18,13 +18,14 @@ import { Loader } from "@/component/atoms/Loader";
 import useDebounce from "@/resources/hooks/useDebounce";
 import { RECORDS_LIMIT } from "@/const";
 import { USER_STATUS_OPTIONS } from "@/developmentContent/dropdownOption";
+import RenderToast from "@/component/atoms/RenderToast";
 
 
 const CoachDetailTemplate = ({slug}) => {
   const [SelectedTabs, setSelectedTabs] = useState(coachTabs[0]);
 
 
-  const {Get} = useAxios();
+  const {Get , Patch} = useAxios();
   const [usersData, setUsersData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [feedsData, setFeedsData] = useState([]);
@@ -55,7 +56,6 @@ const CoachDetailTemplate = ({slug}) => {
         coachSlug,
       };
       const query = new URLSearchParams(params).toString();
-      console.log(query);
     
       setLoading(true);
       const { response } = await Get({
@@ -100,11 +100,25 @@ const CoachDetailTemplate = ({slug}) => {
       setFeedsLoading("");
     }
     
-    // useEffect(() => {
-    //   getData();
-    //   getSubscribersData();
-    //   getFeedsData();
-    // }, [slug, debounceSearch]);
+
+    const editSubscription = async (values) => {
+      
+      const { response } = await Patch({
+        route: `admin/users/coach/subscription/update/${slug}`,
+        data: {
+          subscriptionCost: values.price,
+        },
+      });
+      
+      console.log("API response:", response);
+      
+     if(response){
+      RenderToast({
+        message: "Subscription updated successfully",
+        type: "success",
+      });
+     }
+    }
 
     useEffect(() => {
       getData();
@@ -178,7 +192,7 @@ const CoachDetailTemplate = ({slug}) => {
             ) : SelectedTabs.value === "profile" ? (
               <UserProfile userData={usersData} />
             ) : SelectedTabs.value === "subscription" ? (
-              <Subscription  />
+              <Subscription  editSubscription={editSubscription} userData={usersData} />
             ) : SelectedTabs.value === "feeds" ? (
               <FeedsCom 
                 feedsData={feedsData} 
