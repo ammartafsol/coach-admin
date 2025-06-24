@@ -93,7 +93,7 @@ const DashboardTemplate = () => {
           </BorderWrapper>
         </div>
         <div className={classes.rightColumn}>
-          <DashboardRightContent dataSubscribers={data?.stats}/>
+          <DashboardRightContent dataSubscribers={data?.stats} dataFeeds={data?.feeds}/>
         </div>
       </div>
     </div>

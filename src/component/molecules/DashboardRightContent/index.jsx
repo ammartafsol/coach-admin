@@ -5,7 +5,7 @@ import NotificationCard from "@/component/atoms/NotificationCard";
 import { Col, Row } from "react-bootstrap";
 import { notificationCardData } from "@/developmentContent/dummyData";
 
-export default function DashboardRightContent({ dataSubscribers }) {
+export default function DashboardRightContent({ dataSubscribers , dataFeeds }) {
   const widthSubscribers = dataSubscribers?.totalUsersSubscribed/dataSubscribers?.totalUserRegistered * 100;
   const widthNonSubscribers = (dataSubscribers?.totalUserRegistered - dataSubscribers?.totalUsersSubscribed)/dataSubscribers?.totalUserRegistered * 100;
 
