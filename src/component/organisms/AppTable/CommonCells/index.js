@@ -17,7 +17,7 @@ const statusClassMap = {
   unpaid: "statusUnpaid",
 };
 
-export const RenderTextCell = ({ cellValue: item }) => {
+export const RenderTextCell = ({ cellValue: item , rowItem}) => {
   return (
     <span className={mergeClass("maxLine1 t-t-c")}>
       {item ? capitalizeFirstLetter(item) : "-"}

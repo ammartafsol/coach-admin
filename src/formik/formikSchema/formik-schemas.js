@@ -204,3 +204,7 @@ export const UserModalSchema = Yup.object({
 export const RejectionReasonSchema = Yup.object({
   rejectReason: Yup.string().required("Rejection Reason is required"),
 });
+
+export const EditSubscriptionSchema = Yup.object({
+  price: Yup.number().required("Price is required"),
+});

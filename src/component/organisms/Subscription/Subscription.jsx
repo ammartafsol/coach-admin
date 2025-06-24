@@ -7,8 +7,9 @@ import Button from "@/component/atoms/Button";
 import EditSubscription from "@/component/molecules/EditSubscription/EditSubscription";
 
 
-export default function Subscription({userData}) {
+export default function Subscription({userData, editSubscription}) {
   const [isEdit, setIsEdit] = useState(false);
+  console.log("userData", userData);
   return (
     <div className={classes.main}>
       <div className={isEdit ? classes.editHeader : classes.header}>
@@ -19,7 +20,7 @@ export default function Subscription({userData}) {
         )}
       </div>
       {isEdit ? (
-        <EditSubscription />
+        <EditSubscription editSubscription={editSubscription} />
       ) : (
         <div className={classes.subscriptionCard}>
           <SubscriptionCard setIsEdit={setIsEdit} userData={userData} />

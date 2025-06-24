@@ -2,9 +2,9 @@ import Image from "next/image";
 import classes from "./TestimonialCard.module.css";
 import { mergeClass } from "@/resources/utils/helper";
 
-export default function TestimonialCard({ testimonial }) {
+export default function TestimonialCard({ testimonial, userData }) {
   const { rating, text, name, avatar } = testimonial;
-
+  console.log("userData", userData);
   return (
     <div className={classes.card}>
       <div className={classes.starsContainer}>
@@ -32,7 +32,7 @@ export default function TestimonialCard({ testimonial }) {
           height={46}
           className={classes.avatar}
         />
-        <span className={classes.name}>{name}</span>
+        <span className={classes.name}>{userData?.reviews?.createdBy?.fullName  }</span>
       </div>
     </div>
   );

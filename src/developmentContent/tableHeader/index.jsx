@@ -137,25 +137,36 @@ export const coachtableHeaders = [
     title: "User Name",
     key: "fullName",
     style: { width: "15%" },
-
+    renderValue: (cellValue, rowItem) => (
+      <RenderUserDataCell
+        fullName={rowItem?.subscriber?.fullName}
+        photo={rowItem?.subscriber?.photo}
+      />
+    ),
   },
   {
     title: "Email",
-    key: "email",
+    key: "",
     style: { width: "15%" },
-    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+    renderValue: (cellValue, rowItem) => (
+      <RenderTextCell cellValue={rowItem?.subscriber?.email} />
+    ),
   },
   {
     title: "Number",
     key: "phoneNumber",
     style: { width: "15%" },
-    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+    renderValue: (cellValue, rowItem) => (
+      <RenderTextCell cellValue={rowItem?.subscriber?.phoneNumber} />
+    ),
   },
   {
     title: "Date",
     key: "date",
     style: { width: "10%" },
-    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+    renderValue: (cellValue, rowItem) => (
+      <RenderDateCell cellValue={rowItem?.subscriber?.createdAt} />
+    ),
   },
   {
     title: "Status",
@@ -167,6 +178,9 @@ export const coachtableHeaders = [
     title: "Location",
     key: "location",
     style: { width: "15%" },
+    renderValue: (cellValue, rowItem) => (
+      <RenderTextCell cellValue={rowItem?.subscriber?.country} />
+    ),
   },
   { title: "", key: "action", width: "15%" },
 ];

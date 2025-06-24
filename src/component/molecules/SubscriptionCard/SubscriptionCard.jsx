@@ -10,6 +10,7 @@ export default function SubscriptionCard({
   setIsEdit,
   userData,
 }) {
+  console.log("userData", userData);
   return (
     <BorderWrapper>
       <div className={classes.main}>
