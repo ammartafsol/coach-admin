@@ -8,8 +8,6 @@ import { notificationCardData } from "@/developmentContent/dummyData";
 export default function DashboardRightContent({ dataSubscribers }) {
   const widthSubscribers = dataSubscribers?.totalUsersSubscribed/dataSubscribers?.totalUserRegistered * 100;
   const widthNonSubscribers = (dataSubscribers?.totalUserRegistered - dataSubscribers?.totalUsersSubscribed)/dataSubscribers?.totalUserRegistered * 100;
-  console.log("🚀 ~ DashboardRightContent ~ widthNonSubscribers:", widthNonSubscribers)
-  console.log("🚀 ~ DashboardRightContent ~ widthSubscribers:", widthSubscribers)
 
   return (
     <div className={classes.rightColumn}>
