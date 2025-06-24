@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./ShowDocuments.module.css";
 import { FaFileContract } from "react-icons/fa";
-import { MediaUrl } from "../../../resources/utils/helper";
+import { mediaUrl } from "../../../resources/utils/helper";
 import { MdFileDownload } from "react-icons/md";
 import { LuLoaderCircle } from "react-icons/lu";
 

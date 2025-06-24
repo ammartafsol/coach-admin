@@ -1,13 +1,15 @@
-
 .registrationContent {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    border-bottom: 1px solid #e7e7e7;
+    padding-bottom: 1rem;
   }
 
   .registrationUser {
     display: flex;
     gap: 1rem;
+    align-items: center;
   }
   
   .registrationAvatar {
@@ -45,30 +47,30 @@
     justify-content: flex-start;
   }
   
-  .rejectButton {
-    padding: 0.5rem 1rem;
-    border: 1px solid #e7e7e7;
-    background-color: white;
-    border-radius: 0.25rem;
-    font-size: 0.875rem;
-    cursor: pointer;
-    font-family: "AvenirRegular";
-
-  }
   
-  .acceptButton {
+  
+  .statusText {
     padding: 0.5rem 1rem;
-    background-color: #b0cd6e;
-    border: none;
     border-radius: 0.25rem;
     font-size: 0.875rem;
-    cursor: pointer;
     font-family: "AvenirRegular";
-
+    font-weight: 500;
+    background-color: #f8f9fa;
+    color: #6c757d;
+    border: 1px solid #dee2e6;
   }
   
   .notificationMain{
     display: flex;
     flex-direction: column;
     width: 100%;
+  }
+  .notificationText{
+    display: flex;
+   justify-content: space-between;
+   align-items: center;
+  }
+  .actionButton{
+    height: 32px !important;
+    padding: 6px 24px !important;
   }

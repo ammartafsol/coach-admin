@@ -1,0 +1,13 @@
+.actionButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (max-width: 768px) {
+  .actionButtons {
+    flex-direction: column;
+    gap: 4px;
+  }
+} 

@@ -45,7 +45,7 @@ export const apiHeader = (token, isFormData) => {
   }
 };
 export const BaseURL = (link) => `${API_URL}/api/v1/${link}`;
-export const MediaUrl = (url) => {
+export const mediaUrl = (url) => {
   if (!url) return "";
   const result = url.indexOf("http");
   if (result === -1) return `${S3_URL}/${url}`;
@@ -343,6 +343,7 @@ export const validateEmail = (email) => {
 };
 
 export const CreateFormData = (data) => {
+  console.log("🚀 ~ data:", data);
   const formData = new FormData();
   for (let key in data) {
     if (Array.isArray(data[key])) {
@@ -577,4 +578,34 @@ export const getUniqueBrowserId = () => {
     localStorage.setItem("uniqueBrowserId", theId);
     return theId;
   }
+};
+
+export const timeAgo = (dateString) => {
+  const now = new Date();
+  const past = new Date(dateString);
+  const diffMs = now - past;
+
+  const seconds = Math.floor(diffMs / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+  const weeks = Math.floor(days / 7);
+  const months = Math.floor(days / 30);
+  const years = Math.floor(days / 365);
+
+  if (seconds < 60) return "just now";
+  if (minutes < 60) return `${minutes} min${minutes !== 1 ? "s" : ""} ago`;
+  if (hours < 24) return `${hours} hr${hours !== 1 ? "s" : ""} ago`;
+  if (days < 7) return `${days} day${days !== 1 ? "s" : ""} ago`;
+  if (weeks < 4) return `${weeks} week${weeks !== 1 ? "s" : ""} ago`;
+  if (months < 12) return `${months} month${months !== 1 ? "s" : ""} ago`;
+  return `${years} year${years !== 1 ? "s" : ""} ago`;
+}
+
+// Format date for display
+export const formatDate = (date) => {
+  if (!date) return "";
+
+  const options = { year: "numeric", month: "short", day: "2-digit" };
+  return new Date(date).toLocaleDateString("en-US", options);
 };

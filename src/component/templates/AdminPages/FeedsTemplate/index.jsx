@@ -9,7 +9,7 @@ import BorderWrapper from "@/component/atoms/BorderWrapper"
 import FeedsCard from "@/component/molecules/FeedsCard/FeedsCard"
 import { feedsData } from "@/developmentContent/dummyData"
 import VideoModalSkeleton from "@/component/molecules/VideoModalSkeleton"
-import Modal from "@/component/molecules/Modal/Modal"
+import Modal from "@/component/molecules/Modal/ModalSkeleton/Modal"
 import CommentsModal from "@/component/molecules/CommentsModal/CommentsModal"
 
 const FeedsTemplate = () => {

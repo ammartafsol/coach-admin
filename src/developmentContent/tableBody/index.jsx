@@ -272,3 +272,36 @@ export const CoachTableBody = [
       }
       
     ];
+
+    export const faqTableData = [
+      {
+        question: "How do I create an account?",
+        answer: "To create an account, click on the 'Sign Up' button and fill in your details including name, email, and password.",
+        updatedAt: "2024-01-15T10:30:00Z",
+        isActive: true,
+      },
+      {
+        question: "How can I reset my password?",
+        answer: "You can reset your password by clicking on 'Forgot Password' on the login page and following the instructions sent to your email.",
+        updatedAt: "2024-01-14T14:20:00Z",
+        isActive: true,
+      },
+      {
+        question: "What payment methods do you accept?",
+        answer: "We accept all major credit cards including Visa, MasterCard, and American Express. We also support PayPal and bank transfers.",
+        updatedAt: "2024-01-13T09:15:00Z",
+        isActive: false,
+      },
+      {
+        question: "How do I contact customer support?",
+        answer: "You can contact our customer support team through email at support@coachhuddle.com or by calling our toll-free number 1-800-COACH.",
+        updatedAt: "2024-01-12T16:45:00Z",
+        isActive: true,
+      },
+      {
+        question: "Can I cancel my subscription anytime?",
+        answer: "Yes, you can cancel your subscription at any time. Go to your account settings and click on 'Cancel Subscription' to stop billing.",
+        updatedAt: "2024-01-11T11:30:00Z",
+        isActive: true,
+      },
+    ];

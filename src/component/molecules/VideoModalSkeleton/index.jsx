@@ -4,7 +4,7 @@ import { Pause, RefreshCw } from "lucide-react";
 import Image from "next/image";
 import { GoRocket } from "react-icons/go";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import Modal from "../Modal/Modal";
+import Modal from "../Modal/ModalSkeleton/Modal";
 import classes from "./VideoModalSkeleton.module.css";
 
 export default function VideoModalSkeleton({

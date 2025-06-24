@@ -1,55 +1,53 @@
 "use client";
-import React from "react";
-import classes from "./CategoryTemplate.module.css";
 import TopHeader from "@/component/atoms/TopHeader";
-import DropDown from "@/component/molecules/DropDown/DropDown";
-import { Input } from "@/component/atoms/Input";
-import { IoSearchOutline } from "react-icons/io5";
-import AppTable from "@/component/organisms/AppTable/AppTable";
-import { HiOutlineDotsHorizontal } from "react-icons/hi";
-import {
-    categoryTableHeaders,
-} from "@/developmentContent/tableHeader";
-import {categoryTableData } from "@/developmentContent/tableBody";
 import ActionMenu from "@/component/molecules/ActionMenu/ActionMenu";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import Image from "next/image";
-import UserProfile from "@/component/organisms/UserProfile/UserProfile";
+import AddCategoryModal from "@/component/molecules/Modal/AddCategory";
+import AppTable from "@/component/organisms/AppTable/AppTable";
+import { CATEGORY_ACTION_OPTIONS, STATUS_OPTIONS } from "@/developmentContent/dropdownOption";
+import { categoryTableHeaders } from "@/developmentContent/tableHeader";
 import useAxios from "@/interceptor/axiosInterceptor";
 import useDebounce from "@/resources/hooks/useDebounce";
+import { useEffect, useState } from "react";
+import classes from "./CategoryTemplate.module.css";
+import { CreateFormData } from "@/resources/utils/helper";
+import RenderToast from "@/component/atoms/RenderToast";
+import FilterHeader from "@/component/molecules/FilterHeader/FilterHeader";
 
 const CategoryTemplate = () => {
-
-  const { get } = useAxios();
+  const { Post, Patch , Get} = useAxios();
+  
   const [showModal, setShowModal] = useState(false);
-
-  const [data, setData] = useState(categoryTableData ?? []);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState("");
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const debounceSearch = useDebounce(search, 500);
   const [totalRecords, setTotalRecords] = useState(data?.length ?? 0);
-  const [filter, setFilter] = useState({
-    status: "all",
-  });
+  const [status, setStatus] = useState(STATUS_OPTIONS[0]);
+  const [selectedItem, setSelectedItem] = useState(null);
+ 
+  const getData = async ({
+    pg = page,
+    _search = debounceSearch,
+    _status = status?.value,
+  }) => {
+    if (loading === "loading") return;
 
-  const getData = async ({ pg = page, _search = debounceSearch }) => {
     const params = {
       page: pg,
       search: _search,
-      status: filter.status,
+      status: _status,
     };
     const query = new URLSearchParams(params).toString();
 
-    if (loading === "loading") return;
-
+    console.log(query);
     setLoading("loading");
 
-    const response = await get({
-      route: `admin/category/all?${query}`,
+    const { response } = await Get({
+      route: `admin/categories?${query}&limit=10`,
     });
 
+  console.log(response);
     if (response) {
       setData(response.data);
       setPage(pg);
@@ -59,40 +57,100 @@ const CategoryTemplate = () => {
     setLoading("");
   };
 
-  const [showActionMenu, setShowActionMenu] = useState(false);
-  const [selectedRowIndex, setSelectedRowIndex] = useState(null);
-  const [menuX, setMenuX] = useState(0);
-  const [menuY, setMenuY] = useState(0);
+  useEffect(() => {
+    getData({ _search: debounceSearch, _status: status?.value });
+  }, [debounceSearch, page, status]);
 
-  const router = useRouter();
 
-  const handleActionClick = (event, rowIndex) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    setMenuX(rect.left);
-    setMenuY(rect.bottom);
-    setShowActionMenu(true);
-    setSelectedRowIndex(rowIndex);
+  const onClickPopover = (label = "", item = rowItem) => {
+    if(label === "Edit"){
+      setSelectedItem(item);
+      setTimeout(() => {
+        setShowModal(true);
+      }, 0);
+    }
+    if(label === "Delete"){
+      console.log("delete");
+    }
   };
 
-  const handleCloseMenu = () => {
-    setShowActionMenu(false);
-    setSelectedRowIndex(null);
-  };
 
-  const menuOptions = [
-    { label: "Deactivate", action: () => router.push("/user/213") },
-    { label: "View Detail", action: () => router.push("/user/213") },
-  ];
+  // add/edit category
+  const handleAddEditCategory = async (values) => {
+    setLoading("loading");
+
+    const payload = {
+      ...values,
+      type: values.type?.value,
+      isActive: values.isActive?.value,
+    };
+
+    const route = selectedItem?._id
+      ? `admin/categories/${selectedItem.slug}`
+      : "admin/categories";
+    const responseHandler = selectedItem?.slug ? Patch : Post;
+
+    const { response } = await responseHandler({
+      route,
+      data: payload,
+    });
+
+    if (response) {
+      RenderToast({
+        type: "success",
+        message: selectedItem?.slug
+          ? "Category Updated Successfully"
+          : "Category Added Successfully",
+      });
+      setShowModal(false);
+      setLoading("");
+      getData({ _search: debounceSearch, _status: status?.value });
+    }
+  };
+  const handleImageChange = async (file) => {
+    const data = {
+      media: file,
+    };
+
+    const formData = CreateFormData(data);
+
+    const { response } = await Post({
+      route: "media/upload",
+      data: formData,
+      isFormData: true,
+    });
+    if (response) {
+      setSelectedItem({
+        ...selectedItem,
+        image: response.data?.media[0].key,
+      });
+    }
+  };
 
   return (
-    <>
-        <TopHeader title="Category">
-
-        <DropDown placeholder={"Category"} />
-        <Input
-          mainContClassName={classes?.mainContClassName}
-          placeholder={"Search By Category"}
-          rightIcon={<IoSearchOutline color="#B0CD6E" size={20} />}
+    <main>
+      <TopHeader title="Category">
+        <FilterHeader
+          showDropDown={true}
+          dropdownOption={STATUS_OPTIONS}
+          placeholder={"Status"}
+          setValue={(value) => {
+            setStatus(value);
+            setPage(1);
+          }}
+          inputPlaceholder="Search"
+          customStyle={{ width: "300px" }}
+          
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setPage(1);
+          }}
+          showButton={true}
+          buttonLabel="Add Category"
+          buttonOnClick={() => {
+            setSelectedItem(null);
+            setShowModal(true);
+          }}
         />
       </TopHeader>
       <div>
@@ -102,40 +160,45 @@ const CategoryTemplate = () => {
           hasPagination={true}
           loading={loading === "loading"}
           totalItems={totalRecords}
-          onPageChange={(pg) => {
-            setPage(pg);
-            getData({ pg });
+          onPageChange={(p) => {
+            setPage(p);
+            getData({ pg: p });
           }}
           currentPage={page}
           renderItem={({ item, key, rowIndex, renderValue }) => {
             const rowItem = data[rowIndex];
-            if (renderValue) {
-              return renderValue(item, rowItem);
-            }
+            if (renderValue) return renderValue(rowItem[key]);
             if (key === "action") {
               return (
-              
-                  <HiOutlineDotsHorizontal
-                    size={25}
-                    className={classes.actionLink}
-                    onClick={(event) => handleActionClick(event, rowIndex)}
-                  />
-                
+                <div className={classes.actionButtons}>
+                    <ActionMenu
+                      popover={CATEGORY_ACTION_OPTIONS}
+                      onClick={(label) => {
+                        onClickPopover(label, rowItem);
+                      }}
+                    />
+                  </div>
               );
             }
             return item || "";
           }}
         />
-        {showActionMenu && (
-          <ActionMenu
-            options={menuOptions}
-            onClose={handleCloseMenu}
-            x={menuX}
-            y={menuY}
-          />
-        )}
       </div>
-    </>
+      {showModal && (
+        <AddCategoryModal
+          show={showModal}
+          setShow={() => {
+            setShowModal(false);
+            setSelectedItem(null);
+          }}
+          itemData={selectedItem}
+          handleAddEditCategory={handleAddEditCategory}
+          handleImageChange={handleImageChange}
+          loading={loading}
+          setLoading={setLoading}
+        />
+      )}
+    </main>
   );
 };
 

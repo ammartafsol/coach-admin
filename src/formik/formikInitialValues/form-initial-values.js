@@ -1,3 +1,5 @@
+import { CATEGORY_STATUS_OPTIONS, CATEGORY_TYPE_OPTIONS, FAQ_STATUS_OPTIONS, FAQ_TYPE_OPTIONS, USER_STATUS_OPTIONS } from "@/developmentContent/dropdownOption";
+
 export const LOGIN_FORM_VALUES = {
   email: "",
   password: "",
@@ -81,3 +83,36 @@ export const ADD_EDIT_PATIENT_FORM_VALUES = {
   timeSpentAlone: "", // input
   useOfElectronicDevice: "", //dropdown
 };
+
+export const CATEGORY_MODAL_FORM_VALUES = (itemData) => ({
+  name: itemData?.name ?? "",
+  type: CATEGORY_TYPE_OPTIONS?.find(
+    (option) => option.value === itemData?.type
+  ) ?? null ,
+  image: itemData?.image ?? null,
+  isActive: CATEGORY_STATUS_OPTIONS?.find(
+    (option) => option.value === itemData?.isActive
+  ) ?? CATEGORY_STATUS_OPTIONS[0],
+});
+
+export const FAQ_MODAL_FORM_VALUES = (itemData) => ({
+  title: itemData?.title ?? "",
+  description: itemData?.description ?? "",
+  isActive: FAQ_STATUS_OPTIONS?.find(
+    (option) => option.value === itemData?.isActive
+  ) ?? FAQ_STATUS_OPTIONS[0],
+  type: FAQ_TYPE_OPTIONS?.find(
+    (option) => option.value === itemData?.type
+  ) ?? null ,
+});
+
+export const USER_MODAL_FORM_VALUES = (itemData) => ({
+  firstName: itemData?.firstName ?? "",
+  lastName: itemData?.lastName ?? "",
+  email: itemData?.email ?? "",
+  phoneNumber: itemData?.phoneNumber ?? "",
+  location: itemData?.location ?? "",
+  isActive: USER_STATUS_OPTIONS?.find(
+    (option) => option.value === itemData?.isActive
+  ) ?? USER_STATUS_OPTIONS[0],
+});

@@ -12,3 +12,91 @@
   color: var(--white-color);
   cursor: pointer;
 }
+
+.userDataCell{
+  display: flex; 
+  align-items: center;
+  gap: 10px;
+}
+
+.dotIcon {
+  width: 15px;
+  height: 15px;
+  flex: none;
+}
+
+.text {
+  white-space: nowrap;
+}
+
+/* Wrapper */
+.status {
+  display: flex;
+  padding: 2px 8px 2px 6px;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  border-radius: 100px;
+}
+
+/* === Status Colors === */
+
+/* Approved/Paid */
+/* .statusApproved,
+.statusPaid,
+.statusTrue {
+  background-color: #ecfdf3;
+} */
+.statusApprovedIcon,
+.statusPaidIcon,
+.statusTrueIcon {
+  color: #2CDD96;
+}
+.statusApprovedText,
+.statusPaidText,
+.statusTrueText {
+  color: #14532D;
+}
+
+
+.statusRejectedIcon,
+.statusUnpaidIcon,
+.statusFalseIcon {
+  color: #EF4444;
+}
+.statusRejectedText,
+.statusUnpaidText,
+.statusFalseText {
+  color: #7F1D1D;
+}
+
+.statusPendingIcon {
+  color: #b54708;
+}
+.statusPendingText {
+  color: #664d03;
+}
+
+.sportsCell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sportLabel {
+  background-color: #b4d97c;
+  padding: 4px 12px;
+  border-radius: 20px;
+  color: white;
+  font-size: 14px;
+}
+
+.countBadge {
+  background-color: #ffe28a;
+  padding: 4px 8px;
+  border-radius: 50%;
+  font-size: 13px;
+  color: #fff;
+  font-weight: 600;
+}

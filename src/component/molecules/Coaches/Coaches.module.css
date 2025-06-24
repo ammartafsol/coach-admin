@@ -74,3 +74,19 @@
   border: none;
 }
 
+.activateButton {
+  border-radius: 6px;
+  background: #4ade80;
+  backdrop-filter: blur(8.149999618530273px);
+  height: 45px;
+  padding: 10px 24px;
+  color: #14532d;
+  font-family: "AvenirRegular";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 450;
+  line-height: normal;
+  letter-spacing: 0.32px;
+  border: none;
+}
+

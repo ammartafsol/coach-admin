@@ -1,0 +1,37 @@
+.modal {
+  max-width: 600px;
+  width: 100%;
+}
+
+.container {
+  padding: 20px 0;
+}
+
+.formCol {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 20px 0 0 0;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .modal {
+    max-width: 95%;
+    margin: 0 10px;
+  }
+  
+  .buttonContainer {
+    flex-direction: column;
+  }
+  
+  .formCol {
+    padding: 15px 0 0 0;
+  }
+} 

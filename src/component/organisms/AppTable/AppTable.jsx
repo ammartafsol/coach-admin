@@ -1,9 +1,9 @@
-import TableSkeleton from "@/component/molecules/TableSkeleton";
-import classes from "./AppTable.module.css";
-import { RECORDS_LIMIT } from "@/const";
-import PaginationComponent from "@/component/molecules/PaginationComponent";
 import NoData from "@/component/atoms/NoData/NoData";
+import PaginationComponent from "@/component/molecules/PaginationComponent";
+import TableSkeleton from "@/component/molecules/TableSkeleton";
+import { RECORDS_LIMIT } from "@/const";
 import { mergeClass } from "@/resources/utils/helper";
+import classes from "./AppTable.module.css";
 export default function AppTable({
   data = [],
   tableHeader = [],

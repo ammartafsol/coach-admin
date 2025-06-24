@@ -27,9 +27,17 @@
 .dots {
   width: 10px;
   height: 10px;
-  background-color: #2cdd96;
   border-radius: 50%;
 }
+
+.activeDots {
+  background-color: #2cdd96;
+}
+
+.inactiveDots {
+  background-color: #ef4444;
+}
+
 .active{
     display: flex;
     align-items: center;
@@ -124,11 +132,17 @@
 }
 
 .statusBadge {
+  font-family: "AventaRegular";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.activeStatus {
   color: #14532D;
-font-family: "AventaRegular";
-font-size: 14px;
-font-style: normal;
-font-weight: 400;
-line-height: 20px;
-margin-top: 3px;
+}
+
+.inactiveStatus {
+  color: #7f1d1d;
 }

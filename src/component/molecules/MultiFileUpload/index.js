@@ -13,7 +13,7 @@ import { FaFileContract } from "react-icons/fa";
 import { IoCloseOutline } from "react-icons/io5";
 import classes from "./MultiFileUpload.module.css";
 import { MdOutlineCloudDone } from "react-icons/md";
-import { MediaUrl } from "@/resources/utils/helper";
+import { mediaUrl } from "@/resources/utils/helper";
 
 const MultiFileUpload = ({
   label,
@@ -80,7 +80,7 @@ const MultiFileUpload = ({
       return (
         <div className={classes?.imageContainer}>
           <img
-            src={isFileObject ? URL.createObjectURL(file) : MediaUrl(file)}
+            src={isFileObject ? URL.createObjectURL(file) : mediaUrl(file)}
             alt={file.name || "Image"}
           />
         </div>
@@ -102,10 +102,10 @@ const MultiFileUpload = ({
               color="var(--secondary-text)"
               onClick={() =>
                 // window.open(
-                //   isFileObject ? URL.createObjectURL(file) : MediaUrl(file),
+                //   isFileObject ? URL.createObjectURL(file) : mediaUrl(file),
                 //   "_blank"
                 // )
-                window.open(MediaUrl(file), "_blank")
+                window.open(mediaUrl(file), "_blank")
               }
             />
           </span>

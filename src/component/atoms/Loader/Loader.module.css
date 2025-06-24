@@ -13,7 +13,7 @@
 }
 
 .loader {
-  width: 45px;
-  height: 45px;
-  color: var(--deep-ocean-blue);
+  width: 30px;
+  height: 30px;
+  color: var(--light-green);
 }

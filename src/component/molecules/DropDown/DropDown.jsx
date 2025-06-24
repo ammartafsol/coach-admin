@@ -59,11 +59,13 @@ const DropDown = ({
       border: `1px solid #B8B6B6`,
       padding: "1px 15px",
       height: "40px",
+      width: "100%",
+      minWidth:"130px",
       ...customStyle,
 
       ":hover": {
         ...styles[":hover"],
-        borderColor: "var(--Wild-Willow-100)",
+        borderColor: "#B8B6B6",
       },
       ":placeholder": {
         ...styles[":placeholder"],
@@ -71,7 +73,7 @@ const DropDown = ({
       },
       ":active": {
         ...styles[":active"],
-        borderColor: "var(--Wild-Willow-100)",
+        borderColor: "#000",
       },
     }),
 

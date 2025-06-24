@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import Modal from "../../molecules/Modal/Modal";
+import Modal from "../Modal/ModalSkeleton/Modal";
 import styles from "./CommentsModal.module.css";
 import { GoRocket } from "react-icons/go";
 
