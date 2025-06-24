@@ -9,17 +9,19 @@
   .registrationUser {
     display: flex;
     gap: 1rem;
-    align-items: center;
+    align-items: flex-start;
   }
   
   .registrationAvatar {
     border-radius: 50%;
+    margin-top: 2px;
   }
   
   .registrationName {
     font-weight: 600;
     font-size: 0.875rem;
     font-family: AventaBold;
+    text-transform: capitalize;
   }
   
   .registrationText {

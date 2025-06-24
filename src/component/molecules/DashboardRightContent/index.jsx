@@ -99,7 +99,7 @@ export default function DashboardRightContent({ dataSubscribers, dataFeeds, data
       <div className={classes.registrationCard}>
         <h2 className={classes.cardTitle}>Registration Request</h2>
         <Row>
-          {notificationCardData?.slice(0, 2)?.map((item) => {
+          {dataRequests?.slice(0, 2)?.map((item) => {
             return (
               <Col md={12}>
                 <NotificationCard key={item.id} item={item} />
