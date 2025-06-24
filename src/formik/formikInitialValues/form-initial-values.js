@@ -92,7 +92,7 @@ export const CATEGORY_MODAL_FORM_VALUES = (itemData) => ({
   image: itemData?.image ?? null,
   isActive: CATEGORY_STATUS_OPTIONS?.find(
     (option) => option.value === itemData?.isActive
-  ) ?? CATEGORY_STATUS_OPTIONS[0],
+  ),
 });
 
 export const FAQ_MODAL_FORM_VALUES = (itemData) => ({

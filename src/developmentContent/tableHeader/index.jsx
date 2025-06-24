@@ -135,8 +135,9 @@ export const tableHeadersData = [
 export const coachtableHeaders = [
   {
     title: "User Name",
-    key: "username",
+    key: "fullName",
     style: { width: "15%" },
+
   },
   {
     title: "Email",
@@ -160,6 +161,7 @@ export const coachtableHeaders = [
     title: "Status",
     key: "status",
     style: { width: "15%" },
+    renderValue: (cellValue) => <RenderStatusCell {...{ cellValue }} />,
   },
   {
     title: "Location",

@@ -12,6 +12,7 @@ import classes from "./CategoryTemplate.module.css";
 import { CreateFormData } from "@/resources/utils/helper";
 import RenderToast from "@/component/atoms/RenderToast";
 import FilterHeader from "@/component/molecules/FilterHeader/FilterHeader";
+import { RECORDS_LIMIT } from "@/const";
 
 const CategoryTemplate = () => {
   const { Post, Patch , Get} = useAxios();
@@ -21,63 +22,63 @@ const CategoryTemplate = () => {
   const [loading, setLoading] = useState("");
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
+  
   const debounceSearch = useDebounce(search, 500);
-  const [totalRecords, setTotalRecords] = useState(data?.length ?? 0);
+
+  const [totalRecords, setTotalRecords] = useState(0);
   const [status, setStatus] = useState(STATUS_OPTIONS[0]);
   const [selectedItem, setSelectedItem] = useState(null);
  
   const getData = async ({
     pg = page,
     _search = debounceSearch,
-    _status = status?.value,
+    _status = status,
   }) => {
     if (loading === "loading") return;
 
     const params = {
       page: pg,
       search: _search,
-      status: _status,
+      ...(_status && { status: _status?.value }),
+      limit: RECORDS_LIMIT,
     };
     const query = new URLSearchParams(params).toString();
 
-    console.log(query);
     setLoading("loading");
 
     const { response } = await Get({
-      route: `admin/categories?${query}&limit=10`,
+      route: `admin/categories?${query}`,
     });
 
-  console.log(response);
     if (response) {
-      setData(response.data);
+      setData(response?.data);
       setPage(pg);
-      setTotalRecords(response.totalRecords);
+      setTotalRecords(response?.totalRecords);
     }
 
     setLoading("");
   };
 
   useEffect(() => {
-    getData({ _search: debounceSearch, _status: status?.value });
-  }, [debounceSearch, page, status]);
+    getData({pg: 1, _search: debounceSearch, _status: status });
+
+  }, [debounceSearch]);
 
 
   const onClickPopover = (label = "", item = rowItem) => {
     if(label === "Edit"){
       setSelectedItem(item);
-      setTimeout(() => {
-        setShowModal(true);
-      }, 0);
-    }
-    if(label === "Delete"){
-      console.log("delete");
+      setShowModal(true);
     }
   };
 
 
   // add/edit category
   const handleAddEditCategory = async (values) => {
-    setLoading("loading");
+
+    if(!values) return;
+
+    setLoading("addEditCategory");
 
     const payload = {
       ...values,
@@ -85,9 +86,10 @@ const CategoryTemplate = () => {
       isActive: values.isActive?.value,
     };
 
-    const route = selectedItem?._id
-      ? `admin/categories/${selectedItem.slug}`
+    const route = selectedItem?.slug
+      ? `admin/categories/${selectedItem?.slug}`
       : "admin/categories";
+
     const responseHandler = selectedItem?.slug ? Patch : Post;
 
     const { response } = await responseHandler({
@@ -98,33 +100,39 @@ const CategoryTemplate = () => {
     if (response) {
       RenderToast({
         type: "success",
-        message: selectedItem?.slug
-          ? "Category Updated Successfully"
-          : "Category Added Successfully",
+        message: `Category ${selectedItem?.slug ? "Updated" : "Added"} Successfully.`
       });
       setShowModal(false);
-      setLoading("");
-      getData({ _search: debounceSearch, _status: status?.value });
+      getData({ pg: 1 });
     }
+    setLoading("");
   };
+
   const handleImageChange = async (file) => {
+
+    if(!file) return;
+
     const data = {
       media: file,
     };
 
     const formData = CreateFormData(data);
 
+    setLoading("uploadImage");
+
     const { response } = await Post({
       route: "media/upload",
       data: formData,
       isFormData: true,
     });
+
     if (response) {
       setSelectedItem({
         ...selectedItem,
-        image: response.data?.media[0].key,
+        image: response?.data?.media[0]?.key,
       });
     }
+    setLoading("");
   };
 
   return (
@@ -136,14 +144,11 @@ const CategoryTemplate = () => {
           placeholder={"Status"}
           setValue={(value) => {
             setStatus(value);
-            setPage(1);
           }}
           inputPlaceholder="Search"
           customStyle={{ width: "300px" }}
-          
           onChange={(e) => {
-            setSearch(e.target.value);
-            setPage(1);
+            setSearch(e);
           }}
           showButton={true}
           buttonLabel="Add Category"
@@ -187,15 +192,11 @@ const CategoryTemplate = () => {
       {showModal && (
         <AddCategoryModal
           show={showModal}
-          setShow={() => {
-            setShowModal(false);
-            setSelectedItem(null);
-          }}
+          setShow={setShowModal}
           itemData={selectedItem}
           handleAddEditCategory={handleAddEditCategory}
           handleImageChange={handleImageChange}
-          loading={loading}
-          setLoading={setLoading}
+          loading={loading === "addEditCategory" || loading === "uploadImage"}
         />
       )}
     </main>

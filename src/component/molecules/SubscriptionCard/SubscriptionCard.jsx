@@ -4,7 +4,12 @@ import classes from "./SubscriptionCard.module.css";
 import Button from "@/component/atoms/Button";
 import { FaUsers } from "react-icons/fa";
 import BorderWrapper from "@/component/atoms/BorderWrapper";
-export default function SubscriptionCard({ isActive = true, setIsEdit }) {
+import { formatDate } from "@/resources/utils/helper";
+export default function SubscriptionCard({
+  isActive = true,
+  setIsEdit,
+  userData,
+}) {
   return (
     <BorderWrapper>
       <div className={classes.main}>
@@ -17,14 +22,16 @@ export default function SubscriptionCard({ isActive = true, setIsEdit }) {
             ></span>
             {isActive ? "Active" : "Inactive"}
           </p>
-          <p className={classes.subscriptionType}>Monthly - $20</p>
+          <p className={classes.subscriptionType}>
+            Monthly - {userData?.subscriptionCost}
+          </p>
           <div className={classes.info}>
-            <p>Jan 2, 2023</p>
+            <p>{formatDate(userData?.createdAt) || "No start date"}</p>
             <p className={classes.usersInfo}>
               <span>
                 <FaUsers fill="#A0C15B" size={18} />
               </span>
-              300 Active Users
+              {userData?.noOfSubscribers} Active Users
             </p>
           </div>
         </div>

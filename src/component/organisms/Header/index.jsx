@@ -105,6 +105,7 @@ export default function Navbar() {
         >
           Transaction
         </button>
+        
       </nav>
 
       <div className={classes.userSection}>

@@ -13,10 +13,11 @@ export default function RejectionReasonModal({
   show,
   setShow,
   onConfirm,
+  loading,
   heading = "⚠️ Rejection Reason",
   subheading = "Please provide a reason for rejecting this request.",
 }) {
-  const [loading, setLoading] = useState("");
+
 
   const rejectionReasonFormik = useFormik({
     initialValues: {
@@ -24,7 +25,6 @@ export default function RejectionReasonModal({
     },
     validationSchema: RejectionReasonSchema,
     onSubmit: (values) => {
-      setLoading("loading")
       onConfirm(values);
     },
   });
@@ -66,14 +66,15 @@ export default function RejectionReasonModal({
           <Button
             label="Cancel"
             variant="green-outlined"
+            disabled={loading}
             onClick={handleCancel}
           />
           <Button
             label="Submit Rejection"
             variant="danger"
             onClick={rejectionReasonFormik.handleSubmit}
-            loading={loading === "loading"}
-            disabled={loading === "loading"}
+            loading={loading}
+            disabled={loading }
           />
         </div>
       </div>

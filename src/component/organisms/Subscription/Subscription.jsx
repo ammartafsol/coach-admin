@@ -5,7 +5,9 @@ import BorderWrapper from "@/component/atoms/BorderWrapper";
 import SubscriptionCard from "@/component/molecules/SubscriptionCard/SubscriptionCard";
 import Button from "@/component/atoms/Button";
 import EditSubscription from "@/component/molecules/EditSubscription/EditSubscription";
-export default function Subscription() {
+
+
+export default function Subscription({userData}) {
   const [isEdit, setIsEdit] = useState(false);
   return (
     <div className={classes.main}>
@@ -20,7 +22,7 @@ export default function Subscription() {
         <EditSubscription />
       ) : (
         <div className={classes.subscriptionCard}>
-          <SubscriptionCard setIsEdit={setIsEdit} />
+          <SubscriptionCard setIsEdit={setIsEdit} userData={userData} />
         </div>
       )}
     </div>

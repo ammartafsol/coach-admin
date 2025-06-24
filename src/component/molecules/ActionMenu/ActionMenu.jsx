@@ -1,45 +1,20 @@
 "use client";
 
 import { ClickAwayListener } from "@mui/material";
+import clsx from "clsx";
 import { useState } from "react";
 import { OverlayTrigger, Popover } from "react-bootstrap";
-import { IoMdCheckmark } from "react-icons/io";
-import { RxCross2 } from "react-icons/rx";
-import Style from "./ActionMenu.module.css";
-import clsx from "clsx";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
-import Button from "@/component/atoms/Button";
-import RejectionReasonModal from "@/component/molecules/Modal/RejectionReasonModal";
+import Style from "./ActionMenu.module.css";
 
 export default function ActionMenu({
   popover = [],
   onClick = () => {},
   children = null,
-  showButtons = false,
-  itemData = null, // Data of the item being acted upon
-  onAccept = () => {}, // Callback for accept action
-  onReject = () => {}, // Callback for reject action
-  acceptLoading = false,
-  rejectLoading = false,
+
+
 }) {
   const [show, setShow] = useState(false);
-  const [showRejectionModal, setShowRejectionModal] = useState(false);
-
-  const handleAccept = async () => {
-      await onAccept(itemData);
-      setShow(false);
-  };
-
-  const handleReject = () => {
-    setShowRejectionModal(true);
-    setShow(false);
-  };
-
-  const handleRejectionSubmit = async (rejectionReason) => {
-      await onReject(rejectionReason.rejectReason);
-      setShowRejectionModal(false);
-    
-  };
 
   const overlayPopover = (
     <Popover
@@ -75,26 +50,7 @@ export default function ActionMenu({
                 <li>No options available</li>
               </div>
             )}
-             {showButtons && (
-                    <div className={Style.btnDiv}>
-                      <Button
-                        label={acceptLoading ? "Accepting..." : "Accept"}
-                        onClick={handleAccept}
-                        className={Style.btn}
-                        variant="green-outlined"
-                        leftIcon={<IoMdCheckmark />}
-                        disabled={acceptLoading || rejectLoading}
-                      />
-                      <Button
-                        label={rejectLoading ? "Rejecting..." : "Reject"}
-                        onClick={handleReject}
-                        className={Style.btn}
-                        variant="danger"
-                        leftIcon={<RxCross2 />}
-                        disabled={acceptLoading || rejectLoading}
-                      />
-                    </div>
-                  )}
+           
           </ul>
         </Popover.Body>
       </ClickAwayListener>
@@ -126,12 +82,8 @@ export default function ActionMenu({
         </OverlayTrigger>
       </div>
 
-      {/* Rejection Reason Modal */}
-      <RejectionReasonModal
-        show={showRejectionModal}
-        setShow={setShowRejectionModal}
-        onConfirm={handleRejectionSubmit}
-      />
+   
+      
     </>
   );
 }

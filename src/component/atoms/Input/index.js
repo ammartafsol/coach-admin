@@ -1,10 +1,9 @@
 "use client";
-import PropTypes from "prop-types";
+import { NUMBER_REG_EX } from "@/const";
 import { useState } from "react";
+import { InputGroup } from "react-bootstrap";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import classes from "./Input.module.css";
-import { InputGroup } from "react-bootstrap";
-import { NUMBER_REG_EX } from "@/const";
 
 /**
  * Primary UI component for user interaction
@@ -14,7 +13,7 @@ export const Input = ({
   label,
   label2, // sub label
   value, // input value
-  setter, // setValue function
+  setValue, // setValue function
   noBorder,
   placeholder,
   disabled,
@@ -87,11 +86,11 @@ export const Input = ({
             }
           }}
           onChange={(e) => {
-            if (setter) {
+            if (setValue) {
               if (regexType === "number" || type === "number") {
-                setter(e?.target?.value?.replace(NUMBER_REG_EX, ""));
+                setValue(e?.target?.value?.replace(NUMBER_REG_EX, ""));
               } else {
-                setter(e.target.value);
+                setValue(e.target.value);
               }
             }
           }}
@@ -129,41 +128,4 @@ export const Input = ({
   );
 };
 
-Input.propTypes = {
-  type: PropTypes.oneOf(["text", "password", "email", "number"]),
-  label: PropTypes.string,
-  placeholder: PropTypes.string,
-  value: PropTypes.string.isRequired,
-  setter: PropTypes.func, // ✅ Ensures setter is a function
-  noBorder: PropTypes.bool,
-  disabled: PropTypes.bool,
-  customStyle: PropTypes.object,
-  errorText: PropTypes.string,
-  label2: PropTypes.string,
-  leftIcon: PropTypes.node,
-  rightIcon: PropTypes.node,
-  regexType: PropTypes.string,
-  labelOnTop: PropTypes.bool,
-  prefix: PropTypes.string,
-  mainContClassName: PropTypes.string,
-  inputBoxStyle: PropTypes.object,
-  onClickEnter: PropTypes.func,
-};
 
-Input.defaultProps = {
-  type: "text",
-  placeholder: "Enter text",
-  value: "",
-  setter: () => {}, // ✅ Default function to prevent errors
-  noBorder: false,
-  disabled: false,
-  errorText: "",
-  leftIcon: null,
-  rightIcon: null,
-  regexType: "",
-  labelOnTop: false,
-  prefix: "",
-  mainContClassName: "",
-  inputBoxStyle: {},
-  onClickEnter: () => {},
-};
