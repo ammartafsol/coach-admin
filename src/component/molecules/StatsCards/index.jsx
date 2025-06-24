@@ -1,15 +1,31 @@
 import Image from "next/image"
 import classes from "./StatsCards.module.css"
 
-
-export default function StatsCards() {
-  const stats = [
-    { value: "347", label: "Total Coaches Registered" },
-    { value: "347", label: "Pending Coach Approvals" },
-    { value: "53500", label: "Total Users" },
-    { value: "347", label: "Total Subscribers" },
-    { value: "$347", label: "Total Earnings" },
-  ]
+export default function StatsCards({ statsData }) {
+  const stats = statsData
+    ? [
+        {
+          value: statsData.totalCoachRegistered,
+          label: "Total Coaches Registered",
+        },
+        {
+          value: statsData.totalPendingCoaches,
+          label: "Pending Coach Approvals",
+        },
+        { value: statsData.totalUserRegistered, label: "Total Users" },
+        {
+          value: statsData.totalUsersSubscribed,
+          label: "Total Subscribers",
+        },
+        { value: `$${statsData.totalEarnings}`, label: "Total Earnings" },
+      ]
+    : [
+        { value: "...", label: "Total Coaches Registered" },
+        { value: "...", label: "Pending Coach Approvals" },
+        { value: "...", label: "Total Users" },
+        { value: "...", label: "Total Subscribers" },
+        { value: "$...", label: "Total Earnings" },
+      ];
 
   return (
     <div className={classes.statsRow}>

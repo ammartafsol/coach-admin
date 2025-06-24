@@ -40,7 +40,7 @@ const DashboardTemplate = () => {
 
   return (
     <div>
-      <StatsCards />
+      <StatsCards statsData={data?.stats} />
       <div className={classes.contentRow}>
         <div className={classes.leftColumn}>
           <EarningsChart />
