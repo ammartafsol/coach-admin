@@ -9,7 +9,7 @@ import BorderWrapper from '@/component/atoms/BorderWrapper';
 import VideoModalSkeleton from "@/component/molecules/VideoModalSkeleton";
 import CommentsModal from "@/component/molecules/CommentsModal/CommentsModal";
 
-const FeedsCom = () => {
+const FeedsCom = ({feedsData, setSearch}) => {
     const [selectedTabs, setSelectedTabs] = useState(buttonsTabs[0]);
     const [isOpenVideo, setIsOpenVideo] = useState(false);
     const [activeFeedId, setActiveFeedId] = useState(null);
@@ -34,7 +34,7 @@ const FeedsCom = () => {
             </div>
             <div className={classes?.mainWrapper}>
                 <div className={classes.feedsList}>
-                    {feedsData.map((feed, index) => (
+                    {feedsData?.map((feed, index) => (
                         <BorderWrapper key={index}>
                             <FeedsCard 
                                 key={feed.id} 

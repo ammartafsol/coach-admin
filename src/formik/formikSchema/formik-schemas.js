@@ -135,7 +135,7 @@ export const getAddPatientValidationSchema = (slug) => {
 
   return Yup.object().shape(baseSchema);
 };
-export const CategoryModalSchema = Yup.object({
+export const CategoryModalSchema = (isActive) => Yup.object({
   name: Yup.string().required("Category name is required"),
   type: Yup.object()
     .nullable()
@@ -146,14 +146,14 @@ export const CategoryModalSchema = Yup.object({
       (value) => value && Object.keys(value).length > 0
     ),
   image: Yup.string().required("Image is required"),
-  isActive  : Yup.object()
-    .nullable()
-    .required("Status is required")
-    .test(
-      "has-category-status",
-      "Status is required",
-      (value) => value && Object.keys(value).length > 0
-    ),
+  isActive  : isActive ? Yup.object()
+  .nullable()
+  .required("Status is required")
+  .test(
+    "has-category-status",
+    "Status is required",
+    (value) => value && Object.keys(value).length > 0
+  ) : Yup.object().nullable(),
 });
 
 export const FaqModalSchema = Yup.object({

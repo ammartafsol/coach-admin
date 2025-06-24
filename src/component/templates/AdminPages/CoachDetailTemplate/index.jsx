@@ -14,6 +14,10 @@ import FeedsCom from "@/component/organisms/FeedsCom";
 import UserProfile from "@/component/organisms/UserProfile/UserProfile";
 import Subscription from "@/component/organisms/Subscription/Subscription";
 import useAxios from "@/interceptor/axiosInterceptor";
+import { Loader } from "@/component/atoms/Loader";
+import useDebounce from "@/resources/hooks/useDebounce";
+import { RECORDS_LIMIT } from "@/const";
+import { USER_STATUS_OPTIONS } from "@/developmentContent/dropdownOption";
 
 
 const CoachDetailTemplate = ({slug}) => {
@@ -22,73 +26,171 @@ const CoachDetailTemplate = ({slug}) => {
 
   const {Get} = useAxios();
   const [usersData, setUsersData] = useState(null);
-  
+  const [loading, setLoading] = useState(false);
+  const [feedsData, setFeedsData] = useState([]);
+  const [feedsLoading, setFeedsLoading] = useState("");
+  const [search, setSearch] = useState("");
+  const debounceSearch = useDebounce(search, 500);
+  const [feedsStatus, setFeedsStatus] = useState(USER_STATUS_OPTIONS[0]);
+
+  const [page, setPage] = useState(1);
+  const [totalRecords, setTotalRecords] = useState(0);
+
+  const [subscribersData, setSubscribersData] = useState(null);
   
     const getData = async () => {
+      setLoading(true);
       const { response } = await Get({
-        route: `admin/coach/${slug}`,
+        route: `admin/users/${slug}`,
       });
       console.log("response", response);
       if(response){
         setUsersData(response.data);
       }
+      setLoading(false);
     }
-    console.log("usersData", usersData);
   
+    const getSubscribersData = async (coachSlug = slug) => {
+      const params = {
+        coachSlug,
+      };
+      const query = new URLSearchParams(params).toString();
+      console.log(query);
+    
+      setLoading(true);
+      const { response } = await Get({
+        route: `admin/coach/subscribers?${query}`,
+      });
+    
+      console.log("subscribersData", response);
+      if (response) {
+        setSubscribersData(response.data);
+      }
+      setLoading(false);
+    };
+  
+    
+
+    const getFeedsData = async ({
+      _search = debounceSearch,
+      _status = feedsStatus,
+      _category = "Football",
+    }) => {
+      if (feedsLoading === "loading") return;
+
+      const params = {
+        search: _search,
+        ...(_status && { status: _status?.value }),
+        category: _category,
+        // ...(_category && { category: _category?.value }),
+      };
+      const query = new URLSearchParams(params).toString();
+
+      setFeedsLoading("loading");
+      console.log("Feeds query:", query);
+
+      const { response } = await Get({
+        route: `admin/feeds/${slug}?${query}`,
+      });
+      
+      console.log("feedsData", response);
+      if(response){
+        setFeedsData(response?.data);
+      }
+      setFeedsLoading("");
+    }
+    
+    // useEffect(() => {
+    //   getData();
+    //   getSubscribersData();
+    //   getFeedsData();
+    // }, [slug, debounceSearch]);
+
     useEffect(() => {
-      console.log("slug", slug);
       getData();
-    }, [slug]);
+      getSubscribersData();
+      if (SelectedTabs.value === "feeds") {
+        getFeedsData({
+          _search: debounceSearch,
+          _status: feedsStatus,
+          _category: "football",
+        });
+      }
+    }, [slug, debounceSearch, feedsStatus, SelectedTabs.value]);
+
   return (
     <div>
       <TopHeader title={"coaches"} slug={`/${usersData?.fullName}`}></TopHeader>
-      <div className={classes?.tabs}>
-        <Tabs
-          activeTab={SelectedTabs}
-          setActiveTab={setSelectedTabs}
-          tabs={coachTabs}
-        />
-        {SelectedTabs.value === "profile" ? (
-          <Button className={classes?.btn} label={"Deactive"} />
-        ) : SelectedTabs.value === "feeds" ? (
-          <div className={classes?.main}>
-            <Input
-              mainContClassName={classes?.mainContClassName}
-              placeholder={"Search By Name"}
-              rightIcon={<IoSearchOutline color="#B0CD6E" size={20} />}
+      {loading ? (
+        <div className={classes?.loaderContainer}>
+          <Loader />
+        </div>
+      ) : (
+        <>
+          <div className={classes?.tabs}>
+            <Tabs
+              activeTab={SelectedTabs}
+              setActiveTab={setSelectedTabs}
+              tabs={coachTabs}
             />
-            <DropDown placeholder={"Location"} />
-            <DropDown placeholder={"Status"} />
+            {SelectedTabs.value === "profile" ? (
+              <Button className={classes?.btn} label={"Deactive"} />
+            ) : SelectedTabs.value === "feeds" ? (
+              <div className={classes?.main}>
+                <Input
+                  mainContClassName={classes?.mainContClassName}
+                  placeholder={"Search By Name"}
+                  rightIcon={<IoSearchOutline color="#B0CD6E" size={20} />}
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+                {/* <DropDown 
+                  placeholder={"Location"} 
+                  value={feedsCategory}
+                  setValue={setFeedsCategory}
+                /> */}
+                <DropDown 
+                  placeholder={"Status"} 
+                  value={feedsStatus}
+                  setValue={setFeedsStatus}
+                  options={USER_STATUS_OPTIONS}
+                />
+              </div>
+            ) : SelectedTabs.value === "users" ? (
+              <div className={classes?.main}>
+                <Input
+                  mainContClassName={classes?.mainContClassName}
+                  placeholder={"Search By Name"}
+                  rightIcon={<IoSearchOutline color="#B0CD6E" size={20} />}
+                />
+                <DropDown placeholder={"Location"} />
+                <DropDown placeholder={"Status"} />
+              </div>
+            ) : (
+              ""
+            )}
           </div>
-        ) : SelectedTabs.value === "users" ? (
-          <div className={classes?.main}>
-            <Input
-              mainContClassName={classes?.mainContClassName}
-              placeholder={"Search By Name"}
-              rightIcon={<IoSearchOutline color="#B0CD6E" size={20} />}
-            />
-            <DropDown placeholder={"Location"} />
-            <DropDown placeholder={"Status"} />
+          <div className={classes?.coachTop}>
+            {SelectedTabs.value === "users" ? (
+              <UsersTable subscribersData={subscribersData} loading={loading} page={page} setPage={setPage} totalRecords={totalRecords}/>
+            ) : SelectedTabs.value === "users" ? (
+              <UsersTable />
+            ) : SelectedTabs.value === "profile" ? (
+              <UserProfile userData={usersData} />
+            ) : SelectedTabs.value === "subscription" ? (
+              <Subscription  />
+            ) : SelectedTabs.value === "feeds" ? (
+              <FeedsCom 
+                feedsData={feedsData} 
+                setSearch={setSearch}
+                loading={feedsLoading === "loading"}
+              />
+            ) : (
+              "No data "
+            )}
           </div>
-        ) : (
-          ""
-        )}
-      </div>
-      <div className={classes?.coachTop}>
-        {SelectedTabs.value === "users" ? (
-          <UsersTable />
-        ) : SelectedTabs.value === "users" ? (
-          <UsersTable />
-        ) : SelectedTabs.value === "profile" ? (
-          <UserProfile />
-        ) : SelectedTabs.value === "subscription" ? (
-          <Subscription />
-        ) : SelectedTabs.value === "feeds" ? (
-          <FeedsCom />
-        ) : (
-          "No data "
-        )}
-      </div>
+        </>
+      )}
     </div>
   );
 };

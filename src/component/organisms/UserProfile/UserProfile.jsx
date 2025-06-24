@@ -15,8 +15,9 @@ import { CiLocationOn } from "react-icons/ci";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 import { IoPlaySharp } from "react-icons/io5";
 import BorderWrapper from "@/component/atoms/BorderWrapper";
+import { mediaUrl } from "@/resources/utils/helper";
 
-export default function UserProfile() {
+export default function UserProfile({ userData }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -25,7 +26,20 @@ export default function UserProfile() {
 
   const totalPages = Math.ceil(testimonialsData?.length / testimonialsPerPage);
 
-  // Get current testimonials to display
+  const defaultAvatar = "/images/app-images/user-avatar.png";
+  const resolvedImage = userData?.photo
+    ? mediaUrl(userData.photo)
+    : defaultAvatar;
+
+  const defaultThumbnail = "/images/dummy-images/thumbnail.jpeg";
+  const resolvedThumbnail = userData?.introVideoThumbnail
+    ? mediaUrl(userData.introVideoThumbnail)
+    : defaultThumbnail;
+
+  const getSocialUrl = (name) =>
+    userData?.socialLinks?.find((link) => link.name === name)?.url;
+
+  // // Get current testimonials to display
   const getCurrentTestimonials = () => {
     const startIndex = currentPage * testimonialsPerPage;
     return testimonialsData?.slice(
@@ -82,33 +96,25 @@ export default function UserProfile() {
           <div className={classes.profileSection}>
             <div className={classes.profileHeader}>
               <Image
-                src="/images/dummy-images/user.png"
+                src={resolvedImage}
                 alt="Profile picture"
                 width={120}
                 height={120}
                 className={classes.avatar}
               />
               <div>
-                <h1 className={classes.name}>Matthew Ward</h1>
+                <h1 className={classes.name}>{userData?.fullName}</h1>
                 <div className={classes.rating}>
                   <MdOutlineStar size={24} fill="#F29267" />
 
-                  <span>4.8 Cricket Rating</span>
+                  <span>{userData?.rating} Cricket Rating</span>
                 </div>
               </div>
             </div>
 
             <div>
               <h2 className={classes.sectionTitle}>Bio</h2>
-              <p className={classes.bioText}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
+              <p className={classes.bioText}>{userData?.bio}</p>
             </div>
 
             <div className={classes.contactInfo}>
@@ -118,7 +124,7 @@ export default function UserProfile() {
                   fill="#F29267"
                   size={24}
                 />
-                <span>ashleyfarmer@mail.com</span>
+                <span>{userData?.email}</span>
               </div>
               <div className={classes.contactItem}>
                 <MdOutlineLocalPhone
@@ -126,7 +132,7 @@ export default function UserProfile() {
                   fill="#F29267"
                   size={24}
                 />
-                <span>+1 235 5548 945214</span>
+                <span>{userData?.phoneNumber}</span>
               </div>
               <div className={classes.contactItem}>
                 <CiLocationOn
@@ -134,20 +140,30 @@ export default function UserProfile() {
                   fill="#F29267"
                   size={24}
                 />
-                <span>Canada - Manitoba</span>
+                <span>{userData?.country}</span>
               </div>
             </div>
 
             <div className={classes.socialLinks}>
               <h3 className={classes.socialTitle}>Social Links</h3>
               <div className={classes.socialIcons}>
-                <Link href="#" className={classes.twitterIcon}>
+                <Link
+                  href={getSocialUrl("twitter") || "#"}
+                  className={classes.twitterIcon}
+                  target="_blank"
+                >
                   <FaTwitter fill="#B0CD6E" size={20} />
                 </Link>
-                <Link href="#" className={classes.phoneIcon}>
+                <Link
+                  href={getSocialUrl("facebook") || "#"}
+                  className={classes.phoneIcon} target="_blank"
+                >
                   <FaFacebookF fill="#B0CD6E" size={20} />
                 </Link>
-                <Link href="#" className={classes.instagramIcon}>
+                <Link
+                  href={getSocialUrl("instagram") || "#"}
+                  className={classes.instagramIcon} target="_blank"
+                >
                   <FaInstagram fill="#B0CD6E" size={20} />
                 </Link>
               </div>
@@ -161,7 +177,7 @@ export default function UserProfile() {
               {!isPlaying ? (
                 <>
                   <Image
-                    src="/images/dummy-images/thumbnail.jpeg"
+                    src={resolvedThumbnail}
                     alt="Video thumbnail"
                     width={600}
                     height={400}
@@ -182,7 +198,7 @@ export default function UserProfile() {
                     className={classes.videoPlayer}
                     controls
                     autoPlay
-                    src="/video/video.mp4"
+                    src={userData?.introVideo}
                   >
                     Your browser does not support the video tag.
                   </video>

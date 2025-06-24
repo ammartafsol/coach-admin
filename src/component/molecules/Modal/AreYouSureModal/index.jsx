@@ -15,15 +15,7 @@ export default function AreYouSureModal({
   confirmButtonVariant,
   cancelButtonVariant,
 }) {
-  const handleConfirm = () => {
-    onConfirm();
-    setShow(false);
-  };
-
-  const handleCancel = () => {
-    setShow(false);
-  };
-
+ 
   return (
     <Modal
       setShow={setShow}
@@ -42,12 +34,12 @@ export default function AreYouSureModal({
           <Button
             label={cancelButtonLabel}
             variant={cancelButtonVariant}
-            onClick={handleCancel}
+            onClick={() => setShow("")}
           />
           <Button
             label={confirmButtonLabel}
             variant={confirmButtonVariant}
-            onClick={handleConfirm}
+            onClick={onConfirm}
           />
         </div>
       </div>

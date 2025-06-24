@@ -20,20 +20,21 @@ const AddCategoryModal = ({
   handleImageChange,
   handleAddEditCategory,
   loading,
-  setLoading,
+
 }) => {
   const categoryFormik = useFormik({
     initialValues: CATEGORY_MODAL_FORM_VALUES(itemData),
-    validationSchema: CategoryModalSchema,
+    validationSchema: CategoryModalSchema(itemData?.isActive),
     onSubmit: (values) => {
-      setLoading("loading");
       handleAddEditCategory(values);
     },
   });
 
 
   useEffect(() => {
-    categoryFormik.setValues(CATEGORY_MODAL_FORM_VALUES(itemData));
+    if(itemData){
+      categoryFormik.setValues(CATEGORY_MODAL_FORM_VALUES(itemData));
+    }
   }, [itemData]);
 
   return (
@@ -110,7 +111,7 @@ const AddCategoryModal = ({
               }
             />
           </Col>
-          <Col md={12}>
+         {itemData && <Col md={12}>
             <DropDown
               label="Status"
               name="isActive"
@@ -122,7 +123,7 @@ const AddCategoryModal = ({
                 categoryFormik.touched.isActive && categoryFormik.errors.isActive
               }
             />
-          </Col>
+          </Col>}
         </Row>
       </div>
     </Modal>
