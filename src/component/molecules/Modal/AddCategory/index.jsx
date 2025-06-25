@@ -55,14 +55,14 @@ const AddCategoryModal = ({
             />
             <Button
               label={
-                loading === "loading"
+                loading 
                   ? "Please Wait..."
                   : itemData?.slug
                   ? "Edit Category"
                   : "Add Category"
               }
               type="submit"
-              disabled={loading !== ""}
+              disabled={loading}
               onClick={() => categoryFormik.handleSubmit()}
             />
           </div>
