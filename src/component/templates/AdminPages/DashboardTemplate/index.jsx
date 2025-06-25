@@ -99,7 +99,7 @@ const DashboardTemplate = () => {
                     <HiOutlineDotsHorizontal
                       size={25}
                       className={classes.actionLink}
-                      onClick={() => router.push("/merchant/product/1")}
+                      // onClick={() => router.push("/merchant/product/1")} to be worked on
                     />
                   );
                 }
