@@ -5,7 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import classes from "./UserProfile.module.css";
 import TestimonialCard from "@/component/molecules/TestimonialCard/TestimonialCard";
-import { testimonialsData } from "@/developmentContent/usersPageData";
+import NoData from "@/component/atoms/NoData/NoData";
+// import { testimonialsData } from "@/developmentContent/usersPageData";
 import {
   MdOutlineLocalPhone,
   MdOutlineMail,
@@ -24,8 +25,8 @@ export default function UserProfile({ userData }) {
   const autoScrollTimerRef = useRef(null);
   const testimonialsPerPage = 3;
 
-  const totalPages = Math.ceil(testimonialsData?.length / testimonialsPerPage);
-
+  const totalPages = Math.ceil((userData?.reviews?.length || 0) / testimonialsPerPage);
+ 
   const defaultAvatar = "/images/app-images/user-avatar.png";
   const resolvedImage = userData?.photo
     ? mediaUrl(userData.photo)
@@ -39,13 +40,13 @@ export default function UserProfile({ userData }) {
   const getSocialUrl = (name) =>
     userData?.socialLinks?.find((link) => link.name === name)?.url;
 
-  // // Get current testimonials to display
-  const getCurrentTestimonials = () => {
+  // Get current reviews to display
+  const getCurrentReviews = () => {
     const startIndex = currentPage * testimonialsPerPage;
-    return testimonialsData?.slice(
+    return userData?.reviews?.slice(
       startIndex,
       startIndex + testimonialsPerPage
-    );
+    ) || [];
   };
 
   // Auto-scroll functionality
@@ -156,13 +157,15 @@ export default function UserProfile({ userData }) {
                 </Link>
                 <Link
                   href={getSocialUrl("facebook") || "#"}
-                  className={classes.phoneIcon} target="_blank"
+                  className={classes.phoneIcon}
+                  target="_blank"
                 >
                   <FaFacebookF fill="#B0CD6E" size={20} />
                 </Link>
                 <Link
                   href={getSocialUrl("instagram") || "#"}
-                  className={classes.instagramIcon} target="_blank"
+                  className={classes.instagramIcon}
+                  target="_blank"
                 >
                   <FaInstagram fill="#B0CD6E" size={20} />
                 </Link>
@@ -236,30 +239,38 @@ export default function UserProfile({ userData }) {
         >
           <h2 className={classes.reviewsTitle}>Review & Rating</h2>
 
-          <div
-            className={`${classes.reviewsGrid} ${classes.fadeTransition}`}
-            key={currentPage}
-          >
-            {getCurrentTestimonials().map((testimonial) => (
-              <TestimonialCard key={testimonial.id} testimonial={testimonial} userData={userData}/>
-            ))}
-          </div>
+          {userData?.reviews && userData.reviews.length > 0 ? (
+            <>
+              <div
+                className={`${classes.reviewsGrid} ${classes.fadeTransition}`}
+                key={currentPage}
+              >
+                {getCurrentReviews().map((review) => (
+                  <TestimonialCard key={review?._id} review={review} />
+                ))}
+              </div>
 
-          {/* Pagination Dots */}
-          <div className={classes.paginationDots}>
-            {Array.from({ length: totalPages }).map((_, index) => (
-              <button
-                key={index}
-                className={`${classes.paginationButton} ${
-                  index === currentPage
-                    ? classes.activeDot
-                    : classes.inactiveDot
-                }`}
-                onClick={() => handlePageChange(index)}
-                aria-label={`Page ${index + 1}`}
-              />
-            ))}
-          </div>
+              {/* Pagination Dots */}
+              {totalPages > 1 && (
+                <div className={classes.paginationDots}>
+                  {Array.from({ length: totalPages }).map((_, index) => (
+                    <button
+                      key={index}
+                      className={`${classes.paginationButton} ${
+                        index === currentPage
+                          ? classes.activeDot
+                          : classes.inactiveDot
+                      }`}
+                      onClick={() => handlePageChange(index)}
+                      aria-label={`Page ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              )}
+            </>
+          ) : (
+            <NoData text="No reviews available" />
+          )}
         </div>
       </div>
     </BorderWrapper>

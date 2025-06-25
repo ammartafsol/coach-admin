@@ -6,14 +6,17 @@ import { Input } from "@/component/atoms/Input";
 import Button from "@/component/atoms/Button";
 import { useFormik } from "formik";
 import { EditSubscriptionSchema } from "@/formik/formikSchema/formik-schemas";
-export default function EditSubscription({editSubscription}) {
+export default function EditSubscription({editSubscription, loading, setIsEdit}) {
 
   const formik = useFormik({
     initialValues: {
       price: "",
     },
-    onSubmit: (values) => {
-      editSubscription(values);
+    onSubmit: async (values) => {
+      const success = await editSubscription(values);
+      if (success) {
+        setIsEdit(false);
+      }
     },
     validationSchema: EditSubscriptionSchema,
   });
@@ -35,7 +38,12 @@ export default function EditSubscription({editSubscription}) {
             formik.touched.price && formik.errors.price
           }
         />
-        <Button label={"Save"} className={classes.btn} onClick={formik.handleSubmit} />
+        <Button 
+          label={loading ? "Saving..." : "Save"} 
+          className={classes.btn} 
+          onClick={formik.handleSubmit} 
+          disabled={loading}
+        />
       </div>
     </BorderWrapper>
   );

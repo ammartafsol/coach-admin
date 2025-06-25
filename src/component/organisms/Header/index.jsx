@@ -105,7 +105,17 @@ export default function Navbar() {
         >
           Transaction
         </button>
-        
+        <button
+          className={`${classes.navItem} ${
+            activeTab === "Categories" ? classes.active : ""
+          }`}
+          onClick={() => {
+            setActiveTab("Categories");
+            router.push("category");
+          }}
+        >
+          Categories
+        </button>
       </nav>
 
       <div className={classes.userSection}>

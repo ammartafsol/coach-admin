@@ -84,7 +84,8 @@ export default function LoginTemplate() {
               // leftIcon={<MdEmail color="#B0B7C3" fontSize={20} />}
               placeholder={"Email address"}
               value={LoginFormik.values.email}
-              setter={LoginFormik.handleChange("email")}
+              // setter={LoginFormik.handleChange("email")}
+              onChange={LoginFormik.handleChange("email")}
               errorText={LoginFormik.touched.email && LoginFormik.errors.email}
               mainContClassName={"mb-0"}
               inputBoxStyle={classes.inputColor}
@@ -95,8 +96,9 @@ export default function LoginTemplate() {
               label="Password"
               // leftIcon={<FaLock color="#B0B7C3" fontSize={16} />}
               placeholder={"Password"}
-              value={LoginFormik.values.password}
-              setter={LoginFormik.handleChange("password")}
+              value={LoginFormik.values.password} 
+              // setter={LoginFormik.handleChange("password")}
+              onChange={LoginFormik.handleChange("password")}
               errorText={
                 LoginFormik.touched.password && LoginFormik.errors.password
               }
@@ -117,7 +119,7 @@ export default function LoginTemplate() {
               onClick={LoginFormik.handleSubmit}
               disabled={loading == "submitLogin"} type={"submit"}
             />
-            <div className={classes.newAccount}>
+            {/* <div className={classes.newAccount}>
               <p
                 onClick={() => {
                   router.push("/forget-password");
@@ -130,7 +132,7 @@ export default function LoginTemplate() {
                 Don't have an account? Sign up now and start your learning with
                 Coach Huddle!
               </p>
-            </div>
+            </div> */}
           </div>
         </div>
       </Container>

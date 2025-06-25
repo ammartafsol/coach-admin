@@ -76,9 +76,10 @@ const ResetPassword = () => {
                 label="Password"
                 // leftIcon={<FaLock color="#B0B7C3" fontSize={16} />}
                 placeholder={"New Password"}
-                setter={(e) => {
-                  formikResetPassword.setFieldValue("newPassword", e);
-                }}
+                // setter={(e) => {
+                //   formikResetPassword.setFieldValue("newPassword", e);
+                // }}
+                onChange={formikResetPassword.handleChange("newPassword")}
                 value={formikResetPassword.values.newPassword}
                 errorText={
                   formikResetPassword.touched.newPassword &&
@@ -92,9 +93,10 @@ const ResetPassword = () => {
                 label="Confirm Password"
                 // leftIcon={<FaLock color="#B0B7C3" fontSize={16} />}
                 placeholder={"Confirm Password"}
-                setter={(e) => {
-                  formikResetPassword.setFieldValue("confirmPassword", e);
-                }}
+                  // setter={(e) => {
+                  //   formikResetPassword.setFieldValue("confirmPassword", e);
+                  // }}
+                onChange={formikResetPassword.handleChange("confirmPassword")}
                 value={formikResetPassword.values.confirmPassword}
                 errorText={
                   formikResetPassword.touched.confirmPassword &&

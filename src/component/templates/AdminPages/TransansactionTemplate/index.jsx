@@ -7,8 +7,11 @@ import DropDown from "@/component/molecules/DropDown/DropDown";
 import { IoSearchOutline } from "react-icons/io5";
 import { transactionCardData } from "@/developmentContent/dummyData";
 import TransactionCard from "@/component/molecules/TransactionCard";
+import { useSelector } from "react-redux";
 
 const TransansactionTemplate = () => {
+    const userData =useSelector(state=>state.authReducer.user);
+    console.log("userData", userData);
   return (
     <div>
       <TopHeader title="Transactions">

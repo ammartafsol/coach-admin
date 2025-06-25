@@ -28,11 +28,13 @@ const CoachDetailTemplate = ({slug}) => {
   const {Get , Patch} = useAxios();
   const [usersData, setUsersData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [editLoading, setEditLoading] = useState(false);
   const [feedsData, setFeedsData] = useState([]);
   const [feedsLoading, setFeedsLoading] = useState("");
   const [search, setSearch] = useState("");
   const debounceSearch = useDebounce(search, 500);
   const [feedsStatus, setFeedsStatus] = useState(USER_STATUS_OPTIONS[0]);
+  // const [isEdit, setIsEdit] = useState(false);
 
   const [page, setPage] = useState(1);
   const [totalRecords, setTotalRecords] = useState(0);
@@ -102,7 +104,7 @@ const CoachDetailTemplate = ({slug}) => {
     
 
     const editSubscription = async (values) => {
-      
+      setEditLoading(true);
       const { response } = await Patch({
         route: `admin/users/coach/subscription/update/${slug}`,
         data: {
@@ -113,11 +115,18 @@ const CoachDetailTemplate = ({slug}) => {
       console.log("API response:", response);
       
      if(response){
+      setUsersData((prev) => ({
+        ...prev,
+        subscriptionCost: values.price,
+      }));
+    
       RenderToast({
         message: "Subscription updated successfully",
         type: "success",
       });
+      return true;
      }
+     setEditLoading(false);
     }
 
     useEffect(() => {
@@ -192,7 +201,7 @@ const CoachDetailTemplate = ({slug}) => {
             ) : SelectedTabs.value === "profile" ? (
               <UserProfile userData={usersData} />
             ) : SelectedTabs.value === "subscription" ? (
-              <Subscription  editSubscription={editSubscription} userData={usersData} />
+              <Subscription  editSubscription={editSubscription} userData={usersData} loading={editLoading} />
             ) : SelectedTabs.value === "feeds" ? (
               <FeedsCom 
                 feedsData={feedsData} 

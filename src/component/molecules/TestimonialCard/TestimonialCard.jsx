@@ -1,10 +1,16 @@
 import Image from "next/image";
 import classes from "./TestimonialCard.module.css";
-import { mergeClass } from "@/resources/utils/helper";
+import { mediaUrl, mergeClass } from "@/resources/utils/helper";
 
-export default function TestimonialCard({ testimonial, userData }) {
-  const { rating, text, name, avatar } = testimonial;
-  console.log("userData", userData);
+export default function TestimonialCard({ review }) {
+  const { rating, description, createdBy } = review;
+  console.log("review", review);
+
+  const defaultAvatar = "/images/app-images/user-avatar.png";
+  const resolvedImage = createdBy?.photo
+    ? mediaUrl(createdBy?.photo)
+    : defaultAvatar;
+
   return (
     <div className={classes.card}>
       <div className={classes.starsContainer}>
@@ -23,16 +29,16 @@ export default function TestimonialCard({ testimonial, userData }) {
           </svg>
         ))}
       </div>
-      <p className={mergeClass("maxLine4", classes.text)}>{text}</p>
+      <p className={mergeClass("maxLine4", classes.text)}>{description}</p>
       <div className={classes.reviewerInfo}>
         <Image
-          src={avatar || "/placeholder.svg"}
-          alt={name}
+          src={resolvedImage}
+          alt={createdBy?.fullName}
           width={46}
           height={46}
           className={classes.avatar}
         />
-        <span className={classes.name}>{userData?.reviews?.createdBy?.fullName  }</span>
+        <span className={classes.name}>{createdBy?.fullName}</span>
       </div>
     </div>
   );

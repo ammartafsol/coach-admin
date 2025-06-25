@@ -68,9 +68,10 @@ const ForgetPasswordTemplate = () => {
               label="Email"
               // leftIcon={<MdEmail color="#B0B7C3" fontSize={20} />}
               placeholder={"Email"}
-              setter={(e) => {
-                formikForgetPassword.setFieldValue("email", e);
-              }}
+              // setter={(e) => {
+              //   formikForgetPassword.setFieldValue("email", e);
+              // }}
+              onChange={formikForgetPassword.handleChange("email")}
               value={formikForgetPassword.values.email}
               errorText={
                 formikForgetPassword.touched.email &&
