@@ -3,7 +3,7 @@ import TopHeader from "@/component/atoms/TopHeader";
 import ActionMenu from "@/component/molecules/ActionMenu/ActionMenu";
 import AddCategoryModal from "@/component/molecules/Modal/AddCategory";
 import AppTable from "@/component/organisms/AppTable/AppTable";
-import { CATEGORY_ACTION_OPTIONS, STATUS_OPTIONS } from "@/developmentContent/dropdownOption";
+import { CATEGORY_ACTION_OPTIONS, CATEGORY_FILTER_OPTIONS, STATUS_OPTIONS } from "@/developmentContent/dropdownOption";
 import { categoryTableHeaders } from "@/developmentContent/tableHeader";
 import useAxios from "@/interceptor/axiosInterceptor";
 import useDebounce from "@/resources/hooks/useDebounce";
@@ -22,7 +22,7 @@ const CategoryTemplate = () => {
   const [loading, setLoading] = useState("");
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
-  
+  const [type, setType] = useState(CATEGORY_FILTER_OPTIONS[0]);
   const debounceSearch = useDebounce(search, 500);
 
   const [totalRecords, setTotalRecords] = useState(0);
@@ -33,6 +33,7 @@ const CategoryTemplate = () => {
     pg = page,
     _search = debounceSearch,
     _status = status,
+    type = type,
   }) => {
     if (loading === "loading") return;
 
@@ -41,8 +42,11 @@ const CategoryTemplate = () => {
       search: _search,
       ...(_status && { status: _status?.value }),
       limit: RECORDS_LIMIT,
+      ...(type && { type: type?.value }),
+
     };
     const query = new URLSearchParams(params).toString();
+    console.log(query);
 
     setLoading("loading");
 
@@ -60,9 +64,9 @@ const CategoryTemplate = () => {
   };
 
   useEffect(() => {
-    getData({pg: 1, _search: debounceSearch, _status: status });
+    getData({pg: 1, _search: debounceSearch, _status: status, type: type });
 
-  }, [debounceSearch]);
+  }, [debounceSearch ,status, type]);
 
 
   const onClickPopover = (label = "", item = rowItem) => {
@@ -150,6 +154,12 @@ const CategoryTemplate = () => {
           onChange={(e) => {
             setSearch(e);
           }}
+          secondDropdownOption  ={CATEGORY_FILTER_OPTIONS}
+          secondPlaceholder={"Type"}
+          setSecondValue={(value) => {
+            setType(value);
+          }}
+          secondValue={type}
           showButton={true}
           buttonLabel="Add Category"
           buttonOnClick={() => {

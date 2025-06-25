@@ -7,12 +7,16 @@ import classes from "./Header.module.css";
 import { useRouter } from "next/navigation";
 import { Overlay } from "react-bootstrap";
 import NotificationsPopup from "../NotificationsPopup/NotificationsPopup";
+import { usePathname } from "next/navigation";
+import { NAV_DATA } from "@/developmentContent/appData";
 
 export default function Navbar() {
   const bellRef = useRef(null);
-  const [activeTab, setActiveTab] = useState("Dashboard");
+  const [activeTab, setActiveTab] = useState("");
   const router = useRouter();
   const [showNotifications, setShowNotifications] = useState(false);
+
+  const pathname = usePathname();
   return (
     <header className={classes.header}>
       <div className={classes.logo}>

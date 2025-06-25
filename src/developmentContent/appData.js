@@ -1,8 +1,8 @@
-export const NAV_DATA = [
-  { title: "Home", route: "/" },
-  { title: "About Us", route: "/about-us" },
-  { title: "Contact Us", route: "/contact-us" },
-];
+// export const NAV_DATA = [
+//   { title: "Home", route: "/" },
+//   { title: "About Us", route: "/about-us" },
+//   { title: "Contact Us", route: "/contact-us" },
+// ];
 
 export const AFTER_LOGIN_NAV_DATA = [
   { title: "Dashboard", route: "/clinic/dashboard" },
@@ -69,4 +69,12 @@ export const mediaTypeData = [
   { id: 14, label: 'Pathology Report', value: 'pathology_report' },
   { id: 15, label: 'Radiology Reports', value: 'radiology_reports' },
   { id: 16, label: 'Physical Examination', value: 'physical_examination' },
+];
+export const NAV_DATA = [
+  { label: "Dashboard", path: "/", icon:"" },
+  { label: "Users", path: "/user" },
+  { label: "Coaches", path: "/coach" },
+  { label: "Categories", path: "/category" },
+  { label: "Faqs", path: "/faq" },
+  {label:"transaction", path:"/transaction"},
 ];

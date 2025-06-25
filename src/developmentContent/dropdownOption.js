@@ -75,3 +75,14 @@ export const COACH_RATING_OPTIONS = [
   { label: "4 +", value: 4 },
   { label: "5 +", value: 5 },
 ];
+export const CATEGORY_FILTER_OPTIONS = [
+  { label: "All", value: "all" },
+  { label: "Sport", value: "sport" },
+  { label: "Feed", value: "feed" },
+];
+export const TRANSACTION_STATUS_OPTIONS = [
+  { label: "All", value: "all" },
+  { label: "Pending", value: "pending" },
+  { label: "Sent", value: "sent" },
+  { label: "Received", value: "received" },
+];

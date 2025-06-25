@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import useAxios from "@/interceptor/axiosInterceptor";
 import { config } from "@/config";
 import moment from "moment-timezone";
+
 // import { apiHeader } from "../../config/apiUrl";
 
 export const API_URL = config.apiBaseURL;
@@ -609,3 +610,9 @@ export const formatDate = (date) => {
   const options = { year: "numeric", month: "short", day: "2-digit" };
   return new Date(date).toLocaleDateString("en-US", options);
 };
+
+export const getMonthName = (monthIndex) => {
+  if (monthIndex < 0 || monthIndex > 11) return "Invalid month";
+
+  return moment().month(monthIndex).format("MMMM");
+}
