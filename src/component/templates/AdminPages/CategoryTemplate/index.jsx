@@ -197,6 +197,7 @@ const CategoryTemplate = () => {
           handleAddEditCategory={handleAddEditCategory}
           handleImageChange={handleImageChange}
           loading={loading === "addEditCategory" || loading === "uploadImage"}
+         
         />
       )}
     </main>
