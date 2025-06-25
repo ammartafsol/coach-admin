@@ -56,7 +56,7 @@ export default function LoginTemplate() {
         type: "success",
         message: "Login Successfully",
       });
-      router.push("/");
+      router.push("/dashboard");
     }
     setLoading("");
   };

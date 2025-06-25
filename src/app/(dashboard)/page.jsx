@@ -1,12 +1,13 @@
-import DashboardTemplate from '@/component/templates/AdminPages/DashboardTemplate';
+import LoginTemplate from '@/component/templates/AuthPages/LoginTemplate'
 import React from 'react'
 
 const page = () => {
   return (
     <div>
-        <DashboardTemplate />
+        <LoginTemplate />
     </div>
   )
 }
 
 export default page;
+
