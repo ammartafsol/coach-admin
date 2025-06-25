@@ -12,12 +12,24 @@ import BorderWrapper from "@/component/atoms/BorderWrapper";
 import { RiArrowDropRightLine } from "react-icons/ri";
 import Image from "next/image";
 import useAxios from "@/interceptor/axiosInterceptor";
+import { mediaUrl } from "@/resources/utils/helper";
 
 const DashboardTemplate = () => {
   const { Get } = useAxios();
 
   const [loading, setLoading] = useState("");
   const [data, setData] = useState(null);
+  const [coachesTableData, setCoachesTableData] = useState([]);
+
+  const formatCoachesData = (coaches = []) =>
+    coaches.map((coach) => ({
+      coachName: coach.fullName || "",
+      email: coach.email || "",
+      phoneNumber: coach.phoneNumber || "",
+      city: coach.city || "",
+      totalSubscriber: coach.noOfSubscribers ?? 0,
+      photo: coach.photo || null,
+    }));
 
   const getData = async () => {
     setLoading("loading");
@@ -29,6 +41,7 @@ const DashboardTemplate = () => {
     if (response) {
       console.log("🚀 ~ getData ~ response:", response);
       setData(response.data);
+      setCoachesTableData(formatCoachesData(response.data?.coaches));
     }
 
     setLoading("");
@@ -58,9 +71,9 @@ const DashboardTemplate = () => {
             </div>
             <AppTable
               tableHeader={tableHeaders}
-              data={CoachTableBody}
+              data={coachesTableData}
               renderItem={({ item, key, rowIndex, renderValue }) => {
-                const rowItem = CoachTableBody[rowIndex];
+                const rowItem = coachesTableData[rowIndex];
                 if (renderValue) {
                   return renderValue(item, rowItem);
                 }
@@ -68,13 +81,16 @@ const DashboardTemplate = () => {
                   return (
                     <div className={classes?.profileParent}>
                       <div className={classes?.profile}>
-                        <Image
-                          src={"/images/cms-images/profile.png"}
-                          fill
-                          alt="profile"
-                        />
+                          <Image
+                            src={
+                               rowItem?.photo ?  mediaUrl(rowItem.photo)
+                                : "/images/cms-images/profile.png"
+                            }
+                            fill
+                            alt={rowItem.coachName}
+                          />
                       </div>
-                      <div className={classes?.userName}>Jenny Wilson</div>
+                      <div className={classes?.userName}>{rowItem.coachName}</div>
                     </div>
                   );
                 }
