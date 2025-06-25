@@ -75,7 +75,8 @@ const AddFaqModal = ({
               name="title"
               placeholder="Enter FAQ Question"
               value={faqFormik.values.title}
-              setter={(value) => faqFormik.setFieldValue("title", value)}
+              // setter={(value) => faqFormik.setFieldValue("title", value)}
+              onChange={(e) => faqFormik.setFieldValue("title", e.target.value)}
               errorText={
                 faqFormik.touched.title && faqFormik.errors.title
               }
