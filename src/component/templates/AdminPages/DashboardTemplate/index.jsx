@@ -13,11 +13,14 @@ import { RiArrowDropRightLine } from "react-icons/ri";
 import Image from "next/image";
 import useAxios from "@/interceptor/axiosInterceptor";
 import { mediaUrl } from "@/resources/utils/helper";
+import { Loader } from "@/component/atoms/Loader";
+import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 
 const DashboardTemplate = () => {
   const { Get } = useAxios();
 
-  const [loading, setLoading] = useState("");
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
   const [coachesTableData, setCoachesTableData] = useState([]);
 
@@ -32,7 +35,7 @@ const DashboardTemplate = () => {
     }));
 
   const getData = async () => {
-    setLoading("loading");
+    setLoading(true);
 
     const { response } = await Get({
       route: `admin/dashboard`,
@@ -43,13 +46,20 @@ const DashboardTemplate = () => {
       setData(response.data);
       setCoachesTableData(formatCoachesData(response.data?.coaches));
     }
-
-    setLoading("");
+    setLoading(false);
   };
 
   useEffect(() => {
     getData();
   }, []);
+
+  if (loading) {
+    return (
+      <div className={classes.loaderWrapper}>
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -61,12 +71,10 @@ const DashboardTemplate = () => {
             <div className={classes?.topHeader}>
               <h4>Coaches</h4>
               <div>
-                <span>View All Coaches</span>
-                <RiArrowDropRightLine
-                  cursor={"pointer"}
-                  color="#64832D"
-                  size={26}
-                />
+                <Link href={"/coach"} className={classes.seeAllLink}>
+                  <span>View All Coaches</span>
+                  <ChevronRight size={16} />
+                </Link>
               </div>
             </div>
             <AppTable
@@ -77,39 +85,18 @@ const DashboardTemplate = () => {
                 if (renderValue) {
                   return renderValue(item, rowItem);
                 }
-                if (key === "coachName") {
-                  return (
-                    <div className={classes?.profileParent}>
-                      <div className={classes?.profile}>
-                          <Image
-                            src={
-                               rowItem?.photo ?  mediaUrl(rowItem.photo)
-                                : "/images/cms-images/profile.png"
-                            }
-                            fill
-                            alt={rowItem.coachName}
-                          />
-                      </div>
-                      <div className={classes?.userName}>{rowItem.coachName}</div>
-                    </div>
-                  );
-                }
-                if (key == "action") {
-                  return (
-                    <HiOutlineDotsHorizontal
-                      size={25}
-                      className={classes.actionLink}
-                      // onClick={() => router.push("/merchant/product/1")} to be worked on
-                    />
-                  );
-                }
                 return item || "";
               }}
             />
           </BorderWrapper>
         </div>
         <div className={classes.rightColumn}>
-          <DashboardRightContent dataSubscribers={data?.stats} dataFeeds={data?.feeds} dataRequests={data?.requestCoaches} getData={getData}/>
+          <DashboardRightContent
+            dataSubscribers={data?.stats}
+            dataFeeds={data?.feeds}
+            dataRequests={data?.requestCoaches}
+            getData={getData}
+          />
         </div>
       </div>
     </div>

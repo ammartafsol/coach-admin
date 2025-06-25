@@ -66,6 +66,7 @@ const NotificationCard = ({
             <div>
               <div className={classes.registrationName}>{item?.fullName}</div>
               <div className={classes.registrationText}>{item?.email}</div>
+              <div className={classes.registrationText}>{item?.message}</div>
             </div>
             <div className={classes.registrationTime}>{time}</div>
           </div>

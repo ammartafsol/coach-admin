@@ -29,8 +29,7 @@ const NotificationTemplate = () => {
     });
     console.log("response", response);
     if (response) {
-      setNotifications(response?.notifications);
-      console.log("notifications", notifications);
+      setNotifications(response?.notifications)
     }
     setLoading(false);
   };
@@ -49,22 +48,12 @@ const NotificationTemplate = () => {
           type: "success",
           message: `Notification updated successfully`,
         });
-        
-        // Update the notification status in local state
-        // setNotifications(prev => 
-        //   prev.map(notification => 
-        //     notification._id === itemId 
-        //       ? { ...notification, status: action }
-        //       : notification
-        //   )
-        // );
       }
       setLoading(false);
   };
 
   useEffect(() => {
     getData(
-    // _search = debounceSearch,
     );
   }, []);
 
@@ -93,10 +82,11 @@ const NotificationTemplate = () => {
               notifications.map((item) => (
                 <div key={ item._id}>
                   <NotificationCard
-                    item={item}
-                    left={true}
-                    onAction={handleAction}
-                    loading={loading}
+                     item={item}
+                     left={true}
+                     onAction={handleAction}
+                     loading={loading}
+                     getData={getData}
                   />
                 </div>
               ))

@@ -100,7 +100,7 @@
 }
 
 .inputPassContainer input:disabled {
-  background-color: var(--disabled-input-color);
+  background-color: #fafafa;
   color: #8b8a8a;
   user-select: none;
 }

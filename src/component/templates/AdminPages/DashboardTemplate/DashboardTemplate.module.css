@@ -4,6 +4,13 @@
   font-family: system-ui, -apple-system, sans-serif;
 }
 
+/* Loader Wrapper */
+.loaderWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Header Styles */
 .header {
   display: flex;

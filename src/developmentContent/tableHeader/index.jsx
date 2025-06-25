@@ -5,6 +5,12 @@ export const tableHeaders = [
     title: "Coach Name",
     key: "coachName",
     style: { width: "20%" },
+    renderValue: (cellValue, rowItem) => (
+      <RenderUserDataCell
+        fullName={rowItem?.coachName}
+        photo={rowItem?.photo}
+      />
+    ),
   },
   {
     title: "Email",
@@ -28,9 +34,8 @@ export const tableHeaders = [
     title: "Total Subscriber",
     key: "totalSubscriber",
     style: { width: "15%" },
-    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+    renderValue: (cellValue) => <RenderNumberCell {...{ cellValue }} />,
   },
-  { title: "", key: "action", width: "10%" },
 ];
 
 export const tableUserHeaders = [
