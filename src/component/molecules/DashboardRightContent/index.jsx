@@ -4,8 +4,20 @@ import classes from "./DashboardRightContent.module.css";
 import NotificationCard from "@/component/atoms/NotificationCard";
 import { Col, Row } from "react-bootstrap";
 import { notificationCardData } from "@/developmentContent/dummyData";
+import { mediaUrl, timeAgo } from "@/resources/utils/helper";
+import Link from "next/link";
 
-export default function DashboardRightContent() {
+export default function DashboardRightContent({ dataSubscribers, dataFeeds, dataRequests, getData }) {
+  const widthSubscribers =
+    (dataSubscribers?.totalUsersSubscribed /
+      dataSubscribers?.totalUserRegistered) *
+    100;
+  const widthNonSubscribers =
+    ((dataSubscribers?.totalUserRegistered -
+      dataSubscribers?.totalUsersSubscribed) /
+      dataSubscribers?.totalUserRegistered) *
+    100;
+
   return (
     <div className={classes.rightColumn}>
       <div className={classes.subscribersCard}>
@@ -13,13 +25,18 @@ export default function DashboardRightContent() {
         <div className={classes.subscriberItem}>
           <div className={classes?.main}>
             <div className={classes.subscriberLabel}>Total Subscriber</div>
-            <div className={classes.subscriberValue}>1,43,382</div>
+            <div className={classes.subscriberValue}>
+              {dataSubscribers?.totalUsersSubscribed || "0"}
+            </div>
           </div>
 
           <div className={classes.subscriberBar}>
             <div
               className={classes.subscriberBarFill}
-              style={{ width: "80%", backgroundColor: "#6caadd" }}
+              style={{
+                width: widthSubscribers + "%",
+                backgroundColor: "#6caadd",
+              }}
             ></div>
           </div>
         </div>
@@ -27,13 +44,19 @@ export default function DashboardRightContent() {
         <div className={classes.subscriberItem}>
           <div className={classes?.main}>
             <div className={classes.subscriberLabel}>Total Non Subscriber</div>
-            <div className={classes.subscriberValue}>87,974</div>
+            <div className={classes.subscriberValue}>
+              {dataSubscribers?.totalUserRegistered -
+                dataSubscribers?.totalUsersSubscribed || "0"}
+            </div>
           </div>
 
           <div className={classes.subscriberBar}>
             <div
               className={classes.subscriberBarFill}
-              style={{ width: "40%", backgroundColor: "#f5b5d1" }}
+              style={{
+                width: widthNonSubscribers + "%",
+                backgroundColor: "#f5b5d1",
+              }}
             ></div>
           </div>
         </div>
@@ -45,74 +68,41 @@ export default function DashboardRightContent() {
         </div>
 
         <div className={classes.feedsList}>
-          <div className={classes.feedItem}>
-            <div className={classes.feedImage}>
-              <Image
-                src="/images/cms-images/newsFeed.png"
-                alt="Workout"
-                width={48}
-                height={48}
-              />
-            </div>
-            <div className={classes.feedContent}>
-              <div className={classes.feedTitle}>Workout</div>
-              <div className={classes.feedDescription}>
-                Lorem Ipsum is simply dummy text of the printing.
+          {dataFeeds?.slice(0, 3)?.map((feed) => (
+            <div className={classes.feedItem} key={feed?._id}>
+              <div className={classes.feedImage}>
+                <Image
+                  src={
+                    mediaUrl(feed?.images?.[0]?.url) ||
+                    "/images/cms-images/newsFeed.png"
+                  }
+                  alt={feed?.category?.name || "feed"}
+                  width={48}
+                  height={48}
+                />
               </div>
-            </div>
-            <div className={classes.feedTime}>5min</div>
-          </div>
-
-          <div className={classes.feedItem}>
-            <div className={classes.feedImage}>
-              <Image
-                src="/images/cms-images/newsFeed.png"
-                alt="Gym Routine"
-                width={48}
-                height={48}
-              />
-            </div>
-            <div className={classes.feedContent}>
-              <div className={classes.feedTitle}>Gym Routine</div>
-              <div className={classes.feedDescription}>
-                Lorem Ipsum is simply dummy text of the printing.
+              <div className={classes.feedContent}>
+                <div className={classes.feedTitle}>{feed?.category?.name}</div>
+                <div className={classes.feedDescription}>{feed?.text}</div>
               </div>
+              <div className={classes.feedTime}>{timeAgo(feed?.createdAt)}</div>
             </div>
-            <div className={classes.feedTime}>5min</div>
-          </div>
-
-          <div className={classes.feedItem}>
-            <div className={classes.feedImage}>
-              <Image
-                src="/images/cms-images/newsFeed.png"
-                alt="Nutrition"
-                width={48}
-                height={48}
-              />
-            </div>
-            <div className={classes.feedContent}>
-              <div className={classes.feedTitle}>Nutrition</div>
-              <div className={classes.feedDescription}>
-                Lorem Ipsum is simply dummy text of the printing.
-              </div>
-            </div>
-            <div className={classes.feedTime}>5min</div>
-          </div>
+          ))}
         </div>
 
-        <div className={classes.seeAllLink}>
+        <Link href={'/feed'} className={classes.seeAllLink}>
           <span>See All Feeds</span>
           <ChevronRight size={16} />
-        </div>
+        </Link>
       </div>
 
       <div className={classes.registrationCard}>
         <h2 className={classes.cardTitle}>Registration Request</h2>
         <Row>
-          {notificationCardData?.slice(0, 2)?.map((item) => {
+          {dataRequests?.slice(0, 2)?.map((item) => {
             return (
               <Col md={12}>
-                <NotificationCard key={item.id} item={item} />
+                <NotificationCard key={item.id} item={item} getData={getData}/>
                 <hr />
               </Col>
             );

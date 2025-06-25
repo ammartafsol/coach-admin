@@ -1,19 +1,72 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./NotificationCard.module.css";
 import Image from "next/image";
-import { timeAgo } from "@/resources/utils/helper";
+import { timeAgo, mediaUrl } from "@/resources/utils/helper";
 import Button from "@/component/atoms/Button";
+import RejectionReasonModal from "@/component/molecules/Modal/RejectionReasonModal";
+import AreYouSureModal from "@/component/molecules/Modal/AreYouSureModal";
+import useAxios from "@/interceptor/axiosInterceptor";
+import RenderToast from "../RenderToast";
 
-const NotificationCard = ({ item, left, className, onAction, loading ,showButton=true,}) => {
+const NotificationCard = ({
+  item,
+  left,
+  className,
+  onAction,
+  getData,
+  showButton = true,
+}) => {
+  const { Patch } = useAxios();
   const time = timeAgo(item?.createdAt);
   const isActioned = item?.status === "accepted" || item?.status === "rejected";
+
+  const [showModal, setShowModal] = useState("");
+  const [loading, setLoading] = useState("");
+
+  const handleCoachStatus = async (values) => {
+    setLoading("coachStatus");
+
+    const payload = {
+      status: showModal === "accept" ? "approved" : "rejected",
+      ...(values && { rejectionReason: values.rejectReason }),
+    };
+
+    const { response } = await Patch({
+      route: `admin/users/coach/status/${item?.slug}`,
+      data: payload,
+    });
+
+    if (response) {
+      RenderToast({
+        type: "success",
+        message: `Coach ${
+          showModal === "accept" ? "approved" : "rejected"
+        } successfully`,
+      });
+      getData();
+      setShowModal("");
+    }
+    setLoading("");
+  };
 
   return (
     <div className={`${classes.registrationContent} ${className}`}>
       <div className={classes.registrationUser}>
+        <Image
+          src={
+            item?.photo ? mediaUrl(item.photo) : "/images/cms-images/user.png"
+          }
+          alt={item?.fullName || "User"}
+          width={48}
+          height={48}
+          className={classes.registrationAvatar}
+        />
         <div className={classes?.notificationMain}>
           <div className={classes.notificationText}>
-            <div className={classes.registrationText}>{item?.message}</div>
+            <div>
+              <div className={classes.registrationName}>{item?.fullName}</div>
+              <div className={classes.registrationText}>{item?.email}</div>
+            </div>
             <div className={classes.registrationTime}>{time}</div>
           </div>
           <div
@@ -27,33 +80,57 @@ const NotificationCard = ({ item, left, className, onAction, loading ,showButton
               </div>
             ) : (
               <>
-              
                 {showButton && (
                   <>
-                  <Button
-                  label="Reject"
-                  className={classes.actionButton}
-                  onClick={() => onAction("reject", item?._id)}
-                  disabled={loading}
-                  variant="outlined"
-                  
-                  
-                />
-                 
-                <Button
-                  label="Accept"
-                  className={classes.actionButton}
-                  onClick={() => onAction("accept", item?._id)}
-                  disabled={loading} 
-                  variant="success"
-                />
-                </>
+                    <Button
+                      label="Reject"
+                      className={classes.actionButton}
+                      onClick={() => setShowModal("reject")}
+                      disabled={loading}
+                      variant="outlined"
+                    />
+                    <Button
+                      label="Accept"
+                      className={classes.actionButton}
+                      onClick={() => setShowModal("accept")}
+                      disabled={loading}
+                      variant="success"
+                    />
+                  </>
                 )}
               </>
             )}
           </div>
         </div>
       </div>
+      {showModal === "reject" && (
+        <RejectionReasonModal
+          show={showModal === "reject"}
+          setShow={setShowModal}
+          onConfirm={handleCoachStatus}
+          loading={loading === "coachStatus"}
+        />
+      )}
+
+      {showModal === "accept" && (
+        <AreYouSureModal
+          show={showModal === "accept"}
+          setShow={setShowModal}
+          heading={"Approve Coach"}
+          subheading={
+            "Are you sure you want to approve this coach?"
+          }
+          confirmButtonLabel={
+            loading == "coachStatus" ? "Submitting..." : "Confirm"
+          }
+          cancelButtonLabel="Cancel"
+          confirmButtonVariant="danger"
+          cancelButtonVariant="green-outlined"
+          onConfirm={() => {
+            handleCoachStatus();
+          }}
+        />
+      )}
     </div>
   );
 };
