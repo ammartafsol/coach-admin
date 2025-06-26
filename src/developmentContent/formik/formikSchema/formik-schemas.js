@@ -12,4 +12,7 @@ export const profileSchema = Yup.object().shape({
   email: Yup.string()
     .email("Invalid email format")
     .required("Email is required"),
+  phoneNumber: Yup.string()
+    .matches(/^\+?[0-9]{10,15}$/, "Phone number is not valid")
+    .optional(),
 }); 

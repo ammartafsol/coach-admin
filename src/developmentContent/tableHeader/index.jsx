@@ -63,10 +63,13 @@ export const tableUserHeaders = [
     renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
   {
-    title: "Subscribers",
-    key: "noOfSubscribers",
+    title: "Subscribed Coach",
+    key: "coaches",
     style: { width: "10%" },
-    renderValue: (cellValue) => <RenderNumberCell {...{ cellValue }} />,
+    renderValue: (cellValue, rowItem) => {
+      const coachesCount = rowItem?.coaches?.length || 0;
+      return <RenderNumberCell cellValue={coachesCount} />;
+    },
   },
   {
     title: "Location",

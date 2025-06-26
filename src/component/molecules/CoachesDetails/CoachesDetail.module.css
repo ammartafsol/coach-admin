@@ -43,7 +43,6 @@
     align-items: center;
     flex-direction: row-reverse;
     width: fit-content;
-    margin-top: 5px;
     gap: 6px;
 }
 
@@ -145,4 +144,24 @@
 
 .inactiveStatus {
   color: #7f1d1d;
+}
+.contactItem{
+  display: flex;
+  flex-direction: column  ;
+  gap: 5px;
+}
+.contactIcon{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #333333;
+}
+.starsContainer {
+  display: flex;
+}
+
+.starFilled {
+  color: #f29267;
+  width: 18px;
+  height: 18px;
 }

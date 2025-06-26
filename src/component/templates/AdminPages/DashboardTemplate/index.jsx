@@ -23,6 +23,8 @@ const DashboardTemplate = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
   const [coachesTableData, setCoachesTableData] = useState([]);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [chartLoading, setChartLoading] = useState(false);
 
   const formatCoachesData = (coaches = []) =>
     coaches.map((coach) => ({
@@ -34,11 +36,16 @@ const DashboardTemplate = () => {
       photo: coach.photo || null,
     }));
 
-  const getData = async () => {
+  const getData = async (year = selectedYear) => {
     setLoading(true);
 
+    const params = {
+      forYear: year.toString(),
+    };
+    const query = new URLSearchParams(params).toString();
+
     const { response } = await Get({
-      route: `admin/dashboard`,
+      route: `admin/dashboard?${query}`,
     });
 
     if (response) {
@@ -49,8 +56,51 @@ const DashboardTemplate = () => {
     setLoading(false);
   };
 
+  // Separate function to fetch only graph data
+  const getGraphData = async (year) => {
+    setChartLoading(true);
+    
+    const params = {
+      forYear: year.toString()
+    };
+    const query = new URLSearchParams(params).toString();
+
+    const { response } = await Get({
+      route: `admin/dashboard?${query}`,
+    });
+
+    if (response) {
+      console.log("🚀 ~ getGraphData ~ response:", response);
+      // Update only the graph data in the existing data state
+      // Ensure we always pass an array, even if empty
+      const graphData = response.data?.graph || [];
+      setData(prevData => ({
+        ...prevData,
+        graph: graphData
+      }));
+    } else {
+      // If no response, set empty array to show no data
+      setData(prevData => ({
+        ...prevData,
+        graph: []
+      }));
+    }
+    setChartLoading(false);
+  };
+
+  // Handle year change for chart data
+  const handleYearChange = (year) => {
+    setSelectedYear(year);
+    getGraphData(year);
+  };
+
+  // Wrapper function for DashboardRightContent to refresh data with current year
+  const refreshData = () => {
+    getData(selectedYear);
+  };
+
   useEffect(() => {
-    getData();
+    getData(new Date().getFullYear());
   }, []);
 
   if (loading) {
@@ -66,7 +116,11 @@ const DashboardTemplate = () => {
       <StatsCards statsData={data?.stats} />
       <div className={classes.contentRow}>
         <div className={classes.leftColumn}>
-          <EarningsChart />
+          <EarningsChart 
+            data={data?.graph} 
+            onYearChange={handleYearChange}
+            loading={chartLoading}
+          />
           <BorderWrapper className={classes?.bordetop}>
             <div className={classes?.topHeader}>
               <h4>Coaches</h4>
@@ -95,7 +149,7 @@ const DashboardTemplate = () => {
             dataSubscribers={data?.stats}
             dataFeeds={data?.feeds}
             dataRequests={data?.requestCoaches}
-            getData={getData}
+            getData={refreshData}
           />
         </div>
       </div>

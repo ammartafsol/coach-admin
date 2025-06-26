@@ -16,6 +16,7 @@ import Subscription from "@/component/organisms/Subscription/Subscription";
 import useAxios from "@/interceptor/axiosInterceptor";
 import { Loader } from "@/component/atoms/Loader";
 import useDebounce from "@/resources/hooks/useDebounce";
+import { Country } from "country-state-city";
 
 import { USER_STATUS_OPTIONS } from "@/developmentContent/dropdownOption";
 import RenderToast from "@/component/atoms/RenderToast";
@@ -33,10 +34,48 @@ const CoachDetailTemplate = ({ slug }) => {
   const debounceSearch = useDebounce(search, 500);
   const [feedsStatus, setFeedsStatus] = useState(USER_STATUS_OPTIONS[0]);
   const [feedsCategory, setFeedsCategory] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null); // Country selection state
+  const [selectedCountry, setSelectedCountry] = useState(null);
+
   const [page, setPage] = useState(1);
   const [totalRecords, setTotalRecords] = useState(0);
   const [subscribersData, setSubscribersData] = useState(null);
+
+  // Get all countries for dropdown
+  const countries = Country.getAllCountries().map((country) => ({
+    label: country.name,
+    value: country.isoCode,
+  }));
+
+  const getData = async () => {
+    setLoading(true);
+    const { response } = await Get({
+      route: `admin/users/${slug}`,
+    });
+    console.log("response", response);
+    if (response) {
+      setUsersData(response.data);
+    }
+    setLoading(false);
+  };
+
+  const getSubscribersData = async (coachSlug = slug) => {
+    const params = {
+      coachSlug,
+    };
+    const query = new URLSearchParams(params).toString();
+
+    setLoading(true);
+    const { response } = await Get({
+      route: `admin/coach/subscribers?${query}`,
+    });
+
+    console.log("subscribersData", response);
+    if (response) {
+      setSubscribersData(response.data);
+    }
+    setLoading(false);
+  };
 
   const getData = async () => {
     setLoading(true);
@@ -136,6 +175,11 @@ const CoachDetailTemplate = ({ slug }) => {
     setLoading(false);
   };
 
+  // Handle country change
+  const handleCountryChange = (country) => {
+    setSelectedCountry(country);
+  };
+
   useEffect(() => {
     getData();
     getSubscribersData();
@@ -194,7 +238,12 @@ const CoachDetailTemplate = ({ slug }) => {
                   placeholder={"Search By Name"}
                   rightIcon={<IoSearchOutline color="#B0CD6E" size={20} />}
                 />
-                <DropDown placeholder={"Location"} />
+                <DropDown
+                  placeholder={"Country"}
+                  value={selectedCountry}
+                  setValue={handleCountryChange}
+                  options={countries}
+                />
                 <DropDown placeholder={"Status"} />
               </div>
             ) : (

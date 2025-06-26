@@ -171,6 +171,26 @@ export default function UserProfile({ userData }) {
                 </Link>
               </div>
             </div>
+
+            <div className={classes.bankDetails}>
+              <h2 className={classes.sectionTitle}>Bank Details</h2>
+              <div className={classes.bankInfo}>
+                <div className={classes.bankItem}>
+                  <span className={classes.bankLabel}>Account Holder Name: </span>
+                  <span className={classes.bioText}>{userData?.banksDetails?.accountHolderName}</span>
+                </div>
+                <div className={classes.bankItem}>
+                  <span className={classes.bankLabel}>Account Number: </span>
+                  <span className={classes.bioText}>{userData?.banksDetails?.accountNumber}</span>
+                </div>
+                <div className={classes.bankItem}>
+                  <span className={classes.bankLabel}>Bank Name: </span>
+                  <span className={classes.bioText}>{userData?.banksDetails?.bankName}</span>
+                </div>
+                
+                
+              </div>
+            </div>
           </div>
 
           {/* Video Section */}

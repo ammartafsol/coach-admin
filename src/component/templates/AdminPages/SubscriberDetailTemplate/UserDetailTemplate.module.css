@@ -1,0 +1,43 @@
+.coachesList{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.TopHeader{
+    margin-bottom: 20px;
+}
+
+.coach{
+    color: #333;
+font-family: "AventaBold";
+font-size: 18px;
+font-style: normal;
+font-weight: 400;
+line-height: 29.279px; /* 162.659% */
+margin-bottom: 20px;
+}
+.coachStatus{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.noCoaches {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px dashed #dee2e6;
+}
+
+.noCoaches p {
+    color: #6c757d;
+    font-size: 16px;
+    font-family: "AventaRegular";
+    margin: 0;
+    text-align: center;
+}

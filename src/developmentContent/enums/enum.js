@@ -28,8 +28,8 @@ export const coachTabs = [
         value:"feeds"
     },
     {
-        label:"Subscription",
-        value:"subscription"
+        label:"Subscription Cost",
+        value:"subscriptionCost"
     },
     {
         label:"Users",

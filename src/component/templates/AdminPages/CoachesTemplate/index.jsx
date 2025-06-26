@@ -23,6 +23,7 @@ import AreYouSureModal from "@/component/molecules/Modal/AreYouSureModal";
 import RejectionReasonModal from "@/component/molecules/Modal/RejectionReasonModal";
 import { useRouter } from "next/navigation";
 import { RECORDS_LIMIT } from "@/const";
+import DropDown from "@/component/molecules/DropDown/DropDown";
 
 const CoachesTemplate = () => {
   const { Patch, Get } = useAxios();
@@ -168,6 +169,7 @@ const CoachesTemplate = () => {
             setStatus(value);
             setPage(1);
           }}
+          
           secondValue={status}
           inputPlaceholder="Search By Name"
           customStyle={{ width: "300px" }}
@@ -175,14 +177,19 @@ const CoachesTemplate = () => {
             setSearch(e);
             setPage(1);
           }}
-        />
+        >
+          <div className={classes.filterHeader}>
+            <DropDown options={COACH_STATUS_OPTIONS} placeholder={"Status"} value={coachStatus} setValue={setCoachStatus} />
+            {/* <DropDown options={} placeholder={"Rating"} value={rating} setValue={setRating} /> */}
+          </div>
+        </FilterHeader>
       </TopHeader>
       <div>
         <AppTable
           tableHeader={tableHeadersData}
           data={data}
           hasPagination={true}
-          loading={loading === "loading"}
+          loading={loading === "loading"} 
           totalItems={totalRecords}
           onPageChange={(p) => {
             setPage(p);

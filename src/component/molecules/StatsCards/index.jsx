@@ -17,14 +17,14 @@ export default function StatsCards({ statsData }) {
           value: statsData.totalUsersSubscribed,
           label: "Total Subscribers",
         },
-        { value: `$${statsData.totalEarnings}`, label: "Total Earnings" },
+        { value: `£${statsData.totalEarnings}`, label: "Total Earnings" },
       ]
     : [
         { value: "...", label: "Total Coaches Registered" },
         { value: "...", label: "Pending Coach Approvals" },
         { value: "...", label: "Total Users" },
         { value: "...", label: "Total Subscribers" },
-        { value: "$...", label: "Total Earnings" },
+        { value: "£...", label: "Total Earnings" },
       ];
 
   return (

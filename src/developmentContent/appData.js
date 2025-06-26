@@ -74,7 +74,7 @@ export const mediaTypeData = [
 ];
 export const NAV_DATA = [
   { label: "Dashboard", path: "/", icon: <TbCategory />},
-  { label: "Users", path: "/user" , icon:<HiOutlineUser /> },
+  { label: "Subscribers", path: "/subscriber" , icon:<HiOutlineUser /> },
   { label: "Coaches", path: "/coach" , icon:<TbUsers /> },
   { label: "Feeds", path: "/feed" , icon:<TfiCommentAlt /> },
   { label: "Categories", path: "/category" , icon:  <TbCategory2 /> },

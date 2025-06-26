@@ -1,3 +1,6 @@
+import { CiStar } from "react-icons/ci";
+import { AiFillStar } from "react-icons/ai";
+
 export const CATEGORY_TYPE_OPTIONS = [
   { label: "Sport", value: "sport" },
   { label: "Feed", value: "feed" },
@@ -47,8 +50,8 @@ export const USER_ACTION_OPTIONS = (item) => [
 
 export const USER_STATUS_OPTIONS = [
   { label: "All", value: "all" },
-  { label: "Blocked", value: true },
-  { label: "Unblocked", value: false },
+  { label: "Active", value: true },
+  { label: "Deactive", value: false },
 ];
 
 export const COACH_STATUS_OPTIONS = [
@@ -72,11 +75,11 @@ export const SPORTS_OPTIONS = [
 
 export const COACH_RATING_OPTIONS = [
   { label: "All", value: "all" },
-  { label: "1 +", value: 1 },
-  { label: "2 +", value: 2 },
-  { label: "3 +", value: 3 },
-  { label: "4 +", value: 4 },
-  { label: "5 +", value: 5 },
+  { label: "⭐", value: 1 },
+  { label: "⭐⭐", value: 2 },
+  { label: "⭐⭐⭐", value: 3 },
+  { label: "⭐⭐⭐⭐", value: 4 },
+  { label: "⭐⭐⭐⭐⭐", value: 5 },
 ];
 export const CATEGORY_FILTER_OPTIONS = [
   { label: "All", value: "all" },
