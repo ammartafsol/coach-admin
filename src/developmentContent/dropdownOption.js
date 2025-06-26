@@ -98,3 +98,8 @@ export const FEED_STATUS_OPTIONS = [
   { label: "Active", value: true },
   { label: "Inactive", value: false },
 ];
+
+export const FEED_ARCHIVED_OPTIONS = [
+  { label: "Un Archived", value: false },
+  { label: "Archived", value: true },
+];

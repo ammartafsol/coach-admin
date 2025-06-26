@@ -18,8 +18,12 @@ import { Loader } from "@/component/atoms/Loader";
 import useDebounce from "@/resources/hooks/useDebounce";
 import { Country } from "country-state-city";
 
-import { USER_STATUS_OPTIONS } from "@/developmentContent/dropdownOption";
+import {
+  FEED_ARCHIVED_OPTIONS,
+  USER_STATUS_OPTIONS,
+} from "@/developmentContent/dropdownOption";
 import RenderToast from "@/component/atoms/RenderToast";
+import NoData from "@/component/atoms/NoData/NoData";
 
 const CoachDetailTemplate = ({ slug }) => {
   const [SelectedTabs, setSelectedTabs] = useState(coachTabs[0]);
@@ -36,7 +40,7 @@ const CoachDetailTemplate = ({ slug }) => {
   const [feedsCategory, setFeedsCategory] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null); // Country selection state
   const [selectedCountry, setSelectedCountry] = useState(null);
-
+  const [archived, setArchived] = useState(FEED_ARCHIVED_OPTIONS[0]);
   const [page, setPage] = useState(1);
   const [totalRecords, setTotalRecords] = useState(0);
   const [subscribersData, setSubscribersData] = useState(null);
@@ -46,36 +50,6 @@ const CoachDetailTemplate = ({ slug }) => {
     label: country.name,
     value: country.isoCode,
   }));
-
-  const getData = async () => {
-    setLoading(true);
-    const { response } = await Get({
-      route: `admin/users/${slug}`,
-    });
-    console.log("response", response);
-    if (response) {
-      setUsersData(response.data);
-    }
-    setLoading(false);
-  };
-
-  const getSubscribersData = async (coachSlug = slug) => {
-    const params = {
-      coachSlug,
-    };
-    const query = new URLSearchParams(params).toString();
-
-    setLoading(true);
-    const { response } = await Get({
-      route: `admin/coach/subscribers?${query}`,
-    });
-
-    console.log("subscribersData", response);
-    if (response) {
-      setSubscribersData(response.data);
-    }
-    setLoading(false);
-  };
 
   const getData = async () => {
     setLoading(true);
@@ -109,6 +83,7 @@ const CoachDetailTemplate = ({ slug }) => {
     _search = debounceSearch,
     _status = feedsStatus,
     _category = selectedCategory?._id,
+    _archived = archived.value,
   }) => {
     if (feedsLoading === "loading") return;
 
@@ -117,6 +92,7 @@ const CoachDetailTemplate = ({ slug }) => {
       search: _search,
       ...(_status && { status: _status?.value }),
       ...(_category && { category: _category }),
+      isArchived: _archived,
     };
     const query = new URLSearchParams(params).toString();
 
@@ -189,9 +165,17 @@ const CoachDetailTemplate = ({ slug }) => {
         _search: debounceSearch,
         _status: feedsStatus,
         _category: selectedCategory?._id,
+        _archived: archived.value,
       });
     }
-  }, [slug, debounceSearch, feedsStatus, selectedCategory, SelectedTabs.value]);
+  }, [
+    slug,
+    debounceSearch,
+    feedsStatus,
+    selectedCategory,
+    SelectedTabs.value,
+    archived,
+  ]);
 
   return (
     <div>
@@ -229,6 +213,12 @@ const CoachDetailTemplate = ({ slug }) => {
                   value={feedsStatus}
                   setValue={setFeedsStatus}
                   options={USER_STATUS_OPTIONS}
+                />
+                <DropDown
+                  placeholder={"Archived"}
+                  value={archived}
+                  setValue={setArchived}
+                  options={FEED_ARCHIVED_OPTIONS}
                 />
               </div>
             ) : SelectedTabs.value === "users" ? (
@@ -278,7 +268,7 @@ const CoachDetailTemplate = ({ slug }) => {
                 loading={feedsLoading === "loading"}
               />
             ) : (
-              "No data "
+              <NoData text="No data " />
             )}
           </div>
         </>

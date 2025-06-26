@@ -12,7 +12,10 @@ import { useEffect, useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import classes from "./FeedsTemplate.module.css";
 import { Loader } from "@/component/atoms/Loader";
-import { FEED_STATUS_OPTIONS } from "@/developmentContent/dropdownOption";
+import {
+  FEED_ARCHIVED_OPTIONS,
+  FEED_STATUS_OPTIONS,
+} from "@/developmentContent/dropdownOption";
 import NoDataFound from "@/component/atoms/NoDataFound/NoDataFound";
 import NoData from "@/component/atoms/NoData/NoData";
 
@@ -28,6 +31,7 @@ const FeedsTemplate = () => {
   const [isCommentsOpen, setIsCommentsOpen] = useState(false);
   const [feedsData, setFeedsData] = useState([]);
   const [status, setStatus] = useState(FEED_STATUS_OPTIONS[0]);
+  const [archived, setArchived] = useState(FEED_ARCHIVED_OPTIONS[0]);
 
   const getData = async () => {
     setLoading("loading");
@@ -35,6 +39,7 @@ const FeedsTemplate = () => {
     const params = {
       search: debouncedSearch,
       status: status.value,
+      isArchived: archived.value,
     };
     const queryParams = new URLSearchParams(params).toString();
 
@@ -52,7 +57,7 @@ const FeedsTemplate = () => {
 
   useEffect(() => {
     getData();
-  }, [debouncedSearch, status]);
+  }, [debouncedSearch, status, archived]);
 
   const handleOpenVideo = (feedId) => {
     setActiveFeedSlug(feedId);
@@ -109,6 +114,12 @@ const FeedsTemplate = () => {
           options={FEED_STATUS_OPTIONS}
           value={status}
           setValue={setStatus}
+        />
+        <DropDown
+          placeholder={"Feed"}
+          options={FEED_ARCHIVED_OPTIONS}
+          value={archived}
+          setValue={setArchived}
         />
       </TopHeader>
       <div className={classes?.mainWrapper}>
