@@ -16,9 +16,10 @@ import Subscription from "@/component/organisms/Subscription/Subscription";
 import useAxios from "@/interceptor/axiosInterceptor";
 import { Loader } from "@/component/atoms/Loader";
 import useDebounce from "@/resources/hooks/useDebounce";
-import { RECORDS_LIMIT } from "@/const";
+
 import { USER_STATUS_OPTIONS } from "@/developmentContent/dropdownOption";
 import RenderToast from "@/component/atoms/RenderToast";
+
 
 
 const CoachDetailTemplate = ({slug}) => {
@@ -34,7 +35,7 @@ const CoachDetailTemplate = ({slug}) => {
   const [search, setSearch] = useState("");
   const debounceSearch = useDebounce(search, 500);
   const [feedsStatus, setFeedsStatus] = useState(USER_STATUS_OPTIONS[0]);
-  // const [isEdit, setIsEdit] = useState(false);
+
 
   const [page, setPage] = useState(1);
   const [totalRecords, setTotalRecords] = useState(0);
@@ -129,9 +130,22 @@ const CoachDetailTemplate = ({slug}) => {
      setEditLoading(false);
     }
 
+    const getCategoryData = async (coachSlug = slug) => {
+      const params = {
+        coachId: coachSlug,
+        type: "feed",
+      };
+      const query = new URLSearchParams(params).toString();
+      const { response } = await Get({
+        route: `admin/categories?${query}`,
+      });
+      console.log("categoryData", response);
+    }
+
     useEffect(() => {
       getData();
       getSubscribersData();
+      getCategoryData();
       if (SelectedTabs.value === "feeds") {
         getFeedsData({
           _search: debounceSearch,
@@ -207,6 +221,7 @@ const CoachDetailTemplate = ({slug}) => {
                 feedsData={feedsData} 
                 setSearch={setSearch}
                 loading={feedsLoading === "loading"}
+                
               />
             ) : (
               "No data "
