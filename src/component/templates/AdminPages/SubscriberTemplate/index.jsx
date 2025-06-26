@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import classes from "./UserTemplate.module.css";
 
-const UserTemplate = () => {
+const SubscriberTemplate = () => {
   const { Patch, Get } = useAxios();
 
   const [showModal, setShowModal] = useState("");
@@ -82,7 +82,7 @@ const UserTemplate = () => {
       setSelectedItem(item);
       setShowModal("areYouSure");
     } else if (label == "View Details") {
-      router.push(`/user/${item.slug}`);
+      router.push(`/subscriber/${item.slug}`);
     } else if (label === "Accept" || label === "Reject") {
       setShowModal(label === "Accept" ? "accept" : "reject");
       setSelectedItem(item);
@@ -140,7 +140,7 @@ const UserTemplate = () => {
 
   return (
     <>
-      <TopHeader title="User">
+      <TopHeader title="Subscriber">
         <FilterHeader
           showDropDown={true}
           dropdownOption={USER_STATUS_OPTIONS}
@@ -205,14 +205,14 @@ const UserTemplate = () => {
             heading={
               showModal === "areYouSure"
                 ? selectedItem?.isBlockedByAdmin
-                  ? "⚠️ Unblock User"
-                  : "⚠️ Block User"
+                  ? "⚠️ Active User"
+                  : "⚠️ Inactive User"
                 : "Approve User"
             }
             subheading={
               showModal === "areYouSure"
                 ? `Are you sure you want to ${
-                    selectedItem?.isBlockedByAdmin ? "unblock" : "block"
+                    selectedItem?.isBlockedByAdmin ? "active" : "inactive"
                   } this user? This will ${
                     selectedItem?.isBlockedByAdmin ? "restore" : "affect"
                   } their access to the platform.`
@@ -242,4 +242,4 @@ const UserTemplate = () => {
   );
 };
 
-export default UserTemplate;
+export default SubscriberTemplate;

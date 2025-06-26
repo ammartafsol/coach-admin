@@ -78,13 +78,15 @@ const CoachDetailTemplate = ({slug}) => {
       _search = debounceSearch,
       _status = feedsStatus,
       _category = "Football",
+      coachSlug = slug,
     }) => {
       if (feedsLoading === "loading") return;
 
       const params = {
         search: _search,
         ...(_status && { status: _status?.value }),
-        category: _category,
+        // category: _category,
+        coachSlug: coachSlug,
         // ...(_category && { category: _category?.value }),
       };
       const query = new URLSearchParams(params).toString();
@@ -93,7 +95,7 @@ const CoachDetailTemplate = ({slug}) => {
       console.log("Feeds query:", query);
 
       const { response } = await Get({
-        route: `admin/feeds/${slug}?${query}`,
+        route: `admin/feeds?${query}`,
       });
       
       console.log("feedsData", response);

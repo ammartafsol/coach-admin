@@ -168,6 +168,7 @@ const CoachesTemplate = () => {
             setStatus(value);
             setPage(1);
           }}
+          
           secondValue={status}
           inputPlaceholder="Search By Name"
           customStyle={{ width: "300px" }}

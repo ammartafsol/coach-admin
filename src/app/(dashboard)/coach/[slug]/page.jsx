@@ -4,7 +4,7 @@ import React from 'react'
 const page = ({ params }) => {
   return (
     <div>
-        <CoachDetailTemplate slug={params.slug} />
+        <CoachDetailTemplate slug={params.slug}/>
     </div>
   )
 }

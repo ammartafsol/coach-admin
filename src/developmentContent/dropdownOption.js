@@ -43,8 +43,8 @@ export const USER_ACTION_OPTIONS = (item) => [
 
 export const USER_STATUS_OPTIONS = [
   { label: "All", value: "all" },
-  { label: "Blocked", value: true },
-  { label: "Unblocked", value: false },
+  { label: "Active", value: true },
+  { label: "Deactive", value: false },
 ];
 
 export const COACH_STATUS_OPTIONS = [
