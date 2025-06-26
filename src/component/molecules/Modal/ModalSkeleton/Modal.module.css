@@ -32,7 +32,7 @@
 .headingBox {
   display: flex;
   justify-content: space-between;
-  background: linear-gradient(135deg, #EAF2D5 0%, #D4E6A3 100%);
+  background: linear-gradient(135deg, #eaf2d5 0%, #d4e6a3 100%);
   align-items: center;
   padding: 20px 24px;
   text-align: left;
@@ -41,13 +41,18 @@
 }
 
 .headingBox::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(176, 205, 110, 0.2), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(176, 205, 110, 0.2),
+    transparent
+  );
 }
 
 .heading {
@@ -73,13 +78,18 @@
   position: relative;
 }
 .modal :global(.modal-content)::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(176, 205, 110, 0.3), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(176, 205, 110, 0.3),
+    transparent
+  );
 }
 .footer {
   border-top: 0.5px solid var(--Border-Color);
@@ -97,4 +107,3 @@
 .modalExit {
   animation: slideOutToRight 0.4s ease forwards;
 }
-

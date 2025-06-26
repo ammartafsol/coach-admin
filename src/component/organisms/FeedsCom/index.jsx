@@ -1,66 +1,115 @@
-"use client"
-import React, { useState } from 'react';
-import classes from "./FeedsCom.module.css";
-import ButtonTabs from '@/component/atoms/ButtonTabs';
-import { buttonsTabs } from '@/developmentContent/enums/enum';
-import { feedsData } from '@/developmentContent/dummyData';
-import FeedsCard from '@/component/molecules/FeedsCard/FeedsCard';
-import BorderWrapper from '@/component/atoms/BorderWrapper';
-import VideoModalSkeleton from "@/component/molecules/VideoModalSkeleton";
+"use client";
+import BorderWrapper from "@/component/atoms/BorderWrapper";
+import ButtonTabs from "@/component/atoms/ButtonTabs";
 import CommentsModal from "@/component/molecules/CommentsModal/CommentsModal";
+import FeedsCard from "@/component/molecules/FeedsCard/FeedsCard";
+import VideoModalSkeleton from "@/component/molecules/VideoModalSkeleton";
+import React, { useState } from "react";
+import ScrollContainer from "react-indiana-drag-scroll";
+import classes from "./FeedsCom.module.css";
+import NoData from "@/component/atoms/NoData/NoData";
 
-const FeedsCom = ({feedsData, setSearch}) => {
-    const [selectedTabs, setSelectedTabs] = useState(buttonsTabs[0]);
-    const [isOpenVideo, setIsOpenVideo] = useState(false);
-    const [activeFeedId, setActiveFeedId] = useState(null);
-    const [isOpen, setIsOpen] = useState(false);
+const FeedsCom = ({
+  feedsData,
+  setSearch,
+  setFeedsCategory,
+  feedsCategory,
+  loading,
+}) => {
+  const [isOpenVideo, setIsOpenVideo] = useState(false);
+  const [activeFeedSlug, setActiveFeedSlug] = useState(null);
+  const [isCommentsOpen, setIsCommentsOpen] = useState(false);
+  const [localFeedsData, setLocalFeedsData] = useState(feedsData);
 
-    const handleOpenVideo = (feedId) => {
-        setActiveFeedId(feedId);
-        setIsOpenVideo(true);
-    };
+  React.useEffect(() => {
+    setLocalFeedsData(feedsData);
+  }, [feedsData]);
 
-    const handleCloseVideo = () => {
-        setIsOpenVideo(false);
-        setActiveFeedId(null);
-    };
+  const handleOpenVideo = (feedId) => {
+    setActiveFeedSlug(feedId);
+    setIsOpenVideo(true);
+  };
 
-    const activeFeed = activeFeedId !== null ? feedsData.find((feed) => feed.id === activeFeedId) : null;
+  const handleCloseVideo = () => {
+    setIsOpenVideo(false);
+    setActiveFeedSlug(null);
+  };
 
-    return (
-        <>
-            <div>
-                <ButtonTabs setSelectButton={setSelectedTabs} selectButton={selectedTabs} tabs={buttonsTabs} />
-            </div>
-            <div className={classes?.mainWrapper}>
-                <div className={classes.feedsList}>
-                    {feedsData?.map((feed, index) => (
-                        <BorderWrapper key={index}>
-                            <FeedsCard 
-                                key={feed.id} 
-                                feed={feed}
-                                setIsOpen={handleOpenVideo}
-                                onOpenComments={() => setIsOpen(true)}
-                            />
-                        </BorderWrapper>
-                    ))}
-                </div>
-            </div>
+  const handleOpenComments = (feedSlug) => {
+    setActiveFeedSlug(feedSlug);
+    setIsCommentsOpen(true);
+  };
 
-            <CommentsModal
-                isOpen={isOpen}
-                onClose={() => setIsOpen(false)}
-                feedId={activeFeedId}
-            />
+  const handleCloseComments = () => {
+    setIsCommentsOpen(false);
+    setActiveFeedSlug(null);
+  };
 
-            <VideoModalSkeleton
-                isOpen={isOpenVideo}
-                setIsOpenVideo={setIsOpenVideo}
-                onClose={handleCloseVideo}
-                activeFeed={activeFeed}
-            />
-        </>
-    );
+  const handleCommentDeleted = () => {
+    if (activeFeedSlug) {
+      setLocalFeedsData((prevFeeds) =>
+        prevFeeds.map((feed) =>
+          feed.slug === activeFeedSlug
+            ? {
+                ...feed,
+                commentsCount: Math.max(0, (feed.commentsCount || 0) - 1),
+              }
+            : feed
+        )
+      );
+    }
+  };
+
+  const activeFeed =
+    activeFeedSlug !== null
+      ? localFeedsData.find((feed) => feed.slug === activeFeedSlug)
+      : null;
+
+  return (
+    <>
+      <div>
+        <ScrollContainer>
+          <ButtonTabs
+            setSelectButton={setFeedsCategory}
+            selectButton={feedsCategory[0]}
+            tabs={feedsCategory}
+          />
+        </ScrollContainer>
+      </div>
+      <div className={classes?.mainWrapper}>
+        <div className={classes.feedsList}>
+          {localFeedsData.length > 0 ? (
+            localFeedsData?.map((feed, index) => (
+              <BorderWrapper key={index}>
+                <FeedsCard
+                  key={feed.id}
+                  feed={feed}
+                  setIsOpen={handleOpenVideo}
+                  onOpenComments={() => handleOpenComments(feed?.slug)}
+                />
+              </BorderWrapper>
+            ))
+          ) : (
+            <NoData text="No feeds found" />
+          )}
+        </div>
+      </div>
+
+      <CommentsModal
+        isOpen={isCommentsOpen}
+        onClose={handleCloseComments}
+        feedSlug={activeFeedSlug}
+        onCommentDeleted={handleCommentDeleted}
+      />
+
+      <VideoModalSkeleton
+        isOpen={isOpenVideo}
+        setIsOpenVideo={setIsOpenVideo}
+        onClose={handleCloseVideo}
+        activeFeed={activeFeed}
+      />
+    </>
+  );
 };
 
 export default FeedsCom;

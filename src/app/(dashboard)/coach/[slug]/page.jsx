@@ -1,12 +1,9 @@
-import CoachDetailTemplate from '@/component/templates/AdminPages/CoachDetailTemplate'
-import React from 'react'
+import CoachDetailTemplate from "@/component/templates/AdminPages/CoachDetailTemplate";
+import React from "react";
 
-const page = ({ params }) => {
-  return (
-    <div>
-        <CoachDetailTemplate slug={params.slug} />
-    </div>
-  )
-}
+const page = async ({ params }) => {
+  const { slug } = await params;
+  return <CoachDetailTemplate slug={slug} />;
+};
 
-export default page
+export default page;

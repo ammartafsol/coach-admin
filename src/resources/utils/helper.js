@@ -601,7 +601,7 @@ export const timeAgo = (dateString) => {
   if (weeks < 4) return `${weeks} week${weeks !== 1 ? "s" : ""} ago`;
   if (months < 12) return `${months} month${months !== 1 ? "s" : ""} ago`;
   return `${years} year${years !== 1 ? "s" : ""} ago`;
-}
+};
 
 // Format date for display
 export const formatDate = (date) => {
@@ -615,4 +615,4 @@ export const getMonthName = (monthIndex) => {
   if (monthIndex < 0 || monthIndex > 11) return "Invalid month";
 
   return moment().month(monthIndex).format("MMMM");
-}
+};

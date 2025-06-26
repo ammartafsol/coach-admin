@@ -11,6 +11,7 @@
   border: 1px solid #454343 !important;
   color: #454343 !important;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .mainParent {
@@ -20,7 +21,7 @@
 }
 
 .buttonsNormal {
-    background: #f9e17a !important;
+  background: #f9e17a !important;
   color: #344313 !important;
- 
+  border: 1px solid #f9e17a !important;
 }

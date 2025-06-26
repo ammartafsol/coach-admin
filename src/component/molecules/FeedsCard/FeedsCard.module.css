@@ -35,31 +35,31 @@
 }
 
 .authorName {
-color: #333;
-font-family: "AventaBold";
-font-size: 18px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+  color: #333;
+  font-family: "AventaBold";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .category {
-  color: #71717A;
-font-family: "AvenirRegular";
-font-size: 16px;
-font-style: normal;
-font-weight: 450;
-line-height: normal;
-letter-spacing: 0.32px;
+  color: #71717a;
+  font-family: "AvenirRegular";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 450;
+  line-height: normal;
+  letter-spacing: 0.32px;
 }
 
 .feedDate {
-  color: #71717A;
-font-family: "AvenirRegular";
-font-size: 12px;
-font-style: normal;
-font-weight: 450;
-line-height: normal;
+  color: #71717a;
+  font-family: "AvenirRegular";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 450;
+  line-height: normal;
 }
 
 .feedContent {
@@ -69,13 +69,13 @@ line-height: normal;
 }
 
 .feedText {
-color: rgba(113, 113, 122, 0.80);
-font-family: "AvenirRegular";
-font-size: 14px;
-font-style: normal;
-font-weight: 450;
-line-height: 23px; /* 164.286% */
-letter-spacing: 0.28px;
+  color: rgba(113, 113, 122, 0.8);
+  font-family: "AvenirRegular";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 450;
+  line-height: 23px; /* 164.286% */
+  letter-spacing: 0.28px;
 }
 
 .feedMedia {
@@ -108,13 +108,149 @@ letter-spacing: 0.28px;
   border: none;
   cursor: pointer;
   border: 1px solid #fff;
-    border-radius: 50%;
-    width: 45px;
-    height: 45px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+/* New styles for video container and swiper controls */
+.feedVideoContainer {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.feedVideo {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.feedVideo img,
+.feedVideo video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.documentItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 5px;
+  padding: 6px 10px;
+  margin-bottom: 10px;
+}
+
+.documentIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  color: var(--accent-color);
+  border-radius: 4px;
+}
+
+.documentName {
+  color: var(--accent-color);
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
+  font-family: "AventaRegular", sans-serif;
+  word-break: break-all;
+}
+
+.swiperControls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  gap: 15px;
+}
+
+.swiperButton {
+  background-color: transparent;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+
+.paginationDots {
+  display: flex;
+  gap: 5px;
+}
+
+.paginationDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--Light-Green) !important;
+  opacity: 0.5 !important;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.activeDot {
+  background-color: var(--Dark-Green) !important;
+  opacity: 0.8 !important;
+}
+
+.fullscreenBtn {
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+  transition: background-color 0.2s ease;
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
+  z-index: 2;
+}
+
+.fullscreenBtn:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+/* .feedStats {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  justify-content: space-between;
+}
+
+.likesCount,
+.viewsCount {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: #7b7b7b;
+}
+.viewsCount span {
+  color: #f29267;
+  font-family: "AvenirRegular";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 450;
+  line-height: normal;
+  text-transform: capitalize;
+} */
 
 .feedStats {
   display: flex;
@@ -132,12 +268,22 @@ letter-spacing: 0.28px;
   font-size: 0.75rem;
   color: #71717a;
 }
-.viewsCount span{
-    color: rgba(113, 113, 122, 0.80);
-font-family: "AvenirRegular";
-font-size: 14px;
-font-style: normal;
-font-weight: 450;
-line-height: normal;
-text-transform: capitalize;
+
+.likesCount {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.likesCount:hover {
+  opacity: 0.8;
+}
+
+.viewsCount span {
+  color: rgba(113, 113, 122, 0.8);
+  font-family: "AvenirRegular";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 450;
+  line-height: normal;
+  text-transform: capitalize;
 }

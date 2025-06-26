@@ -37,8 +37,12 @@ export const FAQ_TYPE_OPTIONS = [
 export const USER_ACTION_OPTIONS = (item) => [
   { label: "View Details", value: "viewDetails" },
   { label: "Status", value: "status" },
-  ...(item === "pending" ? [{ label: "Accept", value: "accept" },{ label: "Reject", value: "reject" }] : []),
- 
+  ...(item === "pending"
+    ? [
+        { label: "Accept", value: "accept" },
+        { label: "Reject", value: "reject" },
+      ]
+    : []),
 ];
 
 export const USER_STATUS_OPTIONS = [
@@ -57,7 +61,6 @@ export const COACH_ACTION_OPTIONS = [
   { label: "View Details", value: "viewDetails" },
   { label: "Status", value: "status" },
 ];
-
 
 export const SPORTS_OPTIONS = [
   { label: "All", value: "all" },
@@ -85,4 +88,10 @@ export const TRANSACTION_STATUS_OPTIONS = [
   { label: "Pending", value: "pending" },
   { label: "Sent", value: "sent" },
   { label: "Received", value: "received" },
+];
+
+export const FEED_STATUS_OPTIONS = [
+  { label: "All", value: "all" },
+  { label: "Active", value: true },
+  { label: "Inactive", value: false },
 ];

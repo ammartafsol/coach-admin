@@ -20,13 +20,10 @@ import useDebounce from "@/resources/hooks/useDebounce";
 import { USER_STATUS_OPTIONS } from "@/developmentContent/dropdownOption";
 import RenderToast from "@/component/atoms/RenderToast";
 
-
-
-const CoachDetailTemplate = ({slug}) => {
+const CoachDetailTemplate = ({ slug }) => {
   const [SelectedTabs, setSelectedTabs] = useState(coachTabs[0]);
 
-
-  const {Get , Patch} = useAxios();
+  const { Get, Patch } = useAxios();
   const [usersData, setUsersData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [editLoading, setEditLoading] = useState(false);
@@ -35,125 +32,122 @@ const CoachDetailTemplate = ({slug}) => {
   const [search, setSearch] = useState("");
   const debounceSearch = useDebounce(search, 500);
   const [feedsStatus, setFeedsStatus] = useState(USER_STATUS_OPTIONS[0]);
-
-
+  const [feedsCategory, setFeedsCategory] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [page, setPage] = useState(1);
   const [totalRecords, setTotalRecords] = useState(0);
-
   const [subscribersData, setSubscribersData] = useState(null);
-  
-    const getData = async () => {
-      setLoading(true);
-      const { response } = await Get({
-        route: `admin/users/${slug}`,
-      });
-      console.log("response", response);
-      if(response){
-        setUsersData(response.data);
-      }
-      setLoading(false);
+
+  const getData = async () => {
+    setLoading(true);
+    const { response } = await Get({
+      route: `admin/users/${slug}`,
+    });
+    if (response) {
+      setUsersData(response.data);
     }
-  
-    const getSubscribersData = async (coachSlug = slug) => {
-      const params = {
-        coachSlug,
-      };
-      const query = new URLSearchParams(params).toString();
-    
-      setLoading(true);
-      const { response } = await Get({
-        route: `admin/coach/subscribers?${query}`,
-      });
-    
-      console.log("subscribersData", response);
-      if (response) {
-        setSubscribersData(response.data);
-      }
-      setLoading(false);
+    setLoading(false);
+  };
+
+  const getSubscribersData = async (coachSlug = slug) => {
+    const params = {
+      coachSlug,
     };
-  
-    
+    const query = new URLSearchParams(params).toString();
 
-    const getFeedsData = async ({
-      _search = debounceSearch,
-      _status = feedsStatus,
-      _category = "Football",
-    }) => {
-      if (feedsLoading === "loading") return;
+    setLoading(true);
+    const { response } = await Get({
+      route: `admin/coach/subscribers?${query}`,
+    });
 
-      const params = {
-        search: _search,
-        ...(_status && { status: _status?.value }),
-        category: _category,
-        // ...(_category && { category: _category?.value }),
-      };
-      const query = new URLSearchParams(params).toString();
-
-      setFeedsLoading("loading");
-      console.log("Feeds query:", query);
-
-      const { response } = await Get({
-        route: `admin/feeds/${slug}?${query}`,
-      });
-      
-      console.log("feedsData", response);
-      if(response){
-        setFeedsData(response?.data);
-      }
-      setFeedsLoading("");
+    if (response) {
+      setSubscribersData(response.data);
     }
-    
+    setLoading(false);
+  };
 
-    const editSubscription = async (values) => {
-      setEditLoading(true);
-      const { response } = await Patch({
-        route: `admin/users/coach/subscription/update/${slug}`,
-        data: {
-          subscriptionCost: values.price,
-        },
-      });
-      
-      console.log("API response:", response);
-      
-     if(response){
+  const getFeedsData = async ({
+    _search = debounceSearch,
+    _status = feedsStatus,
+    _category = selectedCategory?._id,
+  }) => {
+    if (feedsLoading === "loading") return;
+
+    const params = {
+      coachSlug: slug,
+      search: _search,
+      ...(_status && { status: _status?.value }),
+      ...(_category && { category: _category }),
+    };
+    const query = new URLSearchParams(params).toString();
+
+    setFeedsLoading("loading");
+
+    const { response } = await Get({
+      route: `admin/feeds?${query}`,
+    });
+
+    if (response) {
+      setFeedsData(response?.data);
+    }
+    setFeedsLoading("");
+  };
+
+  const editSubscription = async (values) => {
+    setEditLoading(true);
+    const { response } = await Patch({
+      route: `admin/users/coach/subscription/update/${slug}`,
+      data: {
+        subscriptionCost: values.price,
+      },
+    });
+
+    if (response) {
       setUsersData((prev) => ({
         ...prev,
         subscriptionCost: values.price,
       }));
-    
+
       RenderToast({
         message: "Subscription updated successfully",
         type: "success",
       });
       return true;
-     }
-     setEditLoading(false);
     }
+    setEditLoading(false);
+  };
 
-    const getCategoryData = async (coachSlug = slug) => {
-      const params = {
-        coachId: coachSlug,
-        type: "feed",
-      };
-      const query = new URLSearchParams(params).toString();
-      const { response } = await Get({
-        route: `admin/categories?${query}`,
-      });
-      console.log("categoryData", response);
-    }
-
-    useEffect(() => {
-      getData();
-      getSubscribersData();
-      getCategoryData();
-      if (SelectedTabs.value === "feeds") {
-        getFeedsData({
-          _search: debounceSearch,
-          _status: feedsStatus,
-          _category: "football",
-        });
+  const getCategoryData = async (coachSlug = slug) => {
+    const params = {
+      coachSlug,
+      type: "feed",
+    };
+    const query = new URLSearchParams(params).toString();
+    const { response } = await Get({
+      route: `admin/categories?${query}`,
+    });
+    if (response) {
+      const categories = response.data;
+      setFeedsCategory(categories);
+      if (categories.length > 0 && !selectedCategory) {
+        setSelectedCategory(categories[0]);
       }
-    }, [slug, debounceSearch, feedsStatus, SelectedTabs.value]);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getData();
+    getSubscribersData();
+    getCategoryData();
+    if (SelectedTabs.value === "feeds") {
+      getFeedsData({
+        _search: debounceSearch,
+        _status: feedsStatus,
+        _category: selectedCategory?._id,
+      });
+    }
+  }, [slug, debounceSearch, feedsStatus, selectedCategory, SelectedTabs.value]);
 
   return (
     <div>
@@ -186,8 +180,8 @@ const CoachDetailTemplate = ({slug}) => {
                   value={feedsCategory}
                   setValue={setFeedsCategory}
                 /> */}
-                <DropDown 
-                  placeholder={"Status"} 
+                <DropDown
+                  placeholder={"Status"}
                   value={feedsStatus}
                   setValue={setFeedsStatus}
                   options={USER_STATUS_OPTIONS}
@@ -209,19 +203,30 @@ const CoachDetailTemplate = ({slug}) => {
           </div>
           <div className={classes?.coachTop}>
             {SelectedTabs.value === "users" ? (
-              <UsersTable subscribersData={subscribersData} loading={loading} page={page} setPage={setPage} totalRecords={totalRecords}/>
+              <UsersTable
+                subscribersData={subscribersData}
+                loading={loading}
+                page={page}
+                setPage={setPage}
+                totalRecords={totalRecords}
+              />
             ) : SelectedTabs.value === "users" ? (
               <UsersTable />
             ) : SelectedTabs.value === "profile" ? (
               <UserProfile userData={usersData} />
             ) : SelectedTabs.value === "subscription" ? (
-              <Subscription  editSubscription={editSubscription} userData={usersData} loading={editLoading} />
+              <Subscription
+                editSubscription={editSubscription}
+                userData={usersData}
+                loading={editLoading}
+              />
             ) : SelectedTabs.value === "feeds" ? (
-              <FeedsCom 
-                feedsData={feedsData} 
+              <FeedsCom
+                feedsData={feedsData}
                 setSearch={setSearch}
+                setFeedsCategory={setSelectedCategory}
+                feedsCategory={feedsCategory}
                 loading={feedsLoading === "loading"}
-                
               />
             ) : (
               "No data "

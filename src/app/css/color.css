@@ -1,23 +1,31 @@
 :root {
-
-  --black-color-300:#212121;
-  --light-gray-color:#FAFAFA;
-  --light-gray-color-100:#EAECF0;
-  --Wild-Willow-100:#EAECF0;
-  --Light-Green:#B0CD6E;
-  --Dark-Charcoal:#454343;
-  --Lemon-Yellow:#F9E17A;
-  --White:#ffffff;
-  --Dark-Brown:#343131;
-  --Dull-White:rgba(255, 255, 255, 0.8);
-  --Dull-Grey:#F5F5F5;
-  --Orange:#F29267;
-  --Border-Color: #B8B6B6;
+  --black-color-300: #212121;
+  --light-gray-color: #fafafa;
+  --light-gray-color-100: #eaecf0;
+  --Wild-Willow-100: #eaecf0;
+  --Light-Green: #b0cd6e;
+  --Dark-Green: #008000;
+  --Dark-Charcoal: #454343;
+  --Gold-Color: #dbb40c;
+  --Lemon-Yellow: #f9e17a;
+  --White: #ffffff;
+  --Dark-Brown: #343131;
+  --Dull-White: rgba(255, 255, 255, 0.8);
+  --Dull-Grey: #f5f5f5;
+  --Orange: #f29267;
+  --Border-Color: #b8b6b6;
 }
 
-
 /* text color */
-.white{color: var(--White);}
-.yellow{color: var(--Lemon-Yellow);}
-.dullWhite{color: var(--Dull-White);}
-.dullGrey{color: var(--Dull-Grey);}
+.white {
+  color: var(--White);
+}
+.yellow {
+  color: var(--Lemon-Yellow);
+}
+.dullWhite {
+  color: var(--Dull-White);
+}
+.dullGrey {
+  color: var(--Dull-Grey);
+}
