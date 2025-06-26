@@ -1,8 +1,10 @@
-// export const NAV_DATA = [
-//   { title: "Home", route: "/" },
-//   { title: "About Us", route: "/about-us" },
-//   { title: "Contact Us", route: "/contact-us" },
-// ];
+import { HiOutlineUser , HiOutlineDocumentCurrencyDollar} from "react-icons/hi2";
+import { TbUsers , TbCategory , TbCategory2 } from "react-icons/tb";
+import { TfiCommentAlt } from "react-icons/tfi";
+import { GoDiscussionDuplicate } from "react-icons/go";
+
+
+
 
 export const AFTER_LOGIN_NAV_DATA = [
   { title: "Dashboard", route: "/clinic/dashboard" },
@@ -71,10 +73,11 @@ export const mediaTypeData = [
   { id: 16, label: 'Physical Examination', value: 'physical_examination' },
 ];
 export const NAV_DATA = [
-  { label: "Dashboard", path: "/", icon:"" },
-  { label: "Users", path: "/user" },
-  { label: "Coaches", path: "/coach" },
-  { label: "Categories", path: "/category" },
-  { label: "Faqs", path: "/faq" },
-  {label:"transaction", path:"/transaction"},
+  { label: "Dashboard", path: "/", icon: <TbCategory />},
+  { label: "Users", path: "/user" , icon:<HiOutlineUser /> },
+  { label: "Coaches", path: "/coach" , icon:<TbUsers /> },
+  { label: "Feeds", path: "/feed" , icon:<TfiCommentAlt /> },
+  { label: "Categories", path: "/category" , icon:  <TbCategory2 /> },
+  { label: "Faqs", path: "/faq" , icon:<GoDiscussionDuplicate /> },
+  {label:"transaction", path:"/transaction", icon:<HiOutlineDocumentCurrencyDollar />},
 ];
