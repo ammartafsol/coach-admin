@@ -16,6 +16,7 @@ import Subscription from "@/component/organisms/Subscription/Subscription";
 import useAxios from "@/interceptor/axiosInterceptor";
 import { Loader } from "@/component/atoms/Loader";
 import useDebounce from "@/resources/hooks/useDebounce";
+import { Country } from "country-state-city";
 
 import { USER_STATUS_OPTIONS } from "@/developmentContent/dropdownOption";
 import RenderToast from "@/component/atoms/RenderToast";
@@ -36,11 +37,19 @@ const CoachDetailTemplate = ({slug}) => {
   const debounceSearch = useDebounce(search, 500);
   const [feedsStatus, setFeedsStatus] = useState(USER_STATUS_OPTIONS[0]);
 
+  // Country selection state
+  const [selectedCountry, setSelectedCountry] = useState(null);
 
   const [page, setPage] = useState(1);
   const [totalRecords, setTotalRecords] = useState(0);
 
   const [subscribersData, setSubscribersData] = useState(null);
+
+  // Get all countries for dropdown
+  const countries = Country.getAllCountries().map((country) => ({
+    label: country.name,
+    value: country.isoCode,
+  }));
   
     const getData = async () => {
       setLoading(true);
@@ -57,6 +66,8 @@ const CoachDetailTemplate = ({slug}) => {
     const getSubscribersData = async (coachSlug = slug) => {
       const params = {
         coachSlug,
+        
+
       };
       const query = new URLSearchParams(params).toString();
     
@@ -144,6 +155,11 @@ const CoachDetailTemplate = ({slug}) => {
       console.log("categoryData", response);
     }
 
+    // Handle country change
+    const handleCountryChange = (country) => {
+      setSelectedCountry(country);
+    };
+
     useEffect(() => {
       getData();
       getSubscribersData();
@@ -202,7 +218,12 @@ const CoachDetailTemplate = ({slug}) => {
                   placeholder={"Search By Name"}
                   rightIcon={<IoSearchOutline color="#B0CD6E" size={20} />}
                 />
-                <DropDown placeholder={"Location"} />
+                <DropDown 
+                  placeholder={"Country"} 
+                  value={selectedCountry}
+                  setValue={handleCountryChange}
+                  options={countries}
+                />
                 <DropDown placeholder={"Status"} />
               </div>
             ) : (
@@ -216,7 +237,7 @@ const CoachDetailTemplate = ({slug}) => {
               <UsersTable />
             ) : SelectedTabs.value === "profile" ? (
               <UserProfile userData={usersData} />
-            ) : SelectedTabs.value === "subscription" ? (
+            ) : SelectedTabs.value === "subscriptionCost" ? (
               <Subscription  editSubscription={editSubscription} userData={usersData} loading={editLoading} />
             ) : SelectedTabs.value === "feeds" ? (
               <FeedsCom 

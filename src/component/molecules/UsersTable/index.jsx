@@ -22,19 +22,6 @@ const UsersTable = ({subscribersData, loading, page, setPage, totalRecords}) => 
           renderItem={({ item, key, rowIndex, renderValue }) => {
             const rowItem = subscribersData[rowIndex];
             if (renderValue) return renderValue(item, rowItem);
-            if (key === "action") {
-              return (
-                <div className={classes.actionButtons}>
-                  <ActionMenu 
-                    popover={USER_ACTION_OPTIONS(rowItem?.status)}
-                    onClick={(label) => {
-                      onClickPopover(label, rowItem);
-                    }}
-                    itemData={rowItem}
-                  />
-                </div>
-              );
-            }
             return item || "";
           }}
         />

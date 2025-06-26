@@ -14,10 +14,8 @@ export default function Subscription({userData, editSubscription, loading }) {
   return (
     <div className={classes.main}>
       <div className={isEdit ? classes.editHeader : classes.header}>
-        {isEdit ? (
+        {isEdit && (
           <Button label={"Back"} onClick={() => setIsEdit(false)} />
-        ) : (
-          <Button label={"Add Subscription"} onClick={() => setIsEdit(true)} />
         )}
       </div>
       {isEdit ? (

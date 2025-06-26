@@ -22,6 +22,7 @@ export default function FilterHeader({
   setSecondValue,
   secondValue,
   value,
+  children,
 }) {
   return (
     <div className={classes.filterHeader}>
@@ -48,6 +49,7 @@ export default function FilterHeader({
       )}
      
       {showButton && <Button label={buttonLabel} onClick={buttonOnClick} />}
+      {children}
     </div>
   );
 }
