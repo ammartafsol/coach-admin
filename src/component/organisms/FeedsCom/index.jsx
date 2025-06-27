@@ -14,12 +14,13 @@ import Button from "@/component/atoms/Button";
 const FeedsCom = ({
   feedsData,
   setSearch,
-  setFeedsCategory,
   feedsCategory,
   loading,
   totalRecords,
   page,
   setPage,
+  selectedCategory,
+  setSelectedCategory,
 }) => {
   const [isOpenVideo, setIsOpenVideo] = useState(false);
   const [activeFeedSlug, setActiveFeedSlug] = useState(null);
@@ -75,8 +76,8 @@ const FeedsCom = ({
       <div>
         <ScrollContainer>
           <ButtonTabs
-            setSelectButton={setFeedsCategory}
-            selectButton={feedsCategory[0]}
+            setSelectButton={setSelectedCategory}
+            selectButton={selectedCategory}
             tabs={feedsCategory}
           />
         </ScrollContainer>

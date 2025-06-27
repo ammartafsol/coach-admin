@@ -13,7 +13,7 @@ const ButtonTabs = ({ tabs, selectButton, setSelectButton }) => {
             }}
             key={index}
             className={`${classes?.buttons} ${
-              selectButton === item && classes?.buttonsNormal
+              selectButton?.slugId === item?.slugId && classes?.buttonsNormal
             } `}
           >
             {typeof item === "object" ? item.name : item}
