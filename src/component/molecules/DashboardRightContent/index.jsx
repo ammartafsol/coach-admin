@@ -2,6 +2,7 @@ import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import classes from "./DashboardRightContent.module.css";
 import NotificationCard from "@/component/atoms/NotificationCard";
+import NoData from "@/component/atoms/NoData/NoData";
 import { Col, Row } from "react-bootstrap";
 import { notificationCardData } from "@/developmentContent/dummyData";
 import { mediaUrl, timeAgo } from "@/resources/utils/helper";
@@ -98,16 +99,20 @@ export default function DashboardRightContent({ dataSubscribers, dataFeeds, data
 
       <div className={classes.registrationCard}>
         <h2 className={classes.cardTitle}>Registration Request</h2>
-        <Row>
-          {dataRequests?.slice(0, 2)?.map((item) => {
-            return (
-              <Col md={12}>
-                <NotificationCard key={item.id} item={item} getData={getData}/>
-                <hr />
-              </Col>
-            );
-          })}
-        </Row>
+        {dataRequests && dataRequests.length > 0 ? (
+          <Row>
+            {dataRequests?.slice(0, 2)?.map((item) => {
+              return (
+                <Col md={12}>
+                  <NotificationCard key={item.id} item={item} getData={getData}/>
+                  {/* <hr /> */}
+                </Col>
+              );
+            })}
+          </Row>
+        ) : (
+          <NoData text="No Registration Requests" className={classes.noDataStyle} />
+        )}
       </div>
     </div>
   );

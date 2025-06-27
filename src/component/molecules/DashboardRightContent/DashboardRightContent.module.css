@@ -190,3 +190,8 @@
     cursor: pointer;
   }
   
+  .noDataStyle {
+    min-height: 100px !important;
+    padding: 1rem;
+  }
+  

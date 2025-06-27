@@ -67,6 +67,7 @@ const ProfileTemplate = () => {
       editProfile(values);
     },
   });
+  console.log(profileFormik.values)
 
   const editProfile = async (values) => {
     const updateData = {
