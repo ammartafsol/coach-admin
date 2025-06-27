@@ -61,7 +61,8 @@ const DashboardTemplate = () => {
     setChartLoading(true);
     
     const params = {
-      forYear: year.toString()
+      forYear: year.toString(),
+      graph: "graph"
     };
     const query = new URLSearchParams(params).toString();
 

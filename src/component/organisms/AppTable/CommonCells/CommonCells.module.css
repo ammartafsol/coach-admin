@@ -46,7 +46,7 @@
 .statusApproved,
 .statusPaid,
 .statusTrue {
-  background-color: #ecfdf3;
+  /* background-color: #ecfdf3; */
 }
 .statusApprovedIcon,
 .statusPaidIcon,
@@ -62,7 +62,7 @@
 .statusRejected,
 .statusUnpaid,
 .statusFalse {
-  background-color: #fef2f2;
+  /* background-color: #fef2f2; */
 }
 .statusRejectedIcon,
 .statusUnpaidIcon,
@@ -76,7 +76,7 @@
 }
 
 .statusPending {
-  background-color: #fffbeb;
+  /* background-color: #fffbeb; */
 }
 .statusPendingIcon {
   color: #b54708;

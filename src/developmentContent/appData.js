@@ -73,7 +73,7 @@ export const mediaTypeData = [
   { id: 16, label: 'Physical Examination', value: 'physical_examination' },
 ];
 export const NAV_DATA = [
-  { label: "Dashboard", path: "/", icon: <TbCategory />},
+  { label: "Dashboard", path: "/dashboard", icon: <TbCategory />},
   { label: "Subscribers", path: "/subscriber" , icon:<HiOutlineUser /> },
   { label: "Coaches", path: "/coach" , icon:<TbUsers /> },
   { label: "Feeds", path: "/feed" , icon:<TfiCommentAlt /> },
