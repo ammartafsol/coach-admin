@@ -6,7 +6,7 @@ import categoryReducer from "./category/categorySlice";
 const rootReducer = combineReducers({
   authReducer,
   commonReducer,
-  categoryReducer,
+  category: categoryReducer, 
 });
 
 export default rootReducer;

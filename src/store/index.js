@@ -7,7 +7,7 @@ import combineReducer from "./combineReducer";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["authReducer", "commonReducer"],
+  whitelist: ["authReducer", "commonReducer", "category"],
 };
 
 const persistedReducer = persistReducer(persistConfig, combineReducer);

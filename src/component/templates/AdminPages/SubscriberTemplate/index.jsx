@@ -51,13 +51,11 @@ const SubscriberTemplate = () => {
     const query = new URLSearchParams(params).toString();
 
     setLoading("loading");
-    console.log(query);
 
     const { response } = await Get({
       route: `admin/users?${query}`,
     });
 
-    console.log(response);
     if (response) {
       setData(response?.data);
       setPage(pg);
@@ -66,8 +64,6 @@ const SubscriberTemplate = () => {
 
     setLoading("");
   };
-  console.log(status);
-  console.log(setStatus);
 
   useEffect(() => {
     getData({
@@ -107,9 +103,8 @@ const SubscriberTemplate = () => {
         type: "success",
         message: `User updated successfully`,
       });
-      getData({
-        pg: 1,
-      });
+      const updatedUser = { ...selectedItem, isBlockedByAdmin: status };
+      updateUserInList(updatedUser);
       setShowModal("");
     }
     setLoading("");
@@ -117,8 +112,6 @@ const SubscriberTemplate = () => {
 
   const handleStatusChange = async (status) => {
     setLoading("updateStatus");
-
-    if (!status) return;
 
     const { response } = await Patch({
       route: `admin/users/block-unblock/${selectedItem.slug}`,
@@ -130,12 +123,18 @@ const SubscriberTemplate = () => {
         type: "success",
         message: `User ${status ? "Blocked" : "Unblocked"} successfully`,
       });
+      const updatedUser = { ...selectedItem, isBlockedByAdmin: status };
+      updateUserInList(updatedUser);
       setShowModal("");
-      getData({
-        pg: 1,
-      });
     }
     setLoading("");
+  };
+
+  const updateUserInList = (updatedUser) => {
+    setData((prev) => {
+      const filtered = prev.filter((u) => u.slug !== updatedUser.slug);
+      return [updatedUser, ...filtered];
+    });
   };
 
   return (
@@ -147,8 +146,6 @@ const SubscriberTemplate = () => {
           placeholder={"Status"}
           setValue={setStatus}
           value={status}
-
-          
           inputPlaceholder="Search By Name"
           customStyle={{ width: "300px" }}
           onChange={(e) => {

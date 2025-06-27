@@ -4,15 +4,12 @@ import classes from "./CoachesTemplate.module.css";
 import TopHeader from "@/component/atoms/TopHeader";
 import AppTable from "@/component/organisms/AppTable/AppTable";
 import {
-  coachtableHeaders,
   tableHeadersData,
 } from "@/developmentContent/tableHeader";
 import ActionMenu from "@/component/molecules/ActionMenu/ActionMenu";
 import {
   COACH_STATUS_OPTIONS,
-  USER_STATUS_OPTIONS,
   COACH_RATING_OPTIONS,
-  COACH_ACTION_OPTIONS,
   USER_ACTION_OPTIONS,
   SORT_BY_OPTIONS,
   SORT_TYPE_OPTIONS,
@@ -27,8 +24,11 @@ import { useRouter } from "next/navigation";
 import { RECORDS_LIMIT } from "@/const";
 import DropDown from "@/component/molecules/DropDown/DropDown";
 import { Country } from "country-state-city";
+import { useSelector } from "react-redux";
 
 const CoachesTemplate = () => {
+  const categories = useSelector((state) => state.category.categories);
+  console.log("categories redux",categories);  
   const { Patch, Get } = useAxios();
 
   const [showModal, setShowModal] = useState("");
@@ -45,6 +45,7 @@ const CoachesTemplate = () => {
   const [country, setCountry] = useState(null);
   const [sortBy, setSortBy] = useState(null);
   const [sortType, setSortType] = useState(null);
+  const [category, setCategory] = useState(null);
 
   const router = useRouter();
 
@@ -64,6 +65,7 @@ const CoachesTemplate = () => {
     _country = country?.value,
     _sortBy = sortBy?.value,
     _sortType = sortType?.value,
+    _category = category?.value,
   }) => {
     if (loading === "loading") return;
 
@@ -86,6 +88,9 @@ const CoachesTemplate = () => {
     }
     if (_country) {
       params.country = _country;
+    }
+    if (_category) {
+      params.category = _category;
     }
     if (_sortType && _sortBy) {
       params.sortType = _sortType;
@@ -121,8 +126,9 @@ const CoachesTemplate = () => {
       _country: country?.value,
       _sortBy: sortBy?.value,
       _sortType: sortType?.value,
+      _category: category?.value,
     });
-  }, [debounceSearch, coachStatus, rating, country, sortBy, sortType]);
+  }, [debounceSearch, coachStatus, rating, country, sortBy, sortType, category]);
 
   const onClickPopover = (label = "", item = null) => {
     if (label === "Status") {
@@ -156,9 +162,8 @@ const CoachesTemplate = () => {
           showModal === "accept" ? "approved" : "rejected"
         } successfully`,
       });
-      getData({
-        pg: 1,
-      });
+      const updatedCoach = { ...selectedItem,  status: showModal === "accept" ? "approved" : "rejected" };
+      updateCoachInList(updatedCoach);
       setShowModal("");
     }
     setLoading("");
@@ -167,7 +172,7 @@ const CoachesTemplate = () => {
   const handleStatusChange = async (status) => {
     setLoading("updateStatus");
 
-    if (!status) return;
+    // if (!status) return;
 
     const { response } = await Patch({
       route: `admin/users/block-unblock/${selectedItem.slug}`,
@@ -179,12 +184,18 @@ const CoachesTemplate = () => {
         type: "success",
         message: `Coach ${status ? "Blocked" : "Unblocked"} successfully`,
       });
+      const updatedCoach = { ...selectedItem, isBlockedByAdmin: status };
+      updateCoachInList(updatedCoach);
       setShowModal("");
-      getData({
-        pg: 1,
-      });
     }
     setLoading("");
+  };
+
+  const updateCoachInList = (updatedCoach) => {
+    setData((prev) => {
+      const filtered = prev.filter((u) => u.slug !== updatedCoach.slug);
+      return [updatedCoach, ...filtered];
+    });
   };
 
   return (
@@ -244,6 +255,18 @@ const CoachesTemplate = () => {
               value={sortBy}
               setValue={(value) => {
                 setSortBy(value);
+                setPage(1);
+              }}
+            />
+            <DropDown
+              options={(categories || []).map((category) => ({
+                label: category.name,
+                value: category._id,
+              }))}
+              placeholder={"Category"}
+              value={category}
+              setValue={(value) => {
+                setCategory(value);
                 setPage(1);
               }}
             />

@@ -12,9 +12,12 @@ import classes from "./CategoryTemplate.module.css";
 import { CreateFormData } from "@/resources/utils/helper";
 import RenderToast from "@/component/atoms/RenderToast";
 import FilterHeader from "@/component/molecules/FilterHeader/FilterHeader";
-import { RECORDS_LIMIT } from "@/const";
+import { RECORDS_LIMIT } from "@/const";  
+import { setCategories } from "@/store/category/categorySlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const CategoryTemplate = () => {
+  const dispatch = useDispatch();
   const { Post, Patch , Get} = useAxios();
   
   const [showModal, setShowModal] = useState(false);
@@ -56,12 +59,31 @@ const CategoryTemplate = () => {
 
     if (response) {
       setData(response?.data);
+      // Don't overwrite Redux store with paginated data
+      // dispatch(setCategories(response?.data));
       setPage(pg);
       setTotalRecords(response?.totalRecords);
     }
 
     setLoading("");
   };
+
+  // Function to fetch all categories for Redux store
+  const getAllCategoriesForRedux = async () => {
+ 
+      const { response } = await Get({
+        route: `admin/categories?limit=1000`, // Fetch all categories
+      });
+      
+      if (response && response.data) {
+        dispatch(setCategories(response.data));
+      }
+  };
+
+  useEffect(() => {
+    // Fetch all categories for Redux when component mounts
+    getAllCategoriesForRedux();
+  }, []);
 
   useEffect(() => {
     getData({pg: 1, _search: debounceSearch, _status: status, type: type });
@@ -107,7 +129,11 @@ const CategoryTemplate = () => {
         message: `Category ${selectedItem?.slug ? "Updated" : "Added"} Successfully.`
       });
       setShowModal(false);
-      getData({ pg: 1 });
+      const updatedCategory = { ...selectedItem, ...payload };
+      updateCategoryInList(updatedCategory);
+      
+      // Refresh Redux store with all categories
+      getAllCategoriesForRedux();
     }
     setLoading("");
   };
@@ -138,7 +164,20 @@ const CategoryTemplate = () => {
     }
     setLoading("");
   };
-
+  const updateCategoryInList = (updatedCategory) => {
+    setData((prev) => {
+      const filtered = prev.filter((u) => u.slug !== updatedCategory.slug);
+      return [updatedCategory, ...filtered];
+    });
+    
+    // Also update Redux store
+    const currentCategories = categories || [];
+    const updatedCategories = currentCategories.filter((u) => u.slug !== updatedCategory.slug);
+    dispatch(setCategories([updatedCategory, ...updatedCategories]));
+  };
+  const categories = useSelector((state) => state.category.categories);
+  console.log("categories redux",categories);  
+  
   return (
     <main>
       <TopHeader title="Category">
@@ -177,7 +216,12 @@ const CategoryTemplate = () => {
           totalItems={totalRecords}
           onPageChange={(p) => {
             setPage(p);
-            getData({ pg: p });
+            getData({ 
+              pg: p, 
+              _search: debounceSearch, 
+              _status: status, 
+              type: type 
+            });
           }}
           currentPage={page}
           renderItem={({ item, key, rowIndex, renderValue }) => {
