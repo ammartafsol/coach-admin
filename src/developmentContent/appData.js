@@ -79,5 +79,5 @@ export const NAV_DATA = [
   { label: "Feeds", path: "/feed" , icon:<TfiCommentAlt /> },
   { label: "Categories", path: "/category" , icon:  <TbCategory2 /> },
   { label: "Faqs", path: "/faq" , icon:<GoDiscussionDuplicate /> },
-  {label:"transaction", path:"/transaction", icon:<HiOutlineDocumentCurrencyDollar />},
+  {label:"Transaction", path:"/transaction", icon:<HiOutlineDocumentCurrencyDollar />},
 ];

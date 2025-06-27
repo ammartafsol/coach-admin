@@ -22,7 +22,7 @@ export default function AppTable({
             overflow: auto !important;
           }
 
-          @media screen and (max-width: 1440px) {
+          @media screen and (max-width: 1200px) {
             .table100-head,
             .table100-body {
               width: 1200px;

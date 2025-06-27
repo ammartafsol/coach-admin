@@ -10,7 +10,6 @@ export default function TestimonialCard({ review }) {
   const resolvedImage = createdBy?.photo
     && mediaUrl(createdBy?.photo)
 
-
   return (
     <div className={classes.card}>
       <div className={classes.cardHeader}>
