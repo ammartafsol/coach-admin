@@ -1,62 +1,144 @@
 .card {
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 16px;
-  border-radius: 10px;
-  background: #fff;
-  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.1);
-  display: flex;
+  background: #ffffff;
+  border-radius: 12px;
   padding: 24px;
-  flex-direction: column;
-  align-items: flex-start;
-  flex: 1 0 0;
-  height: 284px;
-  justify-content: space-between;
-}
-
-.starsContainer {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #f0f0f0;
+  height: 100%;
   display: flex;
+  flex-direction: column;
 }
 
-.starFilled {
-  color: #f29267;
-  width: 18px;
-  height: 18px;
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  gap: 16px;
 }
 
-.starEmpty {
-  color: #e0e0e0;
-  width: 18px;
-  height: 18px;
-}
-
-.text {
-  color: #6c6c72;
-  font-family: "AvenirRegular";
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 450;
-  line-height: 28px; /* 155.556% */
-  letter-spacing: -0.88px;
-  margin-block: 16px;
-}
-
-.reviewerInfo {
+.userInfo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  flex: 1;
 }
 
 .avatar {
   border-radius: 50%;
   object-fit: cover;
+  border: 2px solid #f8f9fa;
 }
 
-.name {
-  color: #333;
+.userDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.userName {
+  color: #1a1a1a;
   font-family: "AventaBold";
   font-size: 16px;
-  font-style: normal;
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reviewDate {
+  color: #8e8e93;
+  font-family: "AvenirRegular";
+  font-size: 13px;
   font-weight: 400;
-  line-height: normal;
+  line-height: 1.3;
+}
+
+.rating {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.stars {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+
+.starFilled {
+  color: #f29267;
+  fill: #f29267;
+}
+
+.starEmpty {
+  color: #e0e0e0;
+  fill: none;
+}
+
+.ratingText {
+  color: #6c6c72;
+  font-family: "AventaBold";
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.cardBody {
+  flex: 1;
+}
+
+.reviewText {
+  color: #4a4a4a;
+  font-family: "AvenirRegular";
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.6;
+  margin: 0;
+  letter-spacing: -0.1px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .card {
+    padding: 20px;
+  }
+  
+  .cardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .rating {
+    align-items: flex-start;
+  }
+  
+  .userName {
+    font-size: 15px;
+  }
+  
+  .reviewText {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 16px;
+  }
+  
+  .userInfo {
+    gap: 10px;
+  }
+  
+  .avatar {
+    width: 44px !important;
+    height: 44px !important;
+  }
 }

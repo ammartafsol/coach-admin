@@ -14,6 +14,7 @@ import {
   COACH_RATING_OPTIONS,
   COACH_ACTION_OPTIONS,
   USER_ACTION_OPTIONS,
+  SORT_BY_OPTIONS,
 } from "@/developmentContent/dropdownOption";
 import useAxios from "@/interceptor/axiosInterceptor";
 import useDebounce from "@/resources/hooks/useDebounce";
@@ -24,6 +25,7 @@ import RejectionReasonModal from "@/component/molecules/Modal/RejectionReasonMod
 import { useRouter } from "next/navigation";
 import { RECORDS_LIMIT } from "@/const";
 import DropDown from "@/component/molecules/DropDown/DropDown";
+import { Country } from "country-state-city";
 
 const CoachesTemplate = () => {
   const { Patch, Get } = useAxios();
@@ -35,32 +37,57 @@ const CoachesTemplate = () => {
   const [search, setSearch] = useState("");
   const debounceSearch = useDebounce(search, 500);
   const [totalRecords, setTotalRecords] = useState(0);
-  const [status, setStatus] = useState(USER_STATUS_OPTIONS[0]);
-  const [coachStatus, setCoachStatus] = useState(COACH_STATUS_OPTIONS[0]);
-  const [rating, setRating] = useState(COACH_RATING_OPTIONS[0]);
+  const [status, setStatus] = useState(null);
+  const [coachStatus, setCoachStatus] = useState(null);
+  const [rating, setRating] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [country, setCountry] = useState(null);
+  const [sortBy, setSortBy] = useState(null);
 
   const router = useRouter();
+
+  // Get all countries for dropdown
+  const countries = Country.getAllCountries().map(country => ({
+    label: country.name,
+    value: country.name
+  }));
 
   const getData = async ({
     pg = page,
     _search = debounceSearch,
     _coachStatus = coachStatus?.value,
     _role = "coach",
-    _status = status,
+    // _status = status,
     _rating = rating?.value,
+    _country = country?.value,
+    _sortBy = sortBy?.value,
   }) => {
     if (loading === "loading") return;
 
     const params = {
       page: pg,
       search: _search,
-      coachStatus: _coachStatus,
       role: _role,
       limit: RECORDS_LIMIT,
-      ...(_status && { status: _status?.value }),
-      ...(_rating && { rating: _rating }),
     };
+
+    // Only add filters if they have values
+    if (_coachStatus && _coachStatus !== "all") {
+      params.coachStatus = _coachStatus;
+    }
+    // if (_status && _status.value && _status.value !== "all") {
+    //   params.status = _status.value;
+    // }
+    if (_rating && _rating !== "all") {
+      params.rating = _rating;
+    }
+    if (_country) {
+      params.country = _country;
+    }
+    if (_sortBy) {
+      params.sortBy = _sortBy;
+    }
+
     const query = new URLSearchParams(params).toString();
 
     setLoading("loading");
@@ -85,10 +112,12 @@ const CoachesTemplate = () => {
       pg: 1,
       _search: debounceSearch,
       _coachStatus: coachStatus?.value,
-      _status: status,
+      // _status: status,
       _rating: rating?.value,
+      _country: country?.value,
+      _sortBy: sortBy?.value,
     });
-  }, [debounceSearch, coachStatus, status, rating]);
+  }, [debounceSearch, coachStatus, rating, country, sortBy]);
 
   const onClickPopover = (label = "", item = null) => {
     if (label === "Status") {
@@ -118,7 +147,9 @@ const CoachesTemplate = () => {
     if (response) {
       RenderToast({
         type: "success",
-        message: `Coach ${showModal === "accept" ? "approved" : "rejected"} successfully`,
+        message: `Coach ${
+          showModal === "accept" ? "approved" : "rejected"
+        } successfully`,
       });
       getData({
         pg: 1,
@@ -163,14 +194,13 @@ const CoachesTemplate = () => {
             setPage(1);
           }}
           value={rating}
-          secondDropdownOption={USER_STATUS_OPTIONS}
-          secondPlaceholder={"Status"}
-          setSecondValue={(value) => {
-            setStatus(value);
-            setPage(1);
-          }}
-          
-          secondValue={status}
+          // secondDropdownOption={USER_STATUS_OPTIONS}
+          // secondPlaceholder={"Status"}
+          // setSecondValue={(value) => {
+          //   setStatus(value);
+          //   setPage(1);
+          // }}
+          // secondValue={status}
           inputPlaceholder="Search By Name"
           customStyle={{ width: "300px" }}
           onChange={(e) => {
@@ -179,8 +209,30 @@ const CoachesTemplate = () => {
           }}
         >
           <div className={classes.filterHeader}>
-            <DropDown options={COACH_STATUS_OPTIONS} placeholder={"Status"} value={coachStatus} setValue={setCoachStatus} />
-            {/* <DropDown options={} placeholder={"Rating"} value={rating} setValue={setRating} /> */}
+            <DropDown
+              options={COACH_STATUS_OPTIONS}
+              placeholder={"Status"}
+              value={coachStatus}
+              setValue={setCoachStatus}
+            />
+            <DropDown
+              options={countries}
+              placeholder={"Country"}
+              value={country}
+              setValue={(value) => {
+                setCountry(value);
+                setPage(1);
+              }}
+            />
+            <DropDown
+              options={SORT_BY_OPTIONS}
+              placeholder={"Sort By"}
+              value={sortBy}
+              setValue={(value) => {
+                setSortBy(value);
+                setPage(1);
+              }}
+            />
           </div>
         </FilterHeader>
       </TopHeader>
@@ -189,7 +241,7 @@ const CoachesTemplate = () => {
           tableHeader={tableHeadersData}
           data={data}
           hasPagination={true}
-          loading={loading === "loading"} 
+          loading={loading === "loading"}
           totalItems={totalRecords}
           onPageChange={(p) => {
             setPage(p);
@@ -203,7 +255,7 @@ const CoachesTemplate = () => {
               return (
                 <div className={classes.actionButtons}>
                   <ActionMenu
-                     popover={USER_ACTION_OPTIONS(rowItem?.status)}
+                    popover={USER_ACTION_OPTIONS(rowItem?.status)}
                     onClick={(label) => {
                       onClickPopover(label, rowItem);
                     }}

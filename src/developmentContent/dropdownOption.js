@@ -103,3 +103,14 @@ export const FEED_ARCHIVED_OPTIONS = [
   { label: "Un Archived", value: false },
   { label: "Archived", value: true },
 ];
+
+export const SUBSCRIBER_STATUS_OPTIONS = [
+  { label: "All", value: "all" },
+  { label: "Active", value: "active" },
+  { label: "Canceled", value: "canceled" },
+];
+
+export const SORT_BY_OPTIONS = [
+  { label: "Ascending", value: "asc" },
+  { label: "Descending", value: "desc" },
+];
