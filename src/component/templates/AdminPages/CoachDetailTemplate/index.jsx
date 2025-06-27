@@ -1,30 +1,29 @@
 "use client";
-import classes from "./CoachDetailTemplate.module.css";
-import TopHeader from "@/component/atoms/TopHeader";
-import Tabs from "@/component/atoms/Tabs/Tabs";
-import { coachTabs } from "@/developmentContent/enums/enum";
-import { useEffect, useState } from "react";
-import UsersTable from "@/component/molecules/UsersTable";
 import Button from "@/component/atoms/Button";
-import DropDown from "@/component/molecules/DropDown/DropDown";
 import { Input } from "@/component/atoms/Input";
-import { IoSearchOutline } from "react-icons/io5";
-import ButtonTabs from "@/component/atoms/ButtonTabs";
-import FeedsCom from "@/component/organisms/FeedsCom";
-import UserProfile from "@/component/organisms/UserProfile/UserProfile";
-import Subscription from "@/component/organisms/Subscription/Subscription";
-import useAxios from "@/interceptor/axiosInterceptor";
 import { Loader } from "@/component/atoms/Loader";
+import Tabs from "@/component/atoms/Tabs/Tabs";
+import TopHeader from "@/component/atoms/TopHeader";
+import DropDown from "@/component/molecules/DropDown/DropDown";
+import UsersTable from "@/component/molecules/UsersTable";
+import FeedsCom from "@/component/organisms/FeedsCom";
+import Subscription from "@/component/organisms/Subscription/Subscription";
+import UserProfile from "@/component/organisms/UserProfile/UserProfile";
+import { coachTabs } from "@/developmentContent/enums/enum";
+import useAxios from "@/interceptor/axiosInterceptor";
 import useDebounce from "@/resources/hooks/useDebounce";
 import { Country } from "country-state-city";
+import { useEffect, useState } from "react";
+import { IoSearchOutline } from "react-icons/io5";
+import classes from "./CoachDetailTemplate.module.css";
 
+import NoData from "@/component/atoms/NoData/NoData";
+import RenderToast from "@/component/atoms/RenderToast";
 import {
   FEED_ARCHIVED_OPTIONS,
   USER_STATUS_OPTIONS,
   SUBSCRIBER_STATUS_OPTIONS,
 } from "@/developmentContent/dropdownOption";
-import RenderToast from "@/component/atoms/RenderToast";
-import NoData from "@/component/atoms/NoData/NoData";
 import { RECORDS_LIMIT } from "@/const";
 
 const CoachDetailTemplate = ({ slug }) => {
@@ -40,16 +39,18 @@ const CoachDetailTemplate = ({ slug }) => {
   const debounceSearch = useDebounce(search, 500);
   const [feedsStatus, setFeedsStatus] = useState(USER_STATUS_OPTIONS[0]);
   const [feedsCategory, setFeedsCategory] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null); // Country selection state
+  const [selectedCategory, setSelectedCategory] = useState(feedsCategory[0]); // Country selection state
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [archived, setArchived] = useState(FEED_ARCHIVED_OPTIONS[0]);
   const [page, setPage] = useState(1);
   const [totalRecords, setTotalRecords] = useState(0);
   const [subscribersData, setSubscribersData] = useState(null);
-  
+
   // Subscriber specific states
   const [subscriberSearch, setSubscriberSearch] = useState("");
-  const [subscriberStatus, setSubscriberStatus] = useState(SUBSCRIBER_STATUS_OPTIONS[0]);
+  const [subscriberStatus, setSubscriberStatus] = useState(
+    SUBSCRIBER_STATUS_OPTIONS[0]
+  );
   const [subscriberCountry, setSubscriberCountry] = useState(null);
   const [subscriberPage, setSubscriberPage] = useState(1);
   const [subscriberTotalRecords, setSubscriberTotalRecords] = useState(0);
@@ -118,6 +119,7 @@ const CoachDetailTemplate = ({ slug }) => {
     _status = feedsStatus,
     _category = selectedCategory?._id,
     _archived = archived.value,
+    _page = page,
   }) => {
     if (feedsLoading === "loading") return;
 
@@ -127,6 +129,7 @@ const CoachDetailTemplate = ({ slug }) => {
       ...(_status && { status: _status?.value }),
       ...(_category && { category: _category }),
       isArchived: _archived,
+      page: _page,
     };
     const query = new URLSearchParams(params).toString();
 
@@ -137,7 +140,11 @@ const CoachDetailTemplate = ({ slug }) => {
     });
 
     if (response) {
-      setFeedsData(response?.data);
+      setFeedsData((prevData) =>
+        _page === 1 ? response?.data : [...(prevData || []), ...response?.data]
+      );
+      setTotalRecords(response?.totalRecords || 0);
+      setPage(_page);
     }
     setFeedsLoading("");
   };
@@ -228,7 +235,6 @@ const CoachDetailTemplate = ({ slug }) => {
 
   // Separate useEffect for subscriber data
   useEffect(() => {
-    
     if (SelectedTabs.value === "users") {
       getSubscribersData({
         pg: 1,
@@ -303,7 +309,7 @@ const CoachDetailTemplate = ({ slug }) => {
                   setValue={handleSubscriberCountryChange}
                   options={countries}
                 />
-                <DropDown 
+                <DropDown
                   placeholder={"Status"}
                   value={subscriberStatus}
                   setValue={setSubscriberStatus}
@@ -344,6 +350,11 @@ const CoachDetailTemplate = ({ slug }) => {
                 setFeedsCategory={setSelectedCategory}
                 feedsCategory={feedsCategory}
                 loading={feedsLoading === "loading"}
+                totalRecords={totalRecords}
+                page={page}
+                setPage={setPage}
+                selectedCategory={selectedCategory}
+                setSelectedCategory={setSelectedCategory}
               />
             ) : (
               <NoData text="No data " />

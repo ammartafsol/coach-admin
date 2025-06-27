@@ -25,7 +25,7 @@ export default function LoginTemplate() {
   const dispatch = useDispatch();
   // const userData =useSelector(state=>state.authReducer.user);
   const [loading, setLoading] = useState(""); // submitLogin
-  
+
   const expiryDate = new Date(new Date().getTime() + 10 * 60 * 1000);
   // LoginFormik
   const LoginFormik = useFormik({
@@ -41,7 +41,7 @@ export default function LoginTemplate() {
 
     const { response } = await Post({
       route: "auth/admin/login",
-       data: {
+      data: {
         email: values.email,
         password: values.password,
       },
@@ -56,7 +56,7 @@ export default function LoginTemplate() {
         type: "success",
         message: "Login Successfully",
       });
-      router.push("/");
+      router.push("/dashboard");
     }
     setLoading("");
   };
@@ -96,7 +96,7 @@ export default function LoginTemplate() {
               label="Password"
               // leftIcon={<FaLock color="#B0B7C3" fontSize={16} />}
               placeholder={"Password"}
-              value={LoginFormik.values.password} 
+              value={LoginFormik.values.password}
               // setter={LoginFormik.handleChange("password")}
               onChange={LoginFormik.handleChange("password")}
               errorText={
@@ -117,7 +117,8 @@ export default function LoginTemplate() {
             <Button
               label={loading == "submitLogin" ? "Please Wait..." : "Login"}
               onClick={LoginFormik.handleSubmit}
-              disabled={loading == "submitLogin"} type={"submit"}
+              disabled={loading == "submitLogin"}
+              type={"submit"}
             />
             {/* <div className={classes.newAccount}>
               <p

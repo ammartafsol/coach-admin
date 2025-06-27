@@ -18,6 +18,8 @@ import {
 } from "@/developmentContent/dropdownOption";
 import NoDataFound from "@/component/atoms/NoDataFound/NoDataFound";
 import NoData from "@/component/atoms/NoData/NoData";
+import { RECORDS_LIMIT } from "@/const";
+import Button from "@/component/atoms/Button";
 
 const FeedsTemplate = () => {
   const { Get } = useAxios();
@@ -28,18 +30,26 @@ const FeedsTemplate = () => {
   const [loading, setLoading] = useState("");
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 500);
+  const [totalRecords, setTotalRecords] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [isCommentsOpen, setIsCommentsOpen] = useState(false);
   const [feedsData, setFeedsData] = useState([]);
   const [status, setStatus] = useState(FEED_STATUS_OPTIONS[0]);
   const [archived, setArchived] = useState(FEED_ARCHIVED_OPTIONS[0]);
 
-  const getData = async () => {
+  const getData = async ({
+    page = currentPage,
+    search = debouncedSearch,
+    status: statusParam,
+    isArchived: isArchivedParam,
+  }) => {
     setLoading("loading");
-
     const params = {
-      search: debouncedSearch,
-      status: status.value,
-      isArchived: archived.value,
+      page,
+      limit: RECORDS_LIMIT,
+      search,
+      status: statusParam ?? status.value,
+      isArchived: isArchivedParam ?? archived.value,
     };
     const queryParams = new URLSearchParams(params).toString();
 
@@ -49,14 +59,18 @@ const FeedsTemplate = () => {
 
     if (response) {
       console.log("🚀 ~ FeedsTemplate ~ responseFeed00:", response);
-      setFeedsData(response?.data || []);
+      setFeedsData((prevData) =>
+        page === 1 ? response?.data : [...(prevData || []), ...response?.data]
+      );
+      setTotalRecords(response?.totalRecords || 0);
+      setCurrentPage(page);
     }
 
     setLoading("");
   };
 
   useEffect(() => {
-    getData();
+    getData({ page: 1 });
   }, [debouncedSearch, status, archived]);
 
   const handleOpenVideo = (feedId) => {
@@ -137,6 +151,20 @@ const FeedsTemplate = () => {
             ))
           ) : (
             <NoData text="No Feeds found" />
+          )}
+          {totalRecords > RECORDS_LIMIT && (
+            <div className={classes?.loadMoreContainer}>
+              <Button
+                variant={"outlined"}
+                className={classes?.loadMoreButton}
+                onClick={() => {
+                  setCurrentPage(currentPage + 1);
+                  getData({ page: currentPage + 1 });
+                }}
+              >
+                {loading === "loading" ? "Loading..." : "Load More"}
+              </Button>
+            </div>
           )}
         </div>
       </div>
