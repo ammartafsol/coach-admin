@@ -8,6 +8,8 @@ import React, { useState } from "react";
 import ScrollContainer from "react-indiana-drag-scroll";
 import classes from "./FeedsCom.module.css";
 import NoData from "@/component/atoms/NoData/NoData";
+import { RECORDS_LIMIT } from "@/const";
+import Button from "@/component/atoms/Button";
 
 const FeedsCom = ({
   feedsData,
@@ -15,6 +17,9 @@ const FeedsCom = ({
   setFeedsCategory,
   feedsCategory,
   loading,
+  totalRecords,
+  page,
+  setPage,
 }) => {
   const [isOpenVideo, setIsOpenVideo] = useState(false);
   const [activeFeedSlug, setActiveFeedSlug] = useState(null);
@@ -91,6 +96,20 @@ const FeedsCom = ({
             ))
           ) : (
             <NoData text="No feeds found" />
+          )}
+          {totalRecords > RECORDS_LIMIT && (
+            <div className={classes?.loadMoreContainer}>
+              <Button
+                variant={"outlined"}
+                className={classes?.loadMoreButton}
+                onClick={() => {
+                  setPage(page + 1);
+                  getData({ page: page + 1 });
+                }}
+              >
+                {loading === "loading" ? "Loading..." : "Load More"}
+              </Button>
+            </div>
           )}
         </div>
       </div>

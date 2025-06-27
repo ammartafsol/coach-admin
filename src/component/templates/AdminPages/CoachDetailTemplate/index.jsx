@@ -84,6 +84,7 @@ const CoachDetailTemplate = ({ slug }) => {
     _status = feedsStatus,
     _category = selectedCategory?._id,
     _archived = archived.value,
+    _page = page,
   }) => {
     if (feedsLoading === "loading") return;
 
@@ -93,6 +94,7 @@ const CoachDetailTemplate = ({ slug }) => {
       ...(_status && { status: _status?.value }),
       ...(_category && { category: _category }),
       isArchived: _archived,
+      page: _page,
     };
     const query = new URLSearchParams(params).toString();
 
@@ -103,7 +105,11 @@ const CoachDetailTemplate = ({ slug }) => {
     });
 
     if (response) {
-      setFeedsData(response?.data);
+      setFeedsData((prevData) =>
+        _page === 1 ? response?.data : [...(prevData || []), ...response?.data]
+      );
+      setTotalRecords(response?.totalRecords || 0);
+      setPage(_page);
     }
     setFeedsLoading("");
   };
@@ -266,6 +272,9 @@ const CoachDetailTemplate = ({ slug }) => {
                 setFeedsCategory={setSelectedCategory}
                 feedsCategory={feedsCategory}
                 loading={feedsLoading === "loading"}
+                totalRecords={totalRecords}
+                page={page}
+                setPage={setPage}
               />
             ) : (
               <NoData text="No data " />
