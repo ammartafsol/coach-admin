@@ -7,35 +7,39 @@ export default function TestimonialCard({ review }) {
   const { rating, description, createdBy, createdAt } = review;
 
   const defaultAvatar = "/images/app-images/user-avatars.png";
-  const resolvedImage = createdBy?.photo
-    && mediaUrl(createdBy?.photo)
-
+  const resolvedImage = review?.createdBy?.photo
+    ? mediaUrl(review?.createdBy?.photo)
+    : defaultAvatar;
 
   return (
     <div className={classes.card}>
       <div className={classes.cardHeader}>
         <div className={classes.userInfo}>
           <Image
-            src={resolvedImage || defaultAvatar}
+            src={resolvedImage}
             alt={createdBy?.fullName || "Reviewer"}
             width={50}
             height={50}
             className={classes.avatar}
           />
           <div className={classes.userDetails}>
-            <h4 className={classes.userName}>{createdBy?.fullName || "Anonymous"}</h4>
+            <h4 className={classes.userName}>
+              {createdBy?.fullName || "Anonymous"}
+            </h4>
             {createdAt && (
               <span className={classes.reviewDate}>{timeAgo(createdAt)}</span>
             )}
           </div>
         </div>
-        
+
         <div className={classes.rating}>
           <div className={classes.stars}>
             {[1, 2, 3, 4, 5].map((star) => (
               <MdOutlineStar
                 key={star}
-                className={star <= rating ? classes.starFilled : classes.starEmpty}
+                className={
+                  star <= rating ? classes.starFilled : classes.starEmpty
+                }
                 size={16}
               />
             ))}
