@@ -110,6 +110,11 @@ export const SUBSCRIBER_STATUS_OPTIONS = [
   { label: "Canceled", value: "canceled" },
 ];
 
+export const SORT_TYPE_OPTIONS = [
+  { label: "Created Date", value: "createdAt" },
+  { label: "Number of Subscribers", value: "noOfSubscribers" },
+];
+
 export const SORT_BY_OPTIONS = [
   { label: "Ascending", value: "asc" },
   { label: "Descending", value: "desc" },

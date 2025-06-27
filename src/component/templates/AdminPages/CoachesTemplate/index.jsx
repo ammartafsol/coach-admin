@@ -15,6 +15,7 @@ import {
   COACH_ACTION_OPTIONS,
   USER_ACTION_OPTIONS,
   SORT_BY_OPTIONS,
+  SORT_TYPE_OPTIONS,
 } from "@/developmentContent/dropdownOption";
 import useAxios from "@/interceptor/axiosInterceptor";
 import useDebounce from "@/resources/hooks/useDebounce";
@@ -43,6 +44,7 @@ const CoachesTemplate = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [country, setCountry] = useState(null);
   const [sortBy, setSortBy] = useState(null);
+  const [sortType, setSortType] = useState(null);
 
   const router = useRouter();
 
@@ -61,6 +63,7 @@ const CoachesTemplate = () => {
     _rating = rating?.value,
     _country = country?.value,
     _sortBy = sortBy?.value,
+    _sortType = sortType?.value,
   }) => {
     if (loading === "loading") return;
 
@@ -84,7 +87,8 @@ const CoachesTemplate = () => {
     if (_country) {
       params.country = _country;
     }
-    if (_sortBy) {
+    if (_sortType && _sortBy) {
+      params.sortType = _sortType;
       params.sortBy = _sortBy;
     }
 
@@ -116,8 +120,9 @@ const CoachesTemplate = () => {
       _rating: rating?.value,
       _country: country?.value,
       _sortBy: sortBy?.value,
+      _sortType: sortType?.value,
     });
-  }, [debounceSearch, coachStatus, rating, country, sortBy]);
+  }, [debounceSearch, coachStatus, rating, country, sortBy, sortType]);
 
   const onClickPopover = (label = "", item = null) => {
     if (label === "Status") {
@@ -221,6 +226,15 @@ const CoachesTemplate = () => {
               value={country}
               setValue={(value) => {
                 setCountry(value);
+                setPage(1);
+              }}
+            />
+            <DropDown
+              options={SORT_TYPE_OPTIONS}
+              placeholder={"Sort Type"}
+              value={sortType}
+              setValue={(value) => {
+                setSortType(value);
                 setPage(1);
               }}
             />
