@@ -49,3 +49,7 @@
     background-color: #F9E17A;
     border-radius: 30px;
 }
+.filterHeader{
+  display: flex;
+  gap: 10px;
+}

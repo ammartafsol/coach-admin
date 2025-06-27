@@ -81,7 +81,7 @@ export const tableUserHeaders = [
   
   {
     title: "Status",
-    key: "status",
+    key: "isBlockedByAdmin",
     style: { width: "10%" },
     renderValue: (cellValue) => <RenderStatusCell {...{ cellValue }} />,
   },

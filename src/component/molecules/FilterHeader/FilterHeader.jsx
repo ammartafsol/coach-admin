@@ -45,6 +45,7 @@ export default function FilterHeader({
           options={secondDropdownOption}
           placeholder={secondPlaceholder}
           setValue={setSecondValue}
+          value={secondValue}
         />
       )}
      

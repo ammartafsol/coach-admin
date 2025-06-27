@@ -3,6 +3,157 @@
   padding: 16px;
 }
 
+/* Cover Photo Section Styles */
+.coverPhotoSection {
+  margin-bottom: 32px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.coverPhotoContainer {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+}
+
+.coverPhoto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.coverPhoto:hover {
+  transform: scale(1.02);
+}
+
+.coverOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+  padding: 40px 32px 32px;
+  color: white;
+}
+
+.profileInfoOverlay {
+  display: flex;
+  align-items: flex-end;
+  gap: 24px;
+  margin: 0 auto;
+}
+
+.avatarOverlay {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.avatarOverlayImage {
+  border-radius: 50%;
+  border: 4px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #B0CD6E, #F29267);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.avatarOverlayImage:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+.userInfoOverlay {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nameOverlay {
+  color: white;
+  font-family: "AventaBold";
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.ratingOverlay {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #F29267;
+  font-family: "AvenirRegular";
+  font-size: 18px;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.locationOverlay {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #B0CD6E;
+  font-family: "AvenirRegular";
+  font-size: 16px;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive Design for Cover Photo */
+@media (max-width: 768px) {
+  .coverPhotoContainer {
+    height: 200px;
+  }
+  
+  .coverOverlay {
+    padding: 24px 16px 20px;
+  }
+  
+  .profileInfoOverlay {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+  }
+  
+  .nameOverlay {
+    font-size: 28px;
+  }
+  
+  .ratingOverlay {
+    font-size: 16px;
+  }
+  
+  .locationOverlay {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .coverPhotoContainer {
+    height: 180px;
+  }
+  
+  .nameOverlay {
+    font-size: 24px;
+  }
+  
+  .avatarOverlayImage {
+    width: 80px !important;
+    height: 80px !important;
+  }
+}
+
 .profileGrid {
   display: flex;
   justify-content: space-between;
@@ -235,48 +386,46 @@
 
 .reviewsSection {
   margin-top: 40px;
+  padding: 0 8px;
 }
 
 .reviewsTitle {
-  color: #333;
+  color: #1a1a1a;
   font-family: "AventaBold";
   font-size: 24px;
-  font-weight: 400;
-  line-height: 32px;
-  margin-bottom: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 24px;
+  text-align: center;
 }
 
 .reviewsGrid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
-  opacity: 1;
-  transition: opacity 0.5s ease;
+  gap: 20px;
+  margin-bottom: 24px;
 }
 
 .fadeTransition {
-  animation: fadeEffect 0.5s ease;
-}
-
-@keyframes fadeEffect {
-  from {
-    opacity: 0.4;
-  }
-  to {
-    opacity: 1;
-  }
+  /* Animation removed */
 }
 
 @media (min-width: 768px) {
   .reviewsGrid {
     grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  
+  .reviewsTitle {
+    font-size: 28px;
+    margin-bottom: 32px;
   }
 }
 
 .paginationDots {
   display: flex;
   justify-content: center;
-  gap: 4px;
+  gap: 8px;
   margin-top: 32px;
 }
 
@@ -288,21 +437,15 @@
 }
 
 .activeDot {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background-color: #333;
-  transition: background-color 0.3s ease;
+  background-color: #f29267;
 }
 
 .inactiveDot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: #ccc;
-  transition: background-color 0.3s ease;
-}
-
-.inactiveDot:hover {
-  background-color: #999;
+  background-color: #e0e0e0;
 }

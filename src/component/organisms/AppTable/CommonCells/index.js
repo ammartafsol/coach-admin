@@ -15,6 +15,8 @@ const statusClassMap = {
   rejected: "statusRejected",
   paid: "statusPaid",
   unpaid: "statusUnpaid",
+  active: "statusTrue",
+  canceled: "statusFalse",
 };
 
 export const RenderTextCell = ({ cellValue: item , rowItem}) => {
@@ -104,7 +106,7 @@ export const RenderStatusCell = ({ cellValue: item }) => {
 
 
 export const RenderUserDataCell = ({ fullName, photo }) => {
-  const defaultAvatar = "/images/app-images/user-avatar.png";
+  const defaultAvatar = "/images/app-images/user-avatars.png";
   if (!fullName && ! photo) return null;
 
   const resolvedImage = photo ? mediaUrl(photo) : defaultAvatar;

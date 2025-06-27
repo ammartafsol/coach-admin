@@ -21,16 +21,18 @@ import { Country } from "country-state-city";
 import {
   FEED_ARCHIVED_OPTIONS,
   USER_STATUS_OPTIONS,
+  SUBSCRIBER_STATUS_OPTIONS,
 } from "@/developmentContent/dropdownOption";
 import RenderToast from "@/component/atoms/RenderToast";
 import NoData from "@/component/atoms/NoData/NoData";
+import { RECORDS_LIMIT } from "@/const";
 
 const CoachDetailTemplate = ({ slug }) => {
   const [SelectedTabs, setSelectedTabs] = useState(coachTabs[0]);
 
   const { Get, Patch } = useAxios();
   const [usersData, setUsersData] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState("");
   const [editLoading, setEditLoading] = useState(false);
   const [feedsData, setFeedsData] = useState([]);
   const [feedsLoading, setFeedsLoading] = useState("");
@@ -44,6 +46,14 @@ const CoachDetailTemplate = ({ slug }) => {
   const [page, setPage] = useState(1);
   const [totalRecords, setTotalRecords] = useState(0);
   const [subscribersData, setSubscribersData] = useState(null);
+  
+  // Subscriber specific states
+  const [subscriberSearch, setSubscriberSearch] = useState("");
+  const [subscriberStatus, setSubscriberStatus] = useState(SUBSCRIBER_STATUS_OPTIONS[0]);
+  const [subscriberCountry, setSubscriberCountry] = useState(null);
+  const [subscriberPage, setSubscriberPage] = useState(1);
+  const [subscriberTotalRecords, setSubscriberTotalRecords] = useState(0);
+  const debounceSubscriberSearch = useDebounce(subscriberSearch, 500);
 
   // Get all countries for dropdown
   const countries = Country.getAllCountries().map((country) => ({
@@ -52,31 +62,55 @@ const CoachDetailTemplate = ({ slug }) => {
   }));
 
   const getData = async () => {
-    setLoading(true);
+    setLoading("initial");
     const { response } = await Get({
       route: `admin/users/${slug}`,
     });
     if (response) {
       setUsersData(response.data);
     }
-    setLoading(false);
+    setLoading("");
   };
 
-  const getSubscribersData = async (coachSlug = slug) => {
+  const getSubscribersData = async ({
+    coachSlug = slug,
+    pg = subscriberPage,
+    _search = debounceSubscriberSearch,
+    _status = subscriberStatus,
+    _country = subscriberCountry,
+  }) => {
+    if (loading === "loading") return;
+
+    console.log("getSubscribersData called with:", {
+      coachSlug,
+      pg,
+      _search,
+      _status,
+      _country,
+    });
+
     const params = {
       coachSlug,
+      page: pg,
+      search: _search,
+      limit: RECORDS_LIMIT,
+      ...(_status && _status.value !== "all" && { status: _status.value }),
+      ...(_country && _country.value && { country: _country.label }),
     };
     const query = new URLSearchParams(params).toString();
+    console.log("Subscriber query:", query);
 
-    setLoading(true);
+    setLoading("loading");
     const { response } = await Get({
       route: `admin/coach/subscribers?${query}`,
     });
 
     if (response) {
       setSubscribersData(response.data);
+      setSubscriberPage(pg);
+      setSubscriberTotalRecords(response.totalRecords || 0);
     }
-    setLoading(false);
+    setLoading("");
   };
 
   const getFeedsData = async ({
@@ -156,9 +190,14 @@ const CoachDetailTemplate = ({ slug }) => {
     setSelectedCountry(country);
   };
 
+  // Handle subscriber country change
+  const handleSubscriberCountryChange = (country) => {
+    console.log("Country selected:", country);
+    setSubscriberCountry(country);
+  };
+
   useEffect(() => {
     getData();
-    getSubscribersData();
     getCategoryData();
     if (SelectedTabs.value === "feeds") {
       getFeedsData({
@@ -166,6 +205,13 @@ const CoachDetailTemplate = ({ slug }) => {
         _status: feedsStatus,
         _category: selectedCategory?._id,
         _archived: archived.value,
+      });
+    } else if (SelectedTabs.value === "users") {
+      getSubscribersData({
+        pg: 1,
+        _search: debounceSubscriberSearch,
+        _status: subscriberStatus,
+        _country: subscriberCountry,
       });
     }
   }, [
@@ -175,12 +221,33 @@ const CoachDetailTemplate = ({ slug }) => {
     selectedCategory,
     SelectedTabs.value,
     archived,
+    debounceSubscriberSearch,
+    subscriberStatus,
+    subscriberCountry,
+  ]);
+
+  // Separate useEffect for subscriber data
+  useEffect(() => {
+    
+    if (SelectedTabs.value === "users") {
+      getSubscribersData({
+        pg: 1,
+        _search: debounceSubscriberSearch,
+        _status: subscriberStatus,
+        _country: subscriberCountry,
+      });
+    }
+  }, [
+    SelectedTabs.value,
+    debounceSubscriberSearch,
+    subscriberStatus,
+    subscriberCountry,
   ]);
 
   return (
     <div>
       <TopHeader title={"coaches"} slug={`/${usersData?.fullName}`}></TopHeader>
-      {loading ? (
+      {loading === "initial" && !usersData ? (
         <div className={classes?.loaderContainer}>
           <Loader />
         </div>
@@ -227,14 +294,21 @@ const CoachDetailTemplate = ({ slug }) => {
                   mainContClassName={classes?.mainContClassName}
                   placeholder={"Search By Name"}
                   rightIcon={<IoSearchOutline color="#B0CD6E" size={20} />}
+                  value={subscriberSearch}
+                  onChange={(e) => setSubscriberSearch(e.target.value)}
                 />
                 <DropDown
                   placeholder={"Country"}
-                  value={selectedCountry}
-                  setValue={handleCountryChange}
+                  value={subscriberCountry}
+                  setValue={handleSubscriberCountryChange}
                   options={countries}
                 />
-                <DropDown placeholder={"Status"} />
+                <DropDown 
+                  placeholder={"Status"}
+                  value={subscriberStatus}
+                  setValue={setSubscriberStatus}
+                  options={SUBSCRIBER_STATUS_OPTIONS}
+                />
               </div>
             ) : (
               ""
@@ -244,16 +318,20 @@ const CoachDetailTemplate = ({ slug }) => {
             {SelectedTabs.value === "users" ? (
               <UsersTable
                 subscribersData={subscribersData}
-                loading={loading}
-                page={page}
-                setPage={setPage}
-                totalRecords={totalRecords}
+                loading={loading === "loading"}
+                page={subscriberPage}
+                setPage={setSubscriberPage}
+                totalRecords={subscriberTotalRecords}
+                getData={getSubscribersData}
+                currentFilters={{
+                  _search: debounceSubscriberSearch,
+                  _status: subscriberStatus,
+                  _country: subscriberCountry,
+                }}
               />
-            ) : SelectedTabs.value === "users" ? (
-              <UsersTable />
             ) : SelectedTabs.value === "profile" ? (
               <UserProfile userData={usersData} />
-            ) : SelectedTabs.value === "subscription" ? (
+            ) : SelectedTabs.value === "subscriptionCost" ? (
               <Subscription
                 editSubscription={editSubscription}
                 userData={usersData}

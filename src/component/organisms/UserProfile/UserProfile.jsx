@@ -37,6 +37,12 @@ export default function UserProfile({ userData }) {
     ? mediaUrl(userData.introVideoThumbnail)
     : defaultThumbnail;
 
+  // Cover photo with fallback
+  const defaultCoverPhoto = "/images/dummy-images/thumbnail.jpeg";
+  const resolvedCoverPhoto = userData?.coverPhoto
+    ? mediaUrl(userData.coverPhoto)
+    : defaultCoverPhoto;
+
   const getSocialUrl = (name) =>
     userData?.socialLinks?.find((link) => link.name === name)?.url;
 
@@ -92,10 +98,47 @@ export default function UserProfile({ userData }) {
   return (
     <BorderWrapper>
       <div className={classes.container}>
+        {/* Cover Photo Section */}
+        <div className={classes.coverPhotoSection}>
+          <div className={classes.coverPhotoContainer}>
+            <Image
+              src={resolvedCoverPhoto}
+              alt="Cover photo"
+              width={1200}
+              height={300}
+              className={classes.coverPhoto}
+            />
+            <div className={classes.coverOverlay}>
+              <div className={classes.profileInfoOverlay}>
+                <div className={classes.avatarOverlay}>
+                  <Image
+                    src={resolvedImage}
+                    alt="Profile picture"
+                    width={120}
+                    height={120}
+                    className={classes.avatarOverlayImage}
+                  />
+                </div>
+                <div className={classes.userInfoOverlay}>
+                  <h1 className={classes.nameOverlay}>{userData?.fullName}</h1>
+                  <div className={classes.ratingOverlay}>
+                    <MdOutlineStar size={20} fill="#F29267" />
+                    <span>{userData?.rating} Cricket Rating</span>
+                  </div>
+                  <div className={classes.locationOverlay}>
+                    <CiLocationOn size={16} fill="#B0CD6E" />
+                    <span>{userData?.country}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className={classes.profileGrid}>
           {/* Profile Section */}
           <div className={classes.profileSection}>
-            <div className={classes.profileHeader}>
+            {/* <div className={classes.profileHeader}>
               <Image
                 src={resolvedImage}
                 alt="Profile picture"
@@ -111,7 +154,7 @@ export default function UserProfile({ userData }) {
                   <span>{userData?.rating} Cricket Rating</span>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div>
               <h2 className={classes.sectionTitle}>Bio</h2>
