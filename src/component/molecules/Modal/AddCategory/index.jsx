@@ -109,6 +109,7 @@ const AddCategoryModal = ({
               errorText={
                 categoryFormik.touched.image && categoryFormik.errors.image
               }
+              loading={loading === "uploadMedia"}
             />
           </Col>
          {itemData && <Col md={12}>

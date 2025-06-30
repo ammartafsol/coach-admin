@@ -116,3 +116,16 @@ export const USER_MODAL_FORM_VALUES = (itemData) => ({
     (option) => option.value === itemData?.isActive
   ) ?? USER_STATUS_OPTIONS[0],
 });
+
+export const PROFILE_FORM_VALUES = (userData) => ({
+  firstName: userData?.firstName ?? "",
+  lastName: userData?.lastName ?? "",
+  phoneNumber: userData?.phoneNumber ?? "",
+  photo: userData?.photo ?? null,
+});
+
+export const UPDATE_PASSWORD_FORM_VALUES = {
+  currentPassword: "",
+  newPassword: "",
+  confirmPassword: "",
+};
