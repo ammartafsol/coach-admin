@@ -24,7 +24,7 @@ export default function SubscriptionCard({
             {isActive ? "Active" : "Inactive"}
           </p>
           <p className={classes.subscriptionType}>
-            Monthly - {userData?.subscriptionCost}
+            Monthly - £{userData?.subscriptionCost}
           </p>
           <div className={classes.info}>
             <p>{formatDate(userData?.createdAt) || "No start date"}</p>

@@ -51,6 +51,7 @@ export default function LoginTemplate() {
         expires: 90,
       });
       dispatch(saveLoginUserData(response?.data));
+      dispatch(setUnseenNotifications(response?.data?.unSeenNotifications));
       // console.log("reducer:",userData);
       RenderToast({
         type: "success",

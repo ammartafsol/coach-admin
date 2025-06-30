@@ -20,7 +20,6 @@ const AddCategoryModal = ({
   handleImageChange,
   handleAddEditCategory,
   loading,
-
 }) => {
   const categoryFormik = useFormik({
     initialValues: CATEGORY_MODAL_FORM_VALUES(itemData),

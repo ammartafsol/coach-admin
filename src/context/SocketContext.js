@@ -4,6 +4,7 @@ import RenderToast from "@/component/atoms/RenderToast";
 import { config } from "@/config";
 import { getUniqueBrowserId } from "@/resources/utils/helper";
 import { signOutRequest, updateUserData } from "@/store/auth/authSlice";
+import { addNotificationCount } from "@/store/common/commonSlice";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useRef } from "react";
@@ -32,6 +33,7 @@ export const SocketProvider = ({ children }) => {
             device: getUniqueBrowserId(),
             id: user?._id,
           });
+          console.log("Socket Connected:", socket.current.connected);
         });
 
         // **************** Establish connection with socket Start ****************
@@ -68,9 +70,23 @@ export const SocketProvider = ({ children }) => {
           router?.push("/login");
         });
 
+        // **************** New Notification Listeners Start ****************
+        socket.current.on("registration", (data) => {
+          console.log("socket data",data);
+          // if (data?.id !== user?._id) return;
+
+          dispatch(addNotificationCount(data?.unSeenNotifications));
+          RenderToast({
+            type: "success",
+            message: "New User Registered!",
+          });
+
+        });
+        // **************** New Notification Listeners End ****************
+
         // **************** Listener End ****************
       };
-      // initSocket();
+      initSocket();
       return () => {
         if (socket.current) {
           socket.current.disconnect();

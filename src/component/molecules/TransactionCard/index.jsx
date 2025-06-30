@@ -75,7 +75,7 @@ const TransactionCard = ({ item }) => {
               <div className={classes.detailRow}>
                 <span className={classes.detailLabel}>Total</span>
                 <span className={classes.detailValue}>
-                  ${item?.totalAmount ?? "0"}
+                £{item?.totalAmount ?? "0"}
                 </span>
               </div>
             </div>
