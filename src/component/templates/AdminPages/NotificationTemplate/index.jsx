@@ -21,25 +21,25 @@ const NotificationTemplate = () => {
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const debounceSearch = useDebounce(search, 500);
-  const notificationsState = useSelector(
-    (state) => state.commonReducer.unseenNotifications
-  );
+  const [notifications, setNotifications] = useState([]);
+  // const notificationsState = useSelector(
+  //   (state) => state.commonReducer.unseenNotifications
+  // );
  const userData =useSelector(state=>state.authReducer.user);
   console.log("userData", userData);
   
-  const getData = async () =>
-    // _search = debounceSearch,
-    {
-      setLoading(true);
-      const { response } = await Get({
-        route: `notifications`,
-      });
-      if (response) {
-        // dispatch(saveNotifications(response?.notifications));
-        dispatch(setUnseenNotifications(response?.notifications));
-      }
-      setLoading(false);
-    };
+  const getData = async () => {
+    setLoading(true);
+    const { response } = await Get({
+      route: `notifications`,
+    });
+    console.log("response", response);
+    if (response) {
+      setNotifications(response?.notifications);
+    
+    }
+    setLoading(false);
+  };
 
   const handleAction = async (action, itemId) => {
     setLoading(true);
@@ -87,11 +87,11 @@ const NotificationTemplate = () => {
               >
                 <Loader />
               </div>
-            ) : notificationsState && notificationsState.length > 0 ? (
-              notificationsState.map((item) => (
+            ) : notifications && notifications.length > 0 ? (
+              notifications.map((item) => (
                 <div key={item._id}>
                   <NotificationCard
-                    item={item}
+                    item={item?.receiver}
                     left={true}
                     onAction={handleAction}
                     loading={loading}

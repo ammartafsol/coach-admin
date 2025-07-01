@@ -18,6 +18,7 @@ import classes from "./LoginTemplate.module.css";
 import Cookies from "js-cookie";
 import { handleEncrypt } from "@/resources/utils/helper";
 import Image from "next/image";
+import { setUnseenNotifications } from "@/store/common/commonSlice";
 
 export default function LoginTemplate() {
   const { Post } = useAxios();
@@ -51,7 +52,10 @@ export default function LoginTemplate() {
         expires: 90,
       });
       dispatch(saveLoginUserData(response?.data));
-      dispatch(setUnseenNotifications(response?.data?.unSeenNotifications));
+      dispatch(setUnseenNotifications({
+        unSeenNotifications: response?.data?.unSeenNotifications,
+        unSeenNotificationsCount: response?.data?.unSeenNotificationsCount,
+      }));
       // console.log("reducer:",userData);
       RenderToast({
         type: "success",

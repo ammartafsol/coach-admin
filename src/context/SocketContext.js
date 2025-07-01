@@ -43,45 +43,41 @@ export const SocketProvider = ({ children }) => {
         });
         // **************** Establish connection with socket End ****************
 
-        // **************** Listener Start ****************
-        socket.current.on("updated-user", (data) => {
-          if (data?.id !== user?._id) return;
-          dispatch(updateUserData(data));
-        });
-        socket.current.on("user-blocked", (data) => {
-          if (data?.id === user?._id) {
+        // **************** New Notification Listeners Start ****************
+        // socket.current.on("new-notification", (data) => {
+        //   console.log("socket data", data);
+
+        //   if (data?.flag === "registration" && data?.receiver === user?._id) {
+        //     console.log("New User Registered!", data);
+        //     dispatch(addNotificationCount(data?._id ? 1 : 0));
+        //     RenderToast({
+        //       type: "success",
+        //       message: data?.message,
+        //     });
+        //   }
+        //   if (data?.flag === "coach-approved" && data?.receiver === user?._id) {
+        //     dispatch(addNotificationCount(data?._id ? 1 : 0));
+        //     RenderToast({
+        //       type: "success",
+        //       message: data?.message,
+        //     });
+        //   }
+        // });
+
+        socket.current.on("new-notification", (data) => {
+          console.log("Socket data:", data);
+          console.log("Receiver:", data?.receiver, "User ID:", user?._id);
+        
+          const flagsToHandle = ["registration", "coach-approved" , "subscription-updated"];
+          if (flagsToHandle.includes(data?.flag) && data?.receiver === user?._id) {
+            dispatch(addNotificationCount(1));
             RenderToast({
-              type: "error",
-              message: "Your account has been blocked by admin",
+              type: "success",
+              message: data?.message,
             });
-            dispatch(signOutRequest());
-            Cookies.remove("_xpdx");
-            router?.push("/login");
           }
         });
-        socket.current.on("user-deleted", (data) => {
-          if (data?.id !== user?._id) return;
-          RenderToast({
-            type: "error",
-            message: "Your account has been deleted by admin",
-          });
-          dispatch(signOutRequest());
-          Cookies.remove("_xpdx");
-          router?.push("/login");
-        });
-
-        // **************** New Notification Listeners Start ****************
-        socket.current.on("registration", (data) => {
-          console.log("socket data",data);
-          // if (data?.id !== user?._id) return;
-
-          dispatch(addNotificationCount(data?.unSeenNotifications));
-          RenderToast({
-            type: "success",
-            message: "New User Registered!",
-          });
-
-        });
+        
         // **************** New Notification Listeners End ****************
 
         // **************** Listener End ****************

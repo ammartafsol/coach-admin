@@ -26,9 +26,11 @@ export default function Navbar() {
 
   const userData = useSelector((state) => state.authReducer.user);
   const pathname = usePathname();
-  // const notificationCount = useSelector(
-  //   (state) => state.commonReducer.unseenNotificationsCount
-  // );
+  
+  const notificationCount = useSelector(
+    (state) => state.commonReducer.notificationCount
+  );
+  console.log("notificationCount", notificationCount);
   const data = useSelector((state) => state.authReducer.user);
   console.log("data", data);
 
@@ -90,9 +92,9 @@ export default function Navbar() {
           onClick={() => setShowNotifications(!showNotifications)}
         >
           <Bell size={20} />
-          {Number(data?.unSeenNotificationsCount) > 0 && (
+          {Number(notificationCount) > 0 && (
             <span className={classes.notificationBadge}>
-              {data?.unSeenNotificationsCount > 99 ? "99+" : data?.unSeenNotificationsCount}
+              {notificationCount > 99 ? "99+" : notificationCount}
             </span>
           )}
         </button>
