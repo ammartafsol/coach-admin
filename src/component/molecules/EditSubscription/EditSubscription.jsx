@@ -27,7 +27,7 @@ export default function EditSubscription({editSubscription, loading, setIsEdit})
         <p className={classes.title}>Edit Plan</p>
         <Input
           label={"Price"}
-          placeholder={"$24"}
+          placeholder={"£24"}
           mainContClassName={classes.inpMain}
           name="price"
           type="number"

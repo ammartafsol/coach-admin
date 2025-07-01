@@ -12,6 +12,7 @@ import { NAV_DATA } from "@/developmentContent/appData";
 import { useSelector, useDispatch } from "react-redux";
 import { signOutRequest } from "@/store/auth/authSlice";
 import Cookies from "js-cookie";
+import { incrementUnseenNotificationCount } from "@/store/common/commonSlice";
 
 import { RiLogoutBoxLine } from "react-icons/ri";
 
@@ -25,16 +26,23 @@ export default function Navbar() {
 
   const userData = useSelector((state) => state.authReducer.user);
   const pathname = usePathname();
+  
+  const notificationCount = useSelector(
+    (state) => state.commonReducer.notificationCount
+  );
+  console.log("notificationCount", notificationCount);
+  const data = useSelector((state) => state.authReducer.user);
+  console.log("data", data);
 
   const handleLogout = () => {
     // Clear all auth-related cookies
     Cookies.remove("_xpdx");
     Cookies.remove("_xpdx_rf");
     Cookies.remove("_xpdx_ur");
-    
+
     // Clear Redux state
     dispatch(signOutRequest());
-    
+
     // Redirect to sign-in page
     router.push("/sign-in");
     setShowProfileDropdown(false);
@@ -59,9 +67,9 @@ export default function Navbar() {
       <nav className={classes.nav}>
         {NAV_DATA.map((item) => {
           const isActive =
-          item.path === "/"
-            ? pathname === "/"
-            : pathname === item.path || pathname.startsWith(`${item.path}/`);
+            item.path === "/"
+              ? pathname === "/"
+              : pathname === item.path || pathname.startsWith(`${item.path}/`);
           return (
             <button
               key={item.label}
@@ -84,6 +92,11 @@ export default function Navbar() {
           onClick={() => setShowNotifications(!showNotifications)}
         >
           <Bell size={20} />
+          {Number(notificationCount) > 0 && (
+            <span className={classes.notificationBadge}>
+              {notificationCount > 99 ? "99+" : notificationCount}
+            </span>
+          )}
         </button>
         <Overlay
           target={bellRef.current}
@@ -139,11 +152,8 @@ export default function Navbar() {
                   <User size={16} />
                   <span>Profile Settings</span>
                 </button>
-                <button
-                  className={classes.dropdownItem}
-                  onClick={handleLogout}
-                >
-                 <RiLogoutBoxLine size={16} />
+                <button className={classes.dropdownItem} onClick={handleLogout}>
+                  <RiLogoutBoxLine size={16} />
                   <span>Logout</span>
                 </button>
               </div>

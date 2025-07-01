@@ -6,8 +6,8 @@
 }
 .profileImageContainer{
     position: relative;
-    width: 121px;
-    height: 121px;
+    width: 200px;
+    /* height: 121px; */
     border-radius: 50%;
 }
 .profileImage{

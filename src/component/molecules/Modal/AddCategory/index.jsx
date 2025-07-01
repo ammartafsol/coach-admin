@@ -20,7 +20,6 @@ const AddCategoryModal = ({
   handleImageChange,
   handleAddEditCategory,
   loading,
-
 }) => {
   const categoryFormik = useFormik({
     initialValues: CATEGORY_MODAL_FORM_VALUES(itemData),
@@ -109,6 +108,7 @@ const AddCategoryModal = ({
               errorText={
                 categoryFormik.touched.image && categoryFormik.errors.image
               }
+              loading={loading === "uploadMedia"}
             />
           </Col>
          {itemData && <Col md={12}>

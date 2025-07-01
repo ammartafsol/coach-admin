@@ -13,6 +13,8 @@
   min-width: 220px;
   z-index: 9999;
   margin-top: 6px;
+  justify-content: center;
+  align-items: center; 
 }
 .seeAllMain {
   display: flex;
@@ -30,6 +32,7 @@
   align-self: stretch;
   width: 269px;
   cursor: pointer;
+  margin-top: 10px;
 }
 .notificationCardMain > div {
   gap: 10px !important;

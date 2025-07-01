@@ -49,13 +49,13 @@ export const profileSchema = Yup.object({
   // phoneNumber: Yup.number("Invalid").required("Phone number name is required"),
 });
 
-export const updatePasswordSchema = Yup.object({
-  oldPassword: Yup.string().required("Old password is required"),
-  newPassword: Yup.string().required("New password is required"),
-  reEnterNewPassword: Yup.string()
-    .required("Re-enter new password is required")
-    .oneOf([Yup.ref("newPassword"), null], "Passwords must match"),
-});
+// export const updatePasswordSchema = Yup.object({
+//   oldPassword: Yup.string().required("Old password is required"),
+//   newPassword: Yup.string().required("New password is required"),
+//   reEnterNewPassword: Yup.string()
+//     .required("Re-enter new password is required")
+//     .oneOf([Yup.ref("newPassword"), null], "Passwords must match"),
+// });
 export const getAddPatientValidationSchema = (slug) => {
   const baseSchema = {
     // Demographics
@@ -207,4 +207,16 @@ export const RejectionReasonSchema = Yup.object({
 
 export const EditSubscriptionSchema = Yup.object({
   price: Yup.number().required("Price is required"),
+});
+
+export const updatePasswordSchema = Yup.object().shape({
+  currentPassword: Yup.string()
+    .min(6, "Password must be at least 6 characters")
+    .required("Current password is required"),
+  newPassword: Yup.string()
+    .min(6, "Password must be at least 6 characters")
+    .required("New password is required"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("newPassword"), null], "Passwords must match")
+    .required("Confirm password is required"),
 });

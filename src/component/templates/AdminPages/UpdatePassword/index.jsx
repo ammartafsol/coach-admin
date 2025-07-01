@@ -8,43 +8,45 @@ import { useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import classes from "./UpdatePassword.module.css";
 import BorderWrapper from "@/component/atoms/BorderWrapper";
-import * as Yup from "yup";
-
-const updatePasswordSchema = Yup.object().shape({
-  currentPassword: Yup.string()
-    .min(6, "Password must be at least 6 characters")
-    .required("Current password is required"),
-  newPassword: Yup.string()
-    .min(6, "Password must be at least 6 characters")
-    .required("New password is required"),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref("newPassword"), null], "Passwords must match")
-    .required("Confirm password is required"),
-});
+import { updatePasswordSchema } from "@/formik/formikSchema/formik-schemas";
+import { UPDATE_PASSWORD_FORM_VALUES } from "@/formik/formikInitialValues/form-initial-values";
+import useAxios from "@/interceptor/axiosInterceptor";
 
 const UpdatePasswordTemplate = () => {
+  const { Patch } = useAxios();
   const router = useRouter();
   const [loading, setLoading] = useState("");
 
   const passwordFormik = useFormik({
-    initialValues: {
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
-    },
+    initialValues: UPDATE_PASSWORD_FORM_VALUES,
     validationSchema: updatePasswordSchema,
     onSubmit: (values) => {
       setLoading("loading");
-      setTimeout(() => {
-        RenderToast({
-          type: "success",
-          message: "Password Updated Successfully",
-        });
-        setLoading("");
-        router.push("/profile");
-      }, 1000);
+      editPassword(values);
     },
   });
+
+  const editPassword = async (values) => {
+    const passwordData = {
+      currentPassword: values?.currentPassword,
+      password: values?.newPassword,
+      confirmPassword: values?.confirmPassword,
+    };
+
+    const { response } = await Patch({
+      route: `auth/update/password`,
+      data: passwordData,
+    });
+
+    if (response) {
+      router.push("/profile");
+      RenderToast({
+        type: "success",
+        message: "Password Updated Successfully",
+      });
+      setLoading("");
+    }
+  };
 
   return (
     <div className="main">
@@ -54,10 +56,10 @@ const UpdatePasswordTemplate = () => {
             <Col xs="12">
               <Input
                 label={"Current Password"}
+                name="currentPassword"
                 value={passwordFormik.values.currentPassword}
-                setter={(e) => {
-                  passwordFormik.setFieldValue("currentPassword", e);
-                }}
+                onChange={passwordFormik.handleChange}
+                onBlur={passwordFormik.handleBlur}
                 errorText={
                   passwordFormik.touched.currentPassword &&
                   passwordFormik.errors.currentPassword
@@ -69,10 +71,10 @@ const UpdatePasswordTemplate = () => {
             <Col xs="12">
               <Input
                 label={"New Password"}
+                name="newPassword"
                 value={passwordFormik.values.newPassword}
-                setter={(e) => {
-                  passwordFormik.setFieldValue("newPassword", e);
-                }}
+                onChange={passwordFormik.handleChange}
+                onBlur={passwordFormik.handleBlur}
                 errorText={
                   passwordFormik.touched.newPassword &&
                   passwordFormik.errors.newPassword
@@ -84,10 +86,10 @@ const UpdatePasswordTemplate = () => {
             <Col xs="12">
               <Input
                 label={"Confirm Password"}
+                name="confirmPassword"
                 value={passwordFormik.values.confirmPassword}
-                setter={(e) => {
-                  passwordFormik.setFieldValue("confirmPassword", e);
-                }}
+                onChange={passwordFormik.handleChange}
+                onBlur={passwordFormik.handleBlur}
                 errorText={
                   passwordFormik.touched.confirmPassword &&
                   passwordFormik.errors.confirmPassword
