@@ -208,7 +208,7 @@ export const categoryTableHeaders = [
   },
   { title: "Category Image", key: "image", width: "15%" , renderValue: (cellValue) => <RenderImageCell {...{ cellValue }} />},
   { title: "Last Updated", key: "updatedAt", width: "15%" , renderValue: (cellValue) => <RenderDateCell {...{ cellValue }} />},
-  { title: "Status", key: "isActive", width: "15%" , renderValue: (cellValue) => <RenderStatusCell {...{ cellValue }} />},
+  { title: "Status", key: "isActive", width: "15%" , renderValue: (cellValue) => <RenderStatusCell {...{ cellValue, checkAsItIs : true }} />},
   { title: "", key: "action", width: "15%" },
 ];
 
@@ -226,6 +226,6 @@ export const faqTableHeaders = [
     renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
   { title: "Last Updated", key: "updatedAt", width: "15%" , renderValue: (cellValue) => <RenderDateCell {...{ cellValue }} />},
-  { title: "Status", key: "isActive", width: "10%" , renderValue: (cellValue) => <RenderStatusCell {...{ cellValue }} />},
+  { title: "Status", key: "isActive", width: "10%" , renderValue: (cellValue) => <RenderStatusCell {...{ cellValue, checkAsItIs : true }} />},
   { title: "", key: "action", width: "10%" },
 ];

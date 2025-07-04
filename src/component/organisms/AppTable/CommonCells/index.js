@@ -8,8 +8,8 @@ import { GoDotFill } from "react-icons/go";
 import Rating from "@mui/material/Rating";
 
 const statusClassMap = {
-  true: "statusTrue",
-  false: "statusFalse",
+  true: "statusFalse",
+  false: "statusTrue",
   approved: "statusApproved",
   pending: "statusPending",
   rejected: "statusRejected",
@@ -69,9 +69,9 @@ export const RenderImageCell = ({ cellValue }) => {
 };
 
 
-export const RenderStatusCell = ({ cellValue: item }) => {
+export const RenderStatusCell = ({ cellValue: item, checkAsItIs = false }) => {
   const isBoolean = typeof item === "boolean";
-  const displayValue = isBoolean ? (item ? "Active" : "Inactive") : item;
+  const displayValue = isBoolean ? checkAsItIs ? (item ? "Active" : "Inactive") : (!item ? "Active" : "Inactive") : item;
 
   let normalized = String(item).toLowerCase();
   if (normalized === "paid leaves") {
@@ -80,7 +80,7 @@ export const RenderStatusCell = ({ cellValue: item }) => {
     normalized = "unpaid"; 
   }
 
-  const statusClass = statusClassMap[normalized];
+  const statusClass = checkAsItIs ? item ? 'statusTrue' : 'statusFalse' : statusClassMap[normalized];
 
   const shouldShowDot =
     normalized !== "paid" &&
