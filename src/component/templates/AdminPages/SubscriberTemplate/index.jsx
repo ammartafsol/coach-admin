@@ -202,14 +202,14 @@ const SubscriberTemplate = () => {
             heading={
               showModal === "areYouSure"
                 ? selectedItem?.isBlockedByAdmin
-                  ? "⚠️ Active User"
-                  : "⚠️ Inactive User"
+                  ? "⚠️ Inactive User"
+                  : "⚠️ Active User"
                 : "Approve User"
             }
             subheading={
               showModal === "areYouSure"
                 ? `Are you sure you want to ${
-                    selectedItem?.isBlockedByAdmin ? "active" : "inactive"
+                    selectedItem?.isBlockedByAdmin ? "activate" : "deactivate"
                   } this user? This will ${
                     selectedItem?.isBlockedByAdmin ? "restore" : "affect"
                   } their access to the platform.`
