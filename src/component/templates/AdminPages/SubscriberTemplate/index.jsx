@@ -201,9 +201,9 @@ const SubscriberTemplate = () => {
             setShow={setShowModal}
             heading={
               showModal === "areYouSure"
-                ? selectedItem?.isBlockedByAdmin
-                  ? "⚠️ Inactive User"
-                  : "⚠️ Active User"
+                ? !selectedItem?.isBlockedByAdmin
+                  ? "⚠️ Inactivate User"
+                  : "⚠️ Activate User"
                 : "Approve User"
             }
             subheading={
