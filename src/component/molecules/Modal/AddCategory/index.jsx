@@ -20,20 +20,19 @@ const AddCategoryModal = ({
   handleImageChange,
   handleAddEditCategory,
   loading,
+  setLoading,
 }) => {
   const categoryFormik = useFormik({
     initialValues: CATEGORY_MODAL_FORM_VALUES(itemData),
     validationSchema: CategoryModalSchema(itemData?.isActive),
     onSubmit: (values) => {
+      setLoading("loading");
       handleAddEditCategory(values);
     },
   });
 
-
   useEffect(() => {
-    if(itemData){
-      categoryFormik.setValues(CATEGORY_MODAL_FORM_VALUES(itemData));
-    }
+    categoryFormik.setValues(CATEGORY_MODAL_FORM_VALUES(itemData));
   }, [itemData]);
 
   return (
@@ -54,14 +53,14 @@ const AddCategoryModal = ({
             />
             <Button
               label={
-                loading 
+                loading === "loading"
                   ? "Please Wait..."
                   : itemData?.slug
                   ? "Edit Category"
                   : "Add Category"
               }
               type="submit"
-              disabled={loading}
+              disabled={loading !== ""}
               onClick={() => categoryFormik.handleSubmit()}
             />
           </div>
@@ -108,7 +107,7 @@ const AddCategoryModal = ({
               errorText={
                 categoryFormik.touched.image && categoryFormik.errors.image
               }
-              loading={loading === "uploadMedia"}
+              loading={loading === "uploadImage"}
             />
           </Col>
          {itemData && <Col md={12}>

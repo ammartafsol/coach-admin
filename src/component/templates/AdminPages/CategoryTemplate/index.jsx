@@ -12,12 +12,9 @@ import classes from "./CategoryTemplate.module.css";
 import { CreateFormData } from "@/resources/utils/helper";
 import RenderToast from "@/component/atoms/RenderToast";
 import FilterHeader from "@/component/molecules/FilterHeader/FilterHeader";
-import { RECORDS_LIMIT } from "@/const";  
-import { setCategories } from "@/store/category/categorySlice";
-import { useDispatch, useSelector } from "react-redux";
+import { RECORDS_LIMIT } from "@/const";
 
 const CategoryTemplate = () => {
-  const dispatch = useDispatch();
   const { Post, Patch , Get} = useAxios();
   
   const [showModal, setShowModal] = useState(false);
@@ -68,22 +65,7 @@ const CategoryTemplate = () => {
     setLoading("");
   };
 
-  // Function to fetch all categories for Redux store
-  const getAllCategoriesForRedux = async () => {
- 
-      const { response } = await Get({
-        route: `admin/categories?limit=1000`, // Fetch all categories
-      });
-      
-      if (response && response.data) {
-        dispatch(setCategories(response.data));
-      }
-  };
 
-  useEffect(() => {
-    // Fetch all categories for Redux when component mounts
-    getAllCategoriesForRedux();
-  }, []);
 
   useEffect(() => {
     getData({pg: 1, _search: debounceSearch, _status: status, type: type });
@@ -101,10 +83,7 @@ const CategoryTemplate = () => {
 
   // add/edit category
   const handleAddEditCategory = async (values) => {
-
-    if(!values) return;
-
-    setLoading("addEditCategory");
+    setLoading("loading");
 
     const payload = {
       ...values,
@@ -112,10 +91,9 @@ const CategoryTemplate = () => {
       isActive: values.isActive?.value,
     };
 
-    const route = selectedItem?.slug
-      ? `admin/categories/${selectedItem?.slug}`
+    const route = selectedItem?._id
+      ? `admin/categories/${selectedItem.slug}`
       : "admin/categories";
-
     const responseHandler = selectedItem?.slug ? Patch : Post;
 
     const { response } = await responseHandler({
@@ -126,16 +104,16 @@ const CategoryTemplate = () => {
     if (response) {
       RenderToast({
         type: "success",
-        message: `Category ${selectedItem?.slug ? "Updated" : "Added"} Successfully.`
+        message: selectedItem?.slug
+          ? "Category Updated Successfully"
+          : "Category Added Successfully",
       });
       setShowModal(false);
       const updatedCategory = { ...selectedItem, ...payload };
       updateCategoryInList(updatedCategory);
-      
-      // Refresh Redux store with all categories
-      getAllCategoriesForRedux();
+      setLoading("");
+      getData({ pg: 1, _search: debounceSearch, _status: status, type: type });
     }
-    setLoading("");
   };
 
   const handleImageChange = async (file) => {
@@ -169,14 +147,7 @@ const CategoryTemplate = () => {
       const filtered = prev.filter((u) => u.slug !== updatedCategory.slug);
       return [updatedCategory, ...filtered];
     });
-    
-    // Also update Redux store
-    const currentCategories = categories || [];
-    const updatedCategories = currentCategories.filter((u) => u.slug !== updatedCategory.slug);
-    dispatch(setCategories([updatedCategory, ...updatedCategories]));
   };
-  const categories = useSelector((state) => state.category.categories);
-  console.log("categories redux",categories);  
   
   return (
     <main>
@@ -250,8 +221,8 @@ const CategoryTemplate = () => {
           itemData={selectedItem}
           handleAddEditCategory={handleAddEditCategory}
           handleImageChange={handleImageChange}
-          loading={loading === "addEditCategory" || loading === "uploadImage"}
-         
+          loading={loading}
+          setLoading={setLoading}
         />
       )}
     </main>

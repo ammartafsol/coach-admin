@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { MdClose, MdModeEdit, MdUpload } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
 import classes from "./UploadImageBox.module.css";
@@ -28,6 +28,55 @@ function UploadImageBox({
   loading = false,
 }) {
   const inputRef = useRef(null);
+  const [isDragOver, setIsDragOver] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+
+  const handleFileUpload = (file) => {
+    if (!file) return;
+    
+    const fileType = file.type;
+    if (
+      acceptedTypes === "*" ||
+      fileType.match(
+        acceptedTypes.replace(".", "\\.").replace(",", "|")
+      )
+    ) {
+      setIsUploading(true);
+      // Simulate upload delay - replace with actual upload logic
+      setTimeout(() => {
+        setter(file);
+        setIsUploading(false);
+      }, 1000);
+    } else {
+      RenderToast({
+        type: "warn",
+        message: `Invalid file type.`,
+      });
+    }
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragOver(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setIsDragOver(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragOver(false);
+    const file = e.dataTransfer.files[0];
+    handleFileUpload(file);
+  };
+
+  const handleFileInputChange = (e) => {
+    const file = e.target.files[0];
+    handleFileUpload(file);
+  };
+
   return (
     <>
       {label && <label className={classes.label}>{label}</label>}
@@ -69,7 +118,7 @@ function UploadImageBox({
                     <div
                       className={classes.icon}
                       onClick={() => {
-                        if (!loading) {
+                        if (!loading && !isUploading) {
                           inputRef.current.click();
                           if (onEdit) {
                             onEdit();
@@ -77,7 +126,7 @@ function UploadImageBox({
                         }
                       }}
                     >
-                      {loading ? (
+                      {loading || isUploading ? (
                         <div className={classes.loadingSpinner}></div>
                       ) : (
                         <MdModeEdit />
@@ -88,9 +137,17 @@ function UploadImageBox({
               </div>
             </div>
           ) : (
-            <div className={classes.uploadBox}>
-              {loading ? (
-                <div className={classes.loadingSpinner}></div>
+            <div 
+              className={`${classes.uploadBox} ${isDragOver ? classes.dragOver : ''}`}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+            >
+              {loading || isUploading ? (
+                <div className={classes.uploadLoadingContainer}>
+                  <div className={classes.loadingSpinner}></div>
+                  <p className={classes.uploadingText}>Uploading image...</p>
+                </div>
               ) : fallBackIcon ? (
                 fallBackIcon
               ) : (
@@ -120,22 +177,8 @@ function UploadImageBox({
           hidden
           type={"file"}
           ref={inputRef}
-          onChange={(e) => {
-            const fileType = e.target.files[0].type;
-            if (
-              acceptedTypes === "*" ||
-              fileType.match(
-                acceptedTypes.replace(".", "\\.").replace(",", "|")
-              )
-            ) {
-              setter(e.target.files[0]);
-            } else {
-              RenderToast({
-                type: "warn",
-                message: `Invalid file type.`,
-              });
-            }
-          }}
+          onChange={handleFileInputChange}
+          accept={acceptedTypes === "*" ? "image/*" : acceptedTypes}
         />
       </div>
     </>
