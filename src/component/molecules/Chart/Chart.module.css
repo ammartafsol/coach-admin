@@ -114,4 +114,13 @@
     z-index: 10;
     pointer-events: none;
   }
-  
+  .noData{
+    min-height: 100px !important;
+  }
+  .noData svg{
+    height: 42px !important;
+    width: 42px !important;
+  }
+  .noData p{
+    font-size: 16px !important;
+  }

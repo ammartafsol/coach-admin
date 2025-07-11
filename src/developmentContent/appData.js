@@ -1,5 +1,5 @@
 import { HiOutlineUser , HiOutlineDocumentCurrencyDollar} from "react-icons/hi2";
-import { TbUsers , TbCategory , TbCategory2 } from "react-icons/tb";
+import { TbUsers , TbCategory , TbCategoryPlus } from "react-icons/tb";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { GoDiscussionDuplicate } from "react-icons/go";
 
@@ -77,7 +77,7 @@ export const NAV_DATA = [
   { label: "Subscribers", path: "/subscriber" , icon:<HiOutlineUser /> },
   { label: "Coaches", path: "/coach" , icon:<TbUsers /> },
   { label: "Feeds", path: "/feed" , icon:<TfiCommentAlt /> },
-  { label: "Categories", path: "/category" , icon:  <TbCategory2 /> },
+  { label: "Categories", path: "/category" , icon:  <TbCategoryPlus /> },
   { label: "Faqs", path: "/faq" , icon:<GoDiscussionDuplicate /> },
   {label:"Transaction", path:"/transaction", icon:<HiOutlineDocumentCurrencyDollar />},
 ];
