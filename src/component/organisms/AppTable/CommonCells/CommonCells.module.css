@@ -75,6 +75,10 @@
   color: #7F1D1D;
 }
 
+.pointer{
+  cursor: pointer !important;
+}
+
 .statusPending {
   /* background-color: #fffbeb; */
 }

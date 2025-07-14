@@ -6,6 +6,7 @@ import { mediaUrl } from "@/resources/utils/helper";
 import clsx from "clsx";
 import { GoDotFill } from "react-icons/go";
 import Rating from "@mui/material/Rating";
+import { useRouter } from "next/navigation";
 
 const statusClassMap = {
   true: "statusFalse",
@@ -105,14 +106,15 @@ export const RenderStatusCell = ({ cellValue: item, checkAsItIs = false }) => {
 };
 
 
-export const RenderUserDataCell = ({ fullName, photo }) => {
+export const RenderUserDataCell = ({ fullName, photo, slug = "" }) => {
+  const router = useRouter();
   const defaultAvatar = "/images/app-images/user-avatars.png";
   if (!fullName && ! photo) return null;
 
   const resolvedImage = photo ? mediaUrl(photo) : defaultAvatar;
 
   return (
-    <div className={classes.userDataCell}>
+    <div className={mergeClass(classes.userDataCell, slug && classes.pointer)} onClick={() => {slug && router.push(`/coach/${slug}`)}}>
       <div className={classes.avatarDiv}>
         <Image
           src={resolvedImage}

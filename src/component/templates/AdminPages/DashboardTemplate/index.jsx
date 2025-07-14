@@ -30,6 +30,7 @@ const DashboardTemplate = () => {
     coaches.map((coach) => ({
       coachName: coach.fullName || "",
       email: coach.email || "",
+      slug: coach.slug || "",
       phoneNumber: coach.phoneNumber || "",
       city: coach.city || "",
       totalSubscriber: coach.noOfSubscribers ?? 0,

@@ -9,6 +9,7 @@ export const tableHeaders = [
       <RenderUserDataCell
         fullName={rowItem?.coachName}
         photo={rowItem?.photo}
+        slug={rowItem?.slug}
       />
     ),
   },
