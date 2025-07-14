@@ -7,8 +7,15 @@ import { Col, Row } from "react-bootstrap";
 import { notificationCardData } from "@/developmentContent/dummyData";
 import { mediaUrl, timeAgo } from "@/resources/utils/helper";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-export default function DashboardRightContent({ dataSubscribers, dataFeeds, dataRequests, getData }) {
+export default function DashboardRightContent({
+  dataSubscribers,
+  dataFeeds,
+  dataRequests,
+  getData,
+}) {
+  const router = useRouter();
   const widthSubscribers =
     (dataSubscribers?.totalUsersSubscribed /
       dataSubscribers?.totalUserRegistered) *
@@ -70,7 +77,13 @@ export default function DashboardRightContent({ dataSubscribers, dataFeeds, data
 
         <div className={classes.feedsList}>
           {dataFeeds?.slice(0, 3)?.map((feed) => (
-            <div className={classes.feedItem} key={feed?._id}>
+            <div
+              className={classes.feedItem}
+              key={feed?._id}
+              onClick={() => {
+                router.push(`/feed?search=${feed?.category?.name}`);
+              }}
+            >
               <div className={classes.feedImage}>
                 <Image
                   src={
@@ -91,7 +104,7 @@ export default function DashboardRightContent({ dataSubscribers, dataFeeds, data
           ))}
         </div>
 
-        <Link href={'/feed'} className={classes.seeAllLink}>
+        <Link href={"/feed"} className={classes.seeAllLink}>
           <span>See All Feeds</span>
           <ChevronRight size={16} />
         </Link>
@@ -104,14 +117,21 @@ export default function DashboardRightContent({ dataSubscribers, dataFeeds, data
             {dataRequests?.slice(0, 2)?.map((item) => {
               return (
                 <Col md={12}>
-                  <NotificationCard key={item.id} item={item} getData={getData}/>
+                  <NotificationCard
+                    key={item.id}
+                    item={item}
+                    getData={getData}
+                  />
                   {/* <hr /> */}
                 </Col>
               );
             })}
           </Row>
         ) : (
-          <NoData text="No Registration Requests" className={classes.noDataStyle} />
+          <NoData
+            text="No Registration Requests"
+            className={classes.noDataStyle}
+          />
         )}
       </div>
     </div>

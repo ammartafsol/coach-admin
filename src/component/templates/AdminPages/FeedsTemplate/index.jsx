@@ -20,15 +20,18 @@ import NoDataFound from "@/component/atoms/NoDataFound/NoDataFound";
 import NoData from "@/component/atoms/NoData/NoData";
 import { RECORDS_LIMIT } from "@/const";
 import Button from "@/component/atoms/Button";
+import { useSearchParams } from "next/navigation";
 
 const FeedsTemplate = () => {
+  const searchParams = useSearchParams();
+  const initialSearch = searchParams?.get("search") || "";
   const { Get } = useAxios();
   const [selectedDate, setSelectedDate] = useState("Jan 24, 2023");
   // const [selectedFeed, setSelectedFeed] = useState("All");
   const [isOpenVideo, setIsOpenVideo] = useState(false);
   const [activeFeedSlug, setActiveFeedSlug] = useState(null);
   const [loading, setLoading] = useState("");
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(initialSearch);
   const debouncedSearch = useDebounce(search, 500);
   const [totalRecords, setTotalRecords] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
