@@ -15,6 +15,7 @@ const NotificationCard = ({
   onAction,
   getData,
   showButton = true,
+  onClick = null,
 }) => {
   const { Patch } = useAxios();
   const time = timeAgo(item?.createdAt);
@@ -63,7 +64,7 @@ const NotificationCard = ({
         />
         <div className={classes?.notificationMain}>
           <div className={classes.notificationText}>
-            <div>
+            <div onClick={onClick} className={onClick ? classes.pointer : ""}>
               <div className={classes.registrationName}>{item?.receiver?.fullName || item?.fullName}</div>
               <div className={classes.registrationText}>{item?.receiver?.email || item?.email}</div>
               <div className={classes.registrationText}>{item?.message}</div>

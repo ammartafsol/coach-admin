@@ -116,13 +116,13 @@ export default function DashboardRightContent({
           <Row>
             {dataRequests?.slice(0, 2)?.map((item) => {
               return (
-                <Col md={12}>
+                <Col md={12} key={item?._id} >
                   <NotificationCard
-                    key={item.id}
+                    key={item._id}
                     item={item}
                     getData={getData}
+                    onClick={() => {router.push(`coach/${item?.slug}`)}}
                   />
-                  {/* <hr /> */}
                 </Col>
               );
             })}

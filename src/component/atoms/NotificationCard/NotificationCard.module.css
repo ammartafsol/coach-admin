@@ -7,6 +7,10 @@
     padding-top: 1rem;
   }
 
+  .poiter{
+    cursor: pointer !important;
+  }
+
   .registrationUser {
     display: flex;
     gap: 1rem;
