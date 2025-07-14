@@ -266,7 +266,8 @@ const CoachDetailTemplate = ({ slug }) => {
               tabs={coachTabs}
             />
             {SelectedTabs.value === "profile" ? (
-              <Button className={classes?.btn} label={"Deactive"} />
+              // <Button className={classes?.btn} label={"Deactive"} /> //commented this as there was no action, approve/reject can be done from table 
+              <></>
             ) : SelectedTabs.value === "feeds" ? (
               <div className={classes?.main}>
                 <Input
