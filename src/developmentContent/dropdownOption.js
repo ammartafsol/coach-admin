@@ -3,7 +3,26 @@ import { AiFillStar } from "react-icons/ai";
 
 export const CATEGORY_TYPE_OPTIONS = [
   { label: "Sport", value: "sport" },
-  { label: "Feed", value: "feed" },
+  // { label: "Feed", value: "feed" },
+];
+
+export const DURATION_OPTIONS = [
+  { label: "1 week", value: 1 },
+  { label: "2 week", value: 2 },
+  { label: "3 week", value: 3 },
+  { label: "4 week", value: 4 },
+  { label: "5 week", value: 5 },
+  { label: "6 week", value: 6 },
+  { label: "7 week", value: 7 },
+  { label: "8 week", value: 8 },
+  { label: "9 week", value: 9 },
+  { label: "10 week", value: 10 },
+  { label: "11 week", value: 11 },
+  { label: "12 week", value: 12 },
+  { label: "13 week", value: 13 },
+  { label: "14 week", value: 14 },
+  { label: "15 week", value: 15 },
+  { label: "16 week", value: 16 },
 ];
 
 export const STATUS_OPTIONS = [

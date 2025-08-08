@@ -9,7 +9,7 @@ import classes from "./AddCategory.module.css";
 import { useEffect } from "react";
 import UploadImageBox from "@/component/atoms/UploadImagebox";
 import DropDown from "../../DropDown/DropDown";
-import { CATEGORY_STATUS_OPTIONS, CATEGORY_TYPE_OPTIONS } from "@/developmentContent/dropdownOption";
+import { CATEGORY_STATUS_OPTIONS, CATEGORY_TYPE_OPTIONS, DURATION_OPTIONS } from "@/developmentContent/dropdownOption";
 import { Row, Col } from "react-bootstrap";
 import clsx from "clsx";
 
@@ -93,6 +93,19 @@ const AddCategoryModal = ({
               onBlur={categoryFormik.handleBlur}
               errorText={
                 categoryFormik.touched.type && categoryFormik.errors.type
+              }
+            />
+          </Col>
+          <Col md={12}>
+            <DropDown
+              label="Duration"
+              name="durationWeeks"
+              options={DURATION_OPTIONS}
+              value={categoryFormik.values.durationWeeks}
+              setValue={(value) => categoryFormik.setFieldValue("durationWeeks", value)}
+              onBlur={categoryFormik.handleBlur}
+              errorText={
+                categoryFormik.touched.durationWeeks && categoryFormik.errors.durationWeeks
               }
             />
           </Col>
