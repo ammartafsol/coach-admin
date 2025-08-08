@@ -1,4 +1,4 @@
-import { CATEGORY_STATUS_OPTIONS, CATEGORY_TYPE_OPTIONS, DURATION_OPTIONS, FAQ_STATUS_OPTIONS, FAQ_TYPE_OPTIONS, USER_STATUS_OPTIONS } from "@/developmentContent/dropdownOption";
+import { CATEGORY_STATUS_OPTIONS, CATEGORY_TYPE_OPTIONS, FAQ_STATUS_OPTIONS, FAQ_TYPE_OPTIONS, USER_STATUS_OPTIONS } from "@/developmentContent/dropdownOption";
 
 export const LOGIN_FORM_VALUES = {
   email: "",
@@ -89,9 +89,6 @@ export const CATEGORY_MODAL_FORM_VALUES = (itemData) => ({
   type: CATEGORY_TYPE_OPTIONS?.find(
     (option) => option.value === itemData?.type
   ) ?? null ,
-  durationWeeks: DURATION_OPTIONS?.find(
-    (option) => option.value === itemData?.durationWeeks
-  ) ?? DURATION_OPTIONS[7],
   image: itemData?.image ?? null,
   isActive: CATEGORY_STATUS_OPTIONS?.find(
     (option) => option.value === itemData?.isActive

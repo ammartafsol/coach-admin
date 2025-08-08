@@ -137,7 +137,6 @@ export const getAddPatientValidationSchema = (slug) => {
 };
 export const CategoryModalSchema = (isActive) => Yup.object({
   name: Yup.string().required("Category name is required"),
-  durationWeeks: Yup.object().required("Category duration is required"),
   type: Yup.object()
     .nullable()
     .required("At least one category type is required")

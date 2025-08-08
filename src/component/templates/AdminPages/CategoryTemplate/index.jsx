@@ -83,12 +83,10 @@ const CategoryTemplate = () => {
 
   // add/edit category
   const handleAddEditCategory = async (values) => {
-    console.log("🚀 ~ handleAddEditCategory ~ values:", values)
     setLoading("loading");
 
     const payload = {
       ...values,
-      durationWeeks: values.durationWeeks?.value,
       type: values.type?.value,
       isActive: values.isActive?.value,
     };
