@@ -62,6 +62,23 @@
 .inputColor{color: var(--White) !important;border-radius: 0 !important;border: none !important; padding: 10px 0px !important;border-bottom: 1px solid rgba(255, 255, 255, 0.50)!important;}
 .labelColor{color: var(--White) !important;}
 
+/* Prevent autofill background color changes */
+.inputColor:-webkit-autofill,
+.inputColor:-webkit-autofill:hover,
+.inputColor:-webkit-autofill:focus,
+.inputColor:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+  -webkit-text-fill-color: var(--White) !important;
+  transition: background-color 5000s ease-in-out 0s;
+  background-color: transparent !important;
+}
+
+/* For Firefox */
+.inputColor:-moz-autofill {
+  background-color: transparent !important;
+  color: var(--White) !important;
+}
+
 @media(max-width:1440px){
   .loginFormDiv {padding: 10px 64px;gap: 10px;}
 
