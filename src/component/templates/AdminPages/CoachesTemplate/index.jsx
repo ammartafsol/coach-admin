@@ -40,8 +40,8 @@ const CoachesTemplate = () => {
   const [rating, setRating] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
   const [country, setCountry] = useState(null);
-  const [sortBy, setSortBy] = useState(null);
-  const [sortType, setSortType] = useState(null);
+  const [sortBy, setSortBy] = useState(SORT_BY_OPTIONS[0]); // Set "Descending" as default
+  const [sortType, setSortType] = useState(SORT_TYPE_OPTIONS[0]); // Set "Created Date" as default
   const [category, setCategory] = useState(null);
   const [categories, setCategories] = useState([]);
 
