@@ -1,7 +1,7 @@
 "use client";
 import useAxios from "@/interceptor/axiosInterceptor";
 import { updateUserData } from "@/store/auth/authSlice";
-import { setCMSData } from "@/store/common/commonSlice";
+import { setCMSData, setUnseenNotifications } from "@/store/common/commonSlice";
 import store, { persistor } from "@/store/index";
 import { useEffect } from "react";
 import { Provider, useDispatch, useSelector } from "react-redux";
@@ -18,17 +18,15 @@ export function CustomProvider({ children }) {
 }
 
 export default function ApisProvider({ children }) {
-  const { accessToken } = useSelector((state) => state.authReducer);
+  const { accessToken, user } = useSelector((state) => state.authReducer);
 
   const dispatch = useDispatch();
   const { Get } = useAxios();
 
   useEffect(() => {
-    // if (accessToken) {
-    //   getUserData();
-    // }
+  
     // getCMSData();
-  }, []);
+  }, [user]);
 
   const getUserData = async () => {
     const { response } = await Get({ route: "users/me" });
@@ -36,6 +34,8 @@ export default function ApisProvider({ children }) {
       dispatch(updateUserData(response?.data));
     }
   };
+
+
 
   const getCMSData = async () => {
     const { response } = await Get({ route: "cms" });

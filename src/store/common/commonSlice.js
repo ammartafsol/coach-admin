@@ -9,10 +9,9 @@ const commonSlice = createSlice({
   initialState,
   reducers: {
     setUnseenNotifications: (state, action) => {
-      state.notificationCount = action.payload?.unSeenNotificationsCount || 0;
+      state.notificationCount = action.payload || 0;
     },
     addNotificationCount: (state) => {
-      console.log("addNotificationCount", state.notificationCount);
       state.notificationCount += 1;
     },
     removeNotificationCount: (state) => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ChevronDown, Bell, Settings, LogOut, User } from "lucide-react";
 import classes from "./Header.module.css";
@@ -12,11 +12,12 @@ import { NAV_DATA } from "@/developmentContent/appData";
 import { useSelector, useDispatch } from "react-redux";
 import { signOutRequest } from "@/store/auth/authSlice";
 import Cookies from "js-cookie";
-import { incrementUnseenNotificationCount } from "@/store/common/commonSlice";
-
+import { incrementUnseenNotificationCount, setUnseenNotifications } from "@/store/common/commonSlice";
+import useAxios from "@/interceptor/axiosInterceptor";
 import { RiLogoutBoxLine } from "react-icons/ri";
 
 export default function Navbar() {
+  const { Get } = useAxios();
   const bellRef = useRef(null);
   const profileRef = useRef(null);
   const router = useRouter();
@@ -52,6 +53,19 @@ export default function Navbar() {
     router.push("/profile");
     setShowProfileDropdown(false);
   };
+
+  const getUnseenNotifications = async () => {
+    const { response } = await Get({ route: "notifications?seen=false" });
+    if (response) {
+      dispatch(setUnseenNotifications(response?.totalRecords));
+    }
+  };
+
+  useEffect(() => {
+    if(userData){
+      getUnseenNotifications();
+    }
+  }, [pathname]);
   
 
   return (

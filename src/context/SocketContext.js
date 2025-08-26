@@ -6,7 +6,7 @@ import { getUniqueBrowserId } from "@/resources/utils/helper";
 import { signOutRequest, updateUserData } from "@/store/auth/authSlice";
 import { addNotificationCount } from "@/store/common/commonSlice";
 import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { io } from "socket.io-client";
@@ -18,6 +18,7 @@ export const SocketProvider = ({ children }) => {
   const socket = useRef(null);
   const dispatch = useDispatch();
   const router = useRouter();
+  const pathname = usePathname();
 
   const { accessToken, user } = useSelector((state) => state?.authReducer);
 
@@ -64,17 +65,13 @@ export const SocketProvider = ({ children }) => {
         //   }
         // });
 
+        socket?.current?.on("new-notification", (data) => {
+          dispatch(addNotificationCount());
+        });
+
         socket.current.on("new-notification", (data) => {
-          console.log("Socket data:", data);
-          console.log("Receiver:", data?.receiver, "User ID:", user?._id);
-        
-          const flagsToHandle = ["registration", "coach-approved" , "subscription-updated"];
-          if (flagsToHandle.includes(data?.flag) && data?.receiver === user?._id) {
+          if(!pathname.includes("/notifications")){
             dispatch(addNotificationCount(1));
-            RenderToast({
-              type: "success",
-              message: data?.message,
-            });
           }
         });
         
