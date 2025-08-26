@@ -23,10 +23,9 @@ import { useRouter } from "next/navigation";
 import { RECORDS_LIMIT } from "@/const";
 import DropDown from "@/component/molecules/DropDown/DropDown";
 import { Country } from "country-state-city";
-import { useSelector } from "react-redux";
+
 
 const CoachesTemplate = () => {
-  const categories = useSelector((state) => state.category.categories);
   const { Patch, Get } = useAxios();
 
   const [showModal, setShowModal] = useState("");
@@ -44,6 +43,7 @@ const CoachesTemplate = () => {
   const [sortBy, setSortBy] = useState(null);
   const [sortType, setSortType] = useState(null);
   const [category, setCategory] = useState(null);
+  const [categories, setCategories] = useState([]);
 
   const router = useRouter();
 
@@ -52,6 +52,19 @@ const CoachesTemplate = () => {
     label: country.name,
     value: country.name
   }));
+
+  const getSportCategories = async () => {
+    const params = {
+      type: "sport",
+    };
+    const query = new URLSearchParams(params).toString();
+    const { response } = await Get({
+      route: `admin/categories?${query}`,
+    });
+    if (response) {
+      setCategories(response.data);
+    }
+  };
 
   const getData = async ({
     pg = page,
@@ -113,6 +126,10 @@ const CoachesTemplate = () => {
 
     setLoading("");
   };
+
+  useEffect(() => {
+    getSportCategories();
+  }, []);
 
   useEffect(() => {
     getData({
