@@ -1,4 +1,5 @@
 import { RenderTextCell , RenderImageCell, RenderDateCell, RenderStatusCell, RenderUserDataCell, RenderNumberCell, RenderSportsCell,  } from "@/component/organisms/AppTable/CommonCells";
+import { mediaUrl } from "@/resources/utils/helper";
 
 export const tableHeaders = [
   {
@@ -97,7 +98,7 @@ export const tableHeadersData = [
     renderValue: (_, rowData) => (
       <RenderUserDataCell
         fullName={rowData.fullName}
-        photo={rowData.photo}
+        photo={mediaUrl(rowData.photo)}
       />
     ),
   },

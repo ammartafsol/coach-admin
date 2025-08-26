@@ -56,14 +56,13 @@ export const RenderImageCell = ({ cellValue }) => {
   const imageSrc = mediaUrl(cellValue);
 
   return imageSrc ? (
-    <Image
-      src={imageSrc}
-      alt="Category"
-      width={50}
-      height={50}
-      objectFit="contain"
-      className={classes.image}
-    />
+    <div className={classes.imageDiv}>
+      <Image
+        src={imageSrc}
+        alt="Category"
+        fill
+      />
+    </div>
   ) : (
     <span className="text-muted">No Image</span>
   );
@@ -119,8 +118,7 @@ export const RenderUserDataCell = ({ fullName, photo, slug = "" }) => {
         <Image
           src={resolvedImage}
           alt={fullName || "User"}
-          width={30}
-          height={30}
+          fill
           objectFit="contain"
           className={classes.userAvatar}
         />

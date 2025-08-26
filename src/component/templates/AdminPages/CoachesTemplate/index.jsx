@@ -28,7 +28,6 @@ import { useSelector } from "react-redux";
 
 const CoachesTemplate = () => {
   const categories = useSelector((state) => state.category.categories);
-  console.log("categories redux",categories);  
   const { Patch, Get } = useAxios();
 
   const [showModal, setShowModal] = useState("");
