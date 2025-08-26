@@ -115,7 +115,7 @@ export const tableHeadersData = [
     renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
   {
-    title: "City",
+    title: "Country",
     key: "country",
     style: { width: "10%" },
     renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
