@@ -25,6 +25,8 @@ import {
   SUBSCRIBER_STATUS_OPTIONS,
 } from "@/developmentContent/dropdownOption";
 import { RECORDS_LIMIT } from "@/const";
+import AreYouSureModal from "@/component/molecules/Modal/AreYouSureModal";
+import RejectionReasonModal from "@/component/molecules/Modal/RejectionReasonModal";
 
 const CoachDetailTemplate = ({ slug }) => {
   const [SelectedTabs, setSelectedTabs] = useState(coachTabs[0]);
@@ -55,6 +57,10 @@ const CoachDetailTemplate = ({ slug }) => {
   const [subscriberPage, setSubscriberPage] = useState(1);
   const [subscriberTotalRecords, setSubscriberTotalRecords] = useState(0);
   const debounceSubscriberSearch = useDebounce(subscriberSearch, 500);
+
+  // Accept/Reject functionality states
+  const [showModal, setShowModal] = useState("");
+  const [actionLoading, setActionLoading] = useState("");
 
   // Get all countries for dropdown
   const countries = Country.getAllCountries().map((country) => ({
@@ -203,6 +209,45 @@ const CoachDetailTemplate = ({ slug }) => {
     setSubscriberCountry(country);
   };
 
+  // Handle coach status change (accept/reject)
+  const handleCoachStatus = async (values) => {
+    setActionLoading("coachStatus");
+
+    const payload = {
+      status: showModal === "accept" ? "approved" : "rejected",
+      ...(values && { rejectionReason: values.rejectReason }),
+    };
+
+    const { response } = await Patch({
+      route: `admin/users/coach/status/${slug}`,
+      data: payload,
+    });
+
+    if (response) {
+      RenderToast({
+        type: "success",
+        message: `Coach ${
+          showModal === "accept" ? "approved" : "rejected"
+        } successfully`,
+      });
+      // Update the local user data
+      setUsersData((prev) => ({
+        ...prev,
+        status: showModal === "accept" ? "approved" : "rejected",
+      }));
+      setShowModal("");
+    }
+    setActionLoading("");
+  };
+
+  const handleAccept = () => {
+    setShowModal("accept");
+  };
+
+  const handleReject = () => {
+    setShowModal("reject");
+  };
+
   useEffect(() => {
     getData();
     getCategoryData();
@@ -266,8 +311,22 @@ const CoachDetailTemplate = ({ slug }) => {
               tabs={coachTabs}
             />
             {SelectedTabs.value === "profile" ? (
-              // <Button className={classes?.btn} label={"Deactive"} /> //commented this as there was no action, approve/reject can be done from table 
-              <></>
+              usersData?.status === "pending" && (
+                <div className={classes?.actionButtons}>
+                  <Button
+                    label="Accept"
+                    variant="success"
+                    onClick={handleAccept}
+                    className={classes?.acceptButton}
+                  />
+                  <Button
+                    label="Reject"
+                    variant="outlined"
+                    onClick={handleReject}
+                    className={classes?.rejectButton}
+                  />
+                </div>
+              )
             ) : SelectedTabs.value === "feeds" ? (
               <div className={classes?.main}>
                 <Input
@@ -362,6 +421,34 @@ const CoachDetailTemplate = ({ slug }) => {
             )}
           </div>
         </>
+      )}
+
+      {/* Accept/Reject Modals */}
+      {showModal === "reject" && (
+        <RejectionReasonModal
+          show={showModal === "reject"}
+          setShow={setShowModal}
+          onConfirm={handleCoachStatus}
+          loading={actionLoading === "coachStatus"}
+        />
+      )}
+
+      {showModal === "accept" && (
+        <AreYouSureModal
+          show={showModal === "accept"}
+          setShow={setShowModal}
+          heading="Approve Coach"
+          subheading="Are you sure you want to approve this coach?"
+          confirmButtonLabel={
+            actionLoading === "coachStatus" ? "Submitting..." : "Confirm"
+          }
+          cancelButtonLabel="Cancel"
+          confirmButtonVariant="success"
+          cancelButtonVariant="green-outlined"
+          onConfirm={() => {
+            handleCoachStatus();
+          }}
+        />
       )}
     </div>
   );

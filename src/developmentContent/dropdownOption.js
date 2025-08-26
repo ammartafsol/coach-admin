@@ -59,12 +59,6 @@ export const FAQ_TYPE_OPTIONS = [
 export const USER_ACTION_OPTIONS = (item) => [
   { label: "View Details", value: "viewDetails" },
   { label: "Status", value: "status" },
-  ...(item === "pending"
-    ? [
-        { label: "Accept", value: "accept" },
-        { label: "Reject", value: "reject" },
-      ]
-    : []),
 ];
 
 export const USER_STATUS_OPTIONS = [

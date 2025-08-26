@@ -19,7 +19,6 @@ import useDebounce from "@/resources/hooks/useDebounce";
 import RenderToast from "@/component/atoms/RenderToast";
 import FilterHeader from "@/component/molecules/FilterHeader/FilterHeader";
 import AreYouSureModal from "@/component/molecules/Modal/AreYouSureModal";
-import RejectionReasonModal from "@/component/molecules/Modal/RejectionReasonModal";
 import { useRouter } from "next/navigation";
 import { RECORDS_LIMIT } from "@/const";
 import DropDown from "@/component/molecules/DropDown/DropDown";
@@ -135,38 +134,10 @@ const CoachesTemplate = () => {
       setShowModal("areYouSure");
     } else if (label === "View Details") {
       router.push(`/coach/${item.slug}`);
-    } else if (label === "Accept" || label === "Reject") {
-      setShowModal(label === "Accept" ? "accept" : "reject");
-      setSelectedItem(item);
     }
   };
 
-  const handleCoachStatus = async (values) => {
-    setLoading("coachStatus");
 
-    const payload = {
-      status: showModal === "accept" ? "approved" : "rejected",
-      ...(values && { rejectionReason: values.rejectReason }),
-    };
-
-    const { response } = await Patch({
-      route: `admin/users/coach/status/${selectedItem?.slug}`,
-      data: payload,
-    });
-
-    if (response) {
-      RenderToast({
-        type: "success",
-        message: `Coach ${
-          showModal === "accept" ? "approved" : "rejected"
-        } successfully`,
-      });
-      const updatedCoach = { ...selectedItem,  status: showModal === "accept" ? "approved" : "rejected" };
-      updateCoachInList(updatedCoach);
-      setShowModal("");
-    }
-    setLoading("");
-  };
 
   const handleStatusChange = async (status) => {
     setLoading("updateStatus");
@@ -304,37 +275,24 @@ const CoachesTemplate = () => {
           }}
         />
 
-        {showModal === "reject" && (
-          <RejectionReasonModal
-            show={showModal === "reject"}
-            setShow={setShowModal}
-            onConfirm={handleCoachStatus}
-            loading={loading === "coachStatus"}
-          />
-        )}
-
-        {(showModal === "areYouSure" || showModal === "accept") && (
+        {(showModal === "areYouSure") && (
           <AreYouSureModal
-            show={showModal === "areYouSure" || showModal === "accept"}
+            show={showModal === "areYouSure"}
             setShow={setShowModal}
             heading={
-              showModal === "areYouSure"
-                ? selectedItem?.isBlockedByAdmin
-                  ? "⚠️ Unblock Coach"
-                  : "⚠️ Block Coach"
-                : "Approve Coach"
+              selectedItem?.isBlockedByAdmin
+                ? "⚠️ Unblock Coach"
+                : "⚠️ Block Coach"
             }
             subheading={
-              showModal === "areYouSure"
-                ? `Are you sure you want to ${
-                    selectedItem?.isBlockedByAdmin ? "unblock" : "block"
-                  } this coach? This will ${
-                    selectedItem?.isBlockedByAdmin ? "restore" : "affect"
-                  } their access to the platform.`
-                : "Are you sure you want to approve this coach?"
+              `Are you sure you want to ${
+                selectedItem?.isBlockedByAdmin ? "unblock" : "block"
+              } this coach? This will ${
+                selectedItem?.isBlockedByAdmin ? "restore" : "affect"
+              } their access to the platform.`
             }
             confirmButtonLabel={
-              ["coachStatus", "updateStatus"].includes(loading)
+              loading === "updateStatus"
                 ? "Submitting..."
                 : "Confirm"
             }
@@ -343,11 +301,7 @@ const CoachesTemplate = () => {
             cancelButtonVariant="green-outlined"
             onConfirm={() => {
               if (selectedItem) {
-                if (showModal === "areYouSure") {
-                  handleStatusChange(!selectedItem?.isBlockedByAdmin);
-                } else {
-                  handleCoachStatus();
-                }
+                handleStatusChange(!selectedItem?.isBlockedByAdmin);
               }
             }}
           />

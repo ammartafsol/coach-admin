@@ -28,7 +28,7 @@ const Button = ({
         {...props}
       >
         {leftIcon && leftIcon}
-        {label && <label>{label}</label>}
+        {label && <span>{label}</span>}
 
         {children && <>{children}</>}
         {rightIcon && rightIcon}

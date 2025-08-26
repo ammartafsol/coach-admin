@@ -30,3 +30,17 @@
     min-height: 300px;
     margin-top: 20px;
 }
+
+.actionButtons{
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.acceptButton{
+    min-width: 100px;
+}
+
+.rejectButton{
+    min-width: 100px;
+}
