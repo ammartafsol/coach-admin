@@ -116,7 +116,7 @@ const CategoryTemplate = () => {
     }
   };
 
-  const handleImageChange = async (file) => {
+  const handleImageChange = async (file, setFormImage) => {
 
     if(!file) return;
 
@@ -135,10 +135,8 @@ const CategoryTemplate = () => {
     });
 
     if (response) {
-      setSelectedItem({
-        ...selectedItem,
-        image: response?.data?.media[0]?.key,
-      });
+      // Update the form image directly instead of selectedItem
+      setFormImage(response?.data?.media[0]?.key);
     }
     setLoading("");
   };

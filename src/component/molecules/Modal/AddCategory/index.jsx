@@ -101,7 +101,9 @@ const AddCategoryModal = ({
               label="Category Image"
               state={categoryFormik.values.image}
               setter={(value) => {
-                handleImageChange(value);
+                handleImageChange(value, (imageKey) => {
+                  categoryFormik.setFieldValue("image", imageKey);
+                });
               }}
               onBlur={categoryFormik.handleBlur}
               errorText={
