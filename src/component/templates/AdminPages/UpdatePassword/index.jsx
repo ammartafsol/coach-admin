@@ -11,11 +11,16 @@ import BorderWrapper from "@/component/atoms/BorderWrapper";
 import { updatePasswordSchema } from "@/formik/formikSchema/formik-schemas";
 import { UPDATE_PASSWORD_FORM_VALUES } from "@/formik/formikInitialValues/form-initial-values";
 import useAxios from "@/interceptor/axiosInterceptor";
+import { useDispatch } from "react-redux";
+import { updateUserData,updateAccessToken } from "@/store/auth/authSlice";
+import { handleEncrypt } from "@/resources/utils/helper";
+import Cookies from "js-cookie";
 
 const UpdatePasswordTemplate = () => {
   const { Patch } = useAxios();
   const router = useRouter();
   const [loading, setLoading] = useState("");
+  const dispatch = useDispatch();
 
   const passwordFormik = useFormik({
     initialValues: UPDATE_PASSWORD_FORM_VALUES,
@@ -32,18 +37,22 @@ const UpdatePasswordTemplate = () => {
       password: values?.newPassword,
       confirmPassword: values?.confirmPassword,
     };
-
     const { response } = await Patch({
       route: `auth/update/password`,
       data: passwordData,
     });
 
     if (response) {
-      router.push("/profile");
+      dispatch(updateAccessToken(response?.data?.token));
+      dispatch(updateUserData(response?.data?.user));
+      Cookies.set("_xpdx", handleEncrypt(response?.data?.token), {
+        expires: 90,
+      });
       RenderToast({
         type: "success",
         message: "Password Updated Successfully",
       });
+      router.push("/profile");
       setLoading("");
     }
   };
