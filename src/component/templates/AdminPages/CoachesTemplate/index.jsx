@@ -126,7 +126,23 @@ const CoachesTemplate = () => {
       _sortType: sortType?.value,
       _category: category?.value,
     });
-  }, [debounceSearch, coachStatus, rating, country, sortBy, sortType, category]);
+  }, [debounceSearch, coachStatus, rating, country, sortBy, category]);
+
+  // Separate useEffect for sort type and sort by combination
+  useEffect(() => {
+    if (sortType && sortBy) {
+      getData({
+        pg: 1,
+        _search: debounceSearch,
+        _coachStatus: coachStatus?.value,
+        _rating: rating?.value,
+        _country: country?.value,
+        _sortBy: sortBy?.value,
+        _sortType: sortType?.value,
+        _category: category?.value,
+      });
+    }
+  }, [sortType, sortBy]);
 
   const onClickPopover = (label = "", item = null) => {
     if (label === "Status") {
@@ -216,7 +232,8 @@ const CoachesTemplate = () => {
               value={sortType}
               setValue={(value) => {
                 setSortType(value);
-                setPage(1);
+                // Reset sort by when sort type changes
+                setSortBy(null);
               }}
             />
             <DropDown
@@ -227,6 +244,7 @@ const CoachesTemplate = () => {
                 setSortBy(value);
                 setPage(1);
               }}
+              disabled={!sortType}
             />
             <DropDown
               options={(categories || []).map((category) => ({
