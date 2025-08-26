@@ -297,7 +297,7 @@ const CoachesTemplate = () => {
               return (
                 <div className={classes.actionButtons}>
                   <ActionMenu
-                    popover={USER_ACTION_OPTIONS(rowItem?.status)}
+                    popover={USER_ACTION_OPTIONS(rowItem)}
                     onClick={(label) => {
                       onClickPopover(label, rowItem);
                     }}

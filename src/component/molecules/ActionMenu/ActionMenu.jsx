@@ -29,16 +29,25 @@ export default function ActionMenu({
               popover?.map((item, index) => (
                 <li
                   key={index}
-                  className={clsx(Style.overlayLink, "")}
+                  className={clsx(
+                    Style.overlayLink, 
+                    item?.disabled && Style.disabled
+                  )}
                   onClick={() => {
-                    onClick(item?.label);
-                    setShow(false);
+                    if (!item?.disabled) {
+                      onClick(item?.label);
+                      setShow(false);
+                    }
                   }}
                 >
                   {item?.icon && (
                     <div className={clsx(Style.iconDiv)} >{item?.icon}</div>
                   )}
-                  <span className={clsx("text-black body05", Style.label)}>
+                  <span className={clsx(
+                    "body05", 
+                    Style.label,
+                    item?.disabled ? "text-muted" : "text-black"
+                  )}>
                     {item.label}
                   </span>
                  
