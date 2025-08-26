@@ -107,7 +107,7 @@ export default function FeedsCard({ feed, setIsOpen, onOpenComments }) {
             <div className={classes.feedVideo}>
               {mediaItems[currentSlide]?.type === "video" ? (
                 <video
-                  src={mediaItems[currentSlide].url}
+                  src={mediaUrl(mediaItems[currentSlide].url)}
                   poster="/Images/app-images/video-poster.jpg"
                   controls
                 />
