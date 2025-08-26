@@ -117,7 +117,7 @@ export const FEED_STATUS_OPTIONS = [
 ];
 
 export const FEED_ARCHIVED_OPTIONS = [
-  { label: "Un Archived", value: false },
+  { label: "Unarchived", value: false },
   { label: "Archived", value: true },
 ];
 
