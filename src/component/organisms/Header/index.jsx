@@ -52,6 +52,7 @@ export default function Navbar() {
     router.push("/profile");
     setShowProfileDropdown(false);
   };
+  
 
   return (
     <header className={classes.header}>

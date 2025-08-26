@@ -19,9 +19,8 @@ export default function NotificationsPopup({ setShowNotifications }) {
     const { response } = await Get({
       route: `notifications`,
     });
-    console.log("response", response);
     if (response) {
-      setNotifications(response?.notifications);
+      setNotifications(response?.data);
       setCount(response?.totalRecords);
     }
     setLoading(false);
@@ -40,6 +39,7 @@ export default function NotificationsPopup({ setShowNotifications }) {
       </div>
     );
   }
+
 
   return (
     <div className={classes.popupContainer}>

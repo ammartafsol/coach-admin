@@ -54,15 +54,13 @@ const NotificationCard = ({
     <div className={`${classes.registrationContent} ${className}`}>
       <div className={classes.registrationUser}>
         <Image
-          src={
-            item?.receiver?.photo || item?.photo ? mediaUrl(item?.receiver?.photo || item?.photo) : "/images/app-images/user-avatars.png"
-          }
+          src={mediaUrl(item?.receiver?.photo || item?.photo)}
           alt={item?.receiver?.fullName || "User" || item?.fullName}
           width={40}
           height={40}
           className={classes.registrationAvatar}
         />
-        <div className={classes?.notificationMain}>
+        <div className={`${classes?.notificationMain} maxLine1`}>
           <div className={classes.notificationText}>
             <div onClick={onClick} className={onClick ? classes.pointer : ""}>
               <div className={classes.registrationName}>{item?.receiver?.fullName || item?.fullName}</div>
