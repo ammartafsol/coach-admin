@@ -12,6 +12,8 @@ import { Loader } from "@/component/atoms/Loader";
 import NoData from "@/component/atoms/NoData/NoData";
 import { setUnseenNotifications } from "@/store/common/commonSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { RECORDS_LIMIT } from "@/const";
+import PaginationComponent from "@/component/molecules/PaginationComponent";
 
 // import { saveNotifications } from "@/store/notifications/notificationSlice";
 
@@ -20,23 +22,30 @@ const NotificationTemplate = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalRecords, setTotalRecords] = useState(0);
   const debounceSearch = useDebounce(search, 500);
   const [notifications, setNotifications] = useState([]);
   // const notificationsState = useSelector(
   //   (state) => state.commonReducer.unseenNotifications
   // );
- const userData =useSelector(state=>state.authReducer.user);
+  const userData = useSelector((state) => state.authReducer.user);
   console.log("userData", userData);
-  
-  const getData = async () => {
+
+  const getData = async (_page) => {
     setLoading(true);
+    const query = new URLSearchParams({
+      page: _page || page,
+      limit: RECORDS_LIMIT,
+      search: debounceSearch,
+    }).toString();
     const { response } = await Get({
-      route: `notifications`,
+      route: `notifications?${query}`,
     });
     console.log("response", response);
     if (response) {
-      setNotifications(response?.notifications);
-    
+      setNotifications(response?.data);
+      setTotalRecords(response?.totalRecords);
     }
     setLoading(false);
   };
@@ -57,8 +66,10 @@ const NotificationTemplate = () => {
   };
 
   useEffect(() => {
-    getData();
-  }, []);
+    getData(1);
+  }, [debounceSearch]);
+
+  console.log("debounceSearch",debounceSearch);
 
   return (
     <div>
@@ -67,10 +78,8 @@ const NotificationTemplate = () => {
           inputPlaceholder="Search By Message"
           customStyle={{ width: "300px" }}
           onChange={(e) => {
-            setSearch(e.target.value);
-            // getData(
-            // _search = debounceSearch,
-            // );
+            setSearch(e);
+            setPage(1);
           }}
         />
       </TopHeader>
@@ -91,7 +100,7 @@ const NotificationTemplate = () => {
               notifications.map((item) => (
                 <div key={item._id}>
                   <NotificationCard
-                    item={item?.receiver}
+                    item={item}
                     left={true}
                     onAction={handleAction}
                     loading={loading}
@@ -110,6 +119,19 @@ const NotificationTemplate = () => {
                 <NoData text="No notifications available" />
               </div>
             )}
+          {
+            totalRecords > RECORDS_LIMIT && (
+              <PaginationComponent
+              currentPage={page}
+              totalItems={totalRecords}
+              itemsPerPage={RECORDS_LIMIT}
+              onPageChange={(page) => {
+                setPage(page);
+                getData(page);
+              }}
+              />
+            )
+          }
           </div>
         </BorderWrapper>
       </div>
