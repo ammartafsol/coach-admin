@@ -15,8 +15,11 @@ const commonSlice = createSlice({
       console.log("addNotificationCount", state.notificationCount);
       state.notificationCount += 1;
     },
+    removeNotificationCount: (state) => {
+      state.notificationCount -= 1;
+    },
   },
 });
 
-export const { setCMSData, setUnseenNotifications , addNotificationCount} = commonSlice.actions;
+export const { setCMSData, setUnseenNotifications, removeNotificationCount,addNotificationCount} = commonSlice.actions;
 export default commonSlice.reducer;

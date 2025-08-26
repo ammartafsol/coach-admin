@@ -23,6 +23,7 @@ export default function FilterHeader({
   secondValue,
   value,
   children,
+  mainContClassName
 }) {
   return (
     <div className={classes.filterHeader}>
@@ -30,6 +31,7 @@ export default function FilterHeader({
         placeholder={inputPlaceholder}
         setValue={onChange}
         customStyle={customStyle}
+        mainContClassName={mainContClassName}
         rightIcon={<IoSearchOutline color="#B0CD6E" size={20} />}
       />
       {showDropDown && (

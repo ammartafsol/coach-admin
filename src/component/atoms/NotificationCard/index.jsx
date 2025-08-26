@@ -3,10 +3,9 @@ import classes from "./NotificationCard.module.css";
 import Image from "next/image";
 import { timeAgo, mediaUrl } from "@/resources/utils/helper";
 import Button from "@/component/atoms/Button";
-import RejectionReasonModal from "@/component/molecules/Modal/RejectionReasonModal";
-import AreYouSureModal from "@/component/molecules/Modal/AreYouSureModal";
 import useAxios from "@/interceptor/axiosInterceptor";
 import RenderToast from "../RenderToast";
+import { useDispatch } from "react-redux";
 
 const NotificationCard = ({
   item,
@@ -19,33 +18,24 @@ const NotificationCard = ({
 }) => {
   const { Patch } = useAxios();
   const time = timeAgo(item?.createdAt);
-  const isActioned = item?.status === "accepted" || item?.status === "rejected";
+  const isSeen = item?.seen;
+  const dispatch = useDispatch();
 
-  const [showModal, setShowModal] = useState("");
   const [loading, setLoading] = useState("");
 
-  const handleCoachStatus = async (values) => {
-    setLoading("coachStatus");
-
-    const payload = {
-      status: showModal === "accept" ? "approved" : "rejected",
-      ...(values && { rejectionReason: values.rejectReason }),
-    };
-
+  const handleMarkAsSeen = async () => {
+    setLoading("seen");
     const { response } = await Patch({
-      route: `admin/users/coach/status/${item?.slug}`,
-      data: payload,
+      route: `notifications/seen/${item?._id}`,
     });
-
     if (response) {
       RenderToast({
         type: "success",
-        message: `Coach ${
-          showModal === "accept" ? "approved" : "rejected"
-        } successfully`,
+        message: "Notification marked as seen",
       });
+      dispatch(removeNotificationCount());
       getData();
-      setShowModal("");
+      
     }
     setLoading("");
   };
@@ -74,63 +64,19 @@ const NotificationCard = ({
               left ? classes.left : ""
             }`}
           >
-            {isActioned ? (
-              <div className={classes.statusText}>
-                {item?.status === "accepted" ? "Accepted" : "Rejected"}
-              </div>
-            ) : (
-              <>
-                {showButton && (
-                  <>
-                    <Button
-                      label="Reject"
-                      className={classes.actionButton}
-                      onClick={() => setShowModal("reject")}
-                      disabled={loading}
-                      variant="outlined"
-                    />
-                    <Button
-                      label="Accept"
-                      className={classes.actionButton}
-                      onClick={() => setShowModal("accept")}
-                      disabled={loading}
-                      variant="success"
-                    />
-                  </>
-                )}
-              </>
+            {showButton && !isSeen && (
+              <Button
+                label={loading === "seen" ? "Loading..." : "Seen"}
+                className={classes.actionButton}
+                onClick={handleMarkAsSeen}
+                disabled={loading === "seen"}
+                variant="outlined"
+              />
             )}
+            
           </div>
         </div>
       </div>
-      {showModal === "reject" && (
-        <RejectionReasonModal
-          show={showModal === "reject"}
-          setShow={setShowModal}
-          onConfirm={handleCoachStatus}
-          loading={loading === "coachStatus"}
-        />
-      )}
-
-      {showModal === "accept" && (
-        <AreYouSureModal
-          show={showModal === "accept"}
-          setShow={setShowModal}
-          heading={"Approve Coach"}
-          subheading={
-            "Are you sure you want to approve this coach?"
-          }
-          confirmButtonLabel={
-            loading == "coachStatus" ? "Submitting..." : "Confirm"
-          }
-          cancelButtonLabel="Cancel"
-          confirmButtonVariant="danger"
-          cancelButtonVariant="green-outlined"
-          onConfirm={() => {
-            handleCoachStatus();
-          }}
-        />
-      )}
     </div>
   );
 };

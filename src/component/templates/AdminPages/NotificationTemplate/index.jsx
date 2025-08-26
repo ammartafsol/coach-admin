@@ -14,6 +14,7 @@ import { setUnseenNotifications } from "@/store/common/commonSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RECORDS_LIMIT } from "@/const";
 import PaginationComponent from "@/component/molecules/PaginationComponent";
+import Button from "@/component/atoms/Button";
 
 // import { saveNotifications } from "@/store/notifications/notificationSlice";
 
@@ -50,17 +51,19 @@ const NotificationTemplate = () => {
     setLoading(false);
   };
 
-  const handleAction = async (action, itemId) => {
-    setLoading(true);
+  const handleMarkAllAsRead = async () => {
+    setLoading("markAllAsRead");
     const { response } = await Patch({
-      // route: `notifications/${itemId}/${action}`,
+      route: `notifications/mark-all-as-read`,
     });
 
     if (response) {
       RenderToast({
         type: "success",
-        message: `Notification updated successfully`,
+        message: "All notifications marked as read",
       });
+      dispatch(setUnseenNotifications(0));
+      getData(1);
     }
     setLoading(false);
   };
@@ -69,19 +72,26 @@ const NotificationTemplate = () => {
     getData(1);
   }, [debounceSearch]);
 
-  console.log("debounceSearch",debounceSearch);
-
   return (
     <div>
       <TopHeader title={"Notifications"}>
-        <FilterHeader
-          inputPlaceholder="Search By Message"
-          customStyle={{ width: "300px" }}
-          onChange={(e) => {
-            setSearch(e);
-            setPage(1);
-          }}
-        />
+        <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+          <FilterHeader
+            inputPlaceholder="Search By Message"
+            mainContClassName={classes.filterHeader}
+            customStyle={{ width: "300px", marginBottom: "0px" }}
+            onChange={(e) => {
+              setSearch(e);
+              setPage(1);
+            }}
+          />
+          <Button
+            label="See All"
+            variant="outlined"
+            onClick={handleMarkAllAsRead}
+            disabled={loading === "markAllAsRead"}
+          />
+        </div>
       </TopHeader>
       <div className={classes?.notificationHeader}>
         <BorderWrapper>
@@ -99,13 +109,7 @@ const NotificationTemplate = () => {
             ) : notifications && notifications.length > 0 ? (
               notifications.map((item) => (
                 <div key={item._id}>
-                  <NotificationCard
-                    item={item}
-                    left={true}
-                    onAction={handleAction}
-                    loading={loading}
-                    getData={getData}
-                  />
+                  <NotificationCard item={item} left={true} getData={getData} />
                 </div>
               ))
             ) : (
@@ -119,19 +123,17 @@ const NotificationTemplate = () => {
                 <NoData text="No notifications available" />
               </div>
             )}
-          {
-            totalRecords > RECORDS_LIMIT && (
+            {totalRecords > RECORDS_LIMIT && (
               <PaginationComponent
-              currentPage={page}
-              totalItems={totalRecords}
-              itemsPerPage={RECORDS_LIMIT}
-              onPageChange={(page) => {
-                setPage(page);
-                getData(page);
-              }}
+                currentPage={page}
+                totalItems={totalRecords}
+                itemsPerPage={RECORDS_LIMIT}
+                onPageChange={(page) => {
+                  setPage(page);
+                  getData(page);
+                }}
               />
-            )
-          }
+            )}
           </div>
         </BorderWrapper>
       </div>

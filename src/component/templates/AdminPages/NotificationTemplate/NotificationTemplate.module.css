@@ -16,3 +16,6 @@
 .notification{
     display: inline-block !important;
 }
+.filterHeader{
+    margin-bottom: 0px !important;
+}
