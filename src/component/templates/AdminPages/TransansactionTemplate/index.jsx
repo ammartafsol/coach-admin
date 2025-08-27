@@ -60,6 +60,7 @@ const TransansactionTemplate = () => {
     setLoading("");
   };
 
+
   useEffect(() => {
     getTransactionData({ _search: debounceSearch, status: status, _transactionType: transactionType, _page:1 });
   }, [debounceSearch, status, transactionType]);
@@ -69,19 +70,23 @@ const TransansactionTemplate = () => {
       <TopHeader title="Transactions">
                  <FilterHeader
            inputPlaceholder="Search"
+           searchValue={search}
            customStyle={{ width: "300px" }}
            onChange={(value) => {
              setSearch(value);
              setCurrentPage(1);
+             
+             
            }}
            showDropDown={true}
            dropdownOption={TRANSACTION_TYPE_OPTIONS}
            placeholder={"Transaction Type"}
            setValue={(value) => {
-             setTransactionType(value);
-             setCurrentPage(1);
-             setStatus(TRANSACTION_STATUS_OPTIONS[0]);
-           }}
+                         setSearch("");
+              setTransactionType(value);
+              setCurrentPage(1);
+              setStatus(TRANSACTION_STATUS_OPTIONS[0]);
+            }}
            value={transactionType}
          >
          {
@@ -91,10 +96,11 @@ const TransansactionTemplate = () => {
               options={TRANSACTION_STATUS_OPTIONS}
               placeholder={"Status"}
               value={status}
-              setValue={(value) => {
-                setStatus(value);
-                setCurrentPage(1);
-              }}
+                             setValue={(value) => {
+                               setSearch("");
+                 setStatus(value);
+                 setCurrentPage(1);
+               }}
             />
           </div> 
           )
