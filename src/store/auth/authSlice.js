@@ -25,6 +25,9 @@ const authSlice = createSlice({
     updateUserData(state, action) {
       state.user = action.payload;
     },
+    updateAccessToken(state, action) {
+      state.accessToken = action.payload;
+    },
     signOutRequest(state) {
       state.accessToken = "";
       state.refreshToken = "";
@@ -44,6 +47,7 @@ export const {
   signOutRequest,
   updateUserData,
   updateJWTTokens,
+  updateAccessToken
 } = authSlice.actions;
 
 export default authSlice.reducer;
