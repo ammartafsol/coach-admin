@@ -37,6 +37,7 @@
     "react-loading-indicators": "^1.0.0",
     "react-modern-drawer": "^1.4.0",
     "react-phone-input-2": "^2.15.1",
+    "react-quill-new": "^3.6.0",
     "react-redux": "^9.2.0",
     "react-select": "^5.10.1",
     "react-toastify": "^11.0.5",
