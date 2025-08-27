@@ -614,5 +614,10 @@ export const formatDate = (date) => {
 export const getMonthName = (monthIndex) => {
   if (monthIndex < 0 || monthIndex > 11) return "Invalid month";
 
-  return moment().month(monthIndex).format("MMMM");
+  const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+  
+  return months[monthIndex] || "Invalid month";
 };

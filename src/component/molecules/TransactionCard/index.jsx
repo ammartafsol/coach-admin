@@ -4,13 +4,13 @@ import { useState } from "react";
 import Image from "next/image";
 import { ChevronRight, ChevronDown } from "lucide-react";
 import classes from "./TransactionCard.module.css";
-import { getMonthName, mediaUrl } from "@/resources/utils/helper";
+import { capitalizeFirstLetter, getMonthName, mediaUrl } from "@/resources/utils/helper";
 
 const TransactionCard = ({ item }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   console.log("transactionData", item);
 
-  const { coach, withdrawalStatus, email } = item;
+  const { coach, status, email } = item;
   const defaultAvatar = "/images/app-images/user-avatar.png";
   if (!coach?.fullName && !coach?.photo) return null;
 
@@ -19,6 +19,8 @@ const TransactionCard = ({ item }) => {
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
+
+  console.log("status item", item?.status);
 
   return (
     <div className={classes.transactionCard}>
@@ -37,7 +39,7 @@ const TransactionCard = ({ item }) => {
               <span className={classes.nameSpan}>{coach?.fullName}</span>
               <div className={classes.statusBadge}>
                 <span className={classes.statusDot}></span>
-                <span className={classes.statusText}>{withdrawalStatus}</span>
+                <span className={classes.statusText}>{capitalizeFirstLetter(status)}</span>
               </div>
             </div>
             <div className={classes.emailContainer}>

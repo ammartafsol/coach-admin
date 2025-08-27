@@ -1,4 +1,4 @@
-export const RECORDS_LIMIT = 10;
+export const RECORDS_LIMIT = 4;
 export const FORM_REG_EX = /([a-z])([A-Z])/g;
 export const FORM_REG_EX_REPLACER = "$1 $2";
 

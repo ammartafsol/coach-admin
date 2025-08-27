@@ -110,6 +110,12 @@ export const TRANSACTION_STATUS_OPTIONS = [
   { label: "Received", value: "received" },
 ];
 
+export const TRANSACTION_TYPE_OPTIONS = [
+  { label: "All", value: "" },
+  { label: "Subscription", value: "subscription" },
+  { label: "Withdrawal", value: "withdrawal" },
+];
+
 export const FEED_STATUS_OPTIONS = [
   { label: "All", value: "all" },
   { label: "Active", value: true },

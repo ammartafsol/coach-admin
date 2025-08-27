@@ -5,10 +5,13 @@ import classes from "./TransansactionTemplate.module.css";
 import TransactionCard from "@/component/molecules/TransactionCard";
 import useAxios from "@/interceptor/axiosInterceptor";
 import useDebounce from "@/resources/hooks/useDebounce";
-import { TRANSACTION_STATUS_OPTIONS } from "@/developmentContent/dropdownOption";
+import { TRANSACTION_STATUS_OPTIONS, TRANSACTION_TYPE_OPTIONS } from "@/developmentContent/dropdownOption";
 import FilterHeader from "@/component/molecules/FilterHeader/FilterHeader";
 import { Loader } from "@/component/atoms/Loader";
 import NoData from "@/component/atoms/NoData/NoData";
+import DropDown from "@/component/molecules/DropDown/DropDown";
+import { RECORDS_LIMIT } from "@/const";
+import PaginationComponent from "@/component/molecules/PaginationComponent";
 
 const TransansactionTemplate = () => {
 
@@ -19,36 +22,42 @@ const TransansactionTemplate = () => {
   const [search, setSearch] = useState("");
   const debounceSearch = useDebounce(search, 500);
   const [status, setStatus] = useState(TRANSACTION_STATUS_OPTIONS[0]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalRecords, setTotalRecords] = useState(0);
+  const [transactionType, setTransactionType] = useState(TRANSACTION_TYPE_OPTIONS[0]);
  
   const getTransactionData = async ({
+    _page = currentPage,
     _search = debounceSearch,
     status = status,
+    _transactionType = transactionType,
   }) => {
     if (loading === "loading") return;
 
-    const params = {
-      search: _search,
-      ...(status && { status: status?.value }),
-    };
-    const query = new URLSearchParams(params).toString();
-
     setLoading("loading");
-
+    const query = {
+      page: _page,
+      search: _search,
+      limit: RECORDS_LIMIT,
+      ...(status && { status: status?.value }),
+      ...(_transactionType?.value && { transactionType: _transactionType?.value }),
+    };
+    const queryString = new URLSearchParams(query).toString();
     const { response } = await Get({
-      route: `admin/transactions?${query}`,
+      route: `admin/transactions?${queryString}`,
     });
 
     if (response) {
       setTransactionData(response?.data);
+      setTotalRecords(response?.totalRecords);
     }
 
     setLoading("");
   };
 
   useEffect(() => {
-    getTransactionData({ _search: debounceSearch, status: status });
-
-  }, [debounceSearch ,status]);
+    getTransactionData({ _search: debounceSearch, status: status, _transactionType: transactionType, _page:1 });
+  }, [debounceSearch, status, transactionType]);
     
   return (
     <div>
@@ -58,16 +67,29 @@ const TransansactionTemplate = () => {
           customStyle={{ width: "300px" }}
           onChange={(value) => {
             setSearch(value);
-            
+            setCurrentPage(1);
           }}
           showDropDown={true}
           dropdownOption={TRANSACTION_STATUS_OPTIONS}
           placeholder={"Status"}
           setValue={(value) => {
             setStatus(value);
+            setCurrentPage(1);
           }}
           value={status}
-        />
+        >
+          <div className={classes.filterHeader}>
+            <DropDown
+              options={TRANSACTION_TYPE_OPTIONS}
+              placeholder={"Transaction Type"}
+              value={transactionType}
+              setValue={(value) => {
+                setTransactionType(value);
+                setCurrentPage(1);
+              }}
+            />
+          </div>
+        </FilterHeader>
          
       </TopHeader>
       <div className={classes.transactionCardContainer}>
@@ -84,6 +106,16 @@ const TransansactionTemplate = () => {
         <NoData text="No transactions found" />
       )}
       </div>
+      <PaginationComponent
+      totalItems={totalRecords}
+      currentPage={currentPage}
+      onPageChange={(page) => {
+        setCurrentPage(page);
+        getTransactionData({ _search: debounceSearch, status: status, _transactionType: transactionType, _page:page });
+      }}
+
+    
+      />
     </div>
   );
 };

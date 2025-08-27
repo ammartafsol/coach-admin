@@ -6,3 +6,9 @@
 .transactionCardContainer{
     margin-top: 40px;
 }
+
+.filterHeader {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
