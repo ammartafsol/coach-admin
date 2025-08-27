@@ -111,7 +111,6 @@ export const TRANSACTION_STATUS_OPTIONS = [
 ];
 
 export const TRANSACTION_TYPE_OPTIONS = [
-  { label: "All", value: "" },
   { label: "Subscription", value: "subscription" },
   { label: "Withdrawal", value: "withdrawal" },
 ];

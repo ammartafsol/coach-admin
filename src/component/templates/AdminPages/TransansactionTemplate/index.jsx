@@ -39,9 +39,14 @@ const TransansactionTemplate = () => {
       page: _page,
       search: _search,
       limit: RECORDS_LIMIT,
-      ...(status && { status: status?.value }),
       ...(_transactionType?.value && { transactionType: _transactionType?.value }),
     };
+
+    // Only add status parameter if transaction type is "withdrawal"
+    if (_transactionType?.value === "withdrawal" && status?.value && status?.value !== "all") {
+      query.status = status?.value;
+    }
+
     const queryString = new URLSearchParams(query).toString();
     const { response } = await Get({
       route: `admin/transactions?${queryString}`,
@@ -62,34 +67,39 @@ const TransansactionTemplate = () => {
   return (
     <div>
       <TopHeader title="Transactions">
-        <FilterHeader
-          inputPlaceholder="Search"
-          customStyle={{ width: "300px" }}
-          onChange={(value) => {
-            setSearch(value);
-            setCurrentPage(1);
-          }}
-          showDropDown={true}
-          dropdownOption={TRANSACTION_STATUS_OPTIONS}
-          placeholder={"Status"}
-          setValue={(value) => {
-            setStatus(value);
-            setCurrentPage(1);
-          }}
-          value={status}
-        >
-          <div className={classes.filterHeader}>
+                 <FilterHeader
+           inputPlaceholder="Search"
+           customStyle={{ width: "300px" }}
+           onChange={(value) => {
+             setSearch(value);
+             setCurrentPage(1);
+           }}
+           showDropDown={true}
+           dropdownOption={TRANSACTION_TYPE_OPTIONS}
+           placeholder={"Transaction Type"}
+           setValue={(value) => {
+             setTransactionType(value);
+             setCurrentPage(1);
+             setStatus(TRANSACTION_STATUS_OPTIONS[0]);
+           }}
+           value={transactionType}
+         >
+         {
+          transactionType?.value === "withdrawal" && (
+            <div className={classes.filterHeader}>
             <DropDown
-              options={TRANSACTION_TYPE_OPTIONS}
-              placeholder={"Transaction Type"}
-              value={transactionType}
+              options={TRANSACTION_STATUS_OPTIONS}
+              placeholder={"Status"}
+              value={status}
               setValue={(value) => {
-                setTransactionType(value);
+                setStatus(value);
                 setCurrentPage(1);
               }}
             />
-          </div>
-        </FilterHeader>
+          </div> 
+          )
+         }
+         </FilterHeader>
          
       </TopHeader>
       <div className={classes.transactionCardContainer}>
