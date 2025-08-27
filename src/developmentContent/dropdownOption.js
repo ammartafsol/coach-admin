@@ -53,7 +53,7 @@ export const FAQ_STATUS_OPTIONS = [
 
 export const FAQ_TYPE_OPTIONS = [
   { label: "User", value: "user" },
-  { label: "Admin", value: "admin" },
+  { label: "Coach", value: "coach" },
 ];
 
 export const USER_ACTION_OPTIONS = (item) => [
