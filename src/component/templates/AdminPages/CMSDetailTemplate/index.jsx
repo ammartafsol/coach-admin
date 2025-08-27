@@ -21,18 +21,21 @@ import RenderToast from "@/component/atoms/RenderToast";
 import useAxios from "@/interceptor/axiosInterceptor";
 import UploadImageBox from "@/component/atoms/UploadImagebox";
 import CMSQuill from "@/component/atoms/CMSQuill";
+import FileUpload from "@/component/atoms/FileUpload/FileUpload";
 
 const imageFields = [
   "icon",
   "photo",
   "image",
+  "image2",
   "images",
-  "video",
+  "thumbnail",
   "logo",
   "partners",
 ];
 const descriptionFields = ["description"];
 const htmlDescription = ["htmlDescription", "content"];
+const videoFields = ["video", "videos", "videoUrl", "key"];
 
 const CMSDetailTemplate = ({ pageName }) => {
   const { Get, Post, Patch, Delete } = useAxios();
@@ -47,7 +50,7 @@ const CMSDetailTemplate = ({ pageName }) => {
   useEffect(() => {
     const fetchPageData = async () => {
       setLoading("initial");
-      const { response } = await Get({ route: `cms/page/${pageName}` });
+      const { response } = await Get({ route: `cms/page/admin/${pageName}` });
       if (response) {
         const resData = structuredClone(response?.data);
         console.log("resData858", resData);
@@ -89,6 +92,7 @@ const CMSDetailTemplate = ({ pageName }) => {
   const renderField = (value, path, key, onChange) => {
     const Component = getInputComponent(key);
     const isImageField = imageFields.includes(key);
+    const isVideoField = videoFields.includes(key);
 
     return (
       <div className={classes.fieldContainer} key={path}>
@@ -104,7 +108,54 @@ const CMSDetailTemplate = ({ pageName }) => {
           value={value}
           state={value}
           files={[value]}
-          {...(isImageField
+          loading={loading === "image"}
+          {...(isVideoField
+            ? {
+                onFilesChange: async (files) => {
+                  if (files && files.length > 0) {
+                    setLoading("image");
+
+                    // Delete old media if it exists
+                    if (value) {
+                      await Delete({ route: `cms/delete/media/${value}` });
+                    }
+
+                    // Handle video upload
+                    const { response: presignedRes } = await Post({
+                      route: "media/upload",
+                      data: { videoCount: 1 },
+                    });
+
+                    console.log("presignedRes858", presignedRes);
+
+                    await postVideoToS3({
+                      video: files[0],
+                      url:
+                        presignedRes?.data?.urls?.[0] ||
+                        presignedRes?.data?.data?.urls?.[0],
+                      setVideoProgress,
+                    });
+
+                    setLoading("");
+                    const videoKey =
+                      presignedRes?.data?.keys?.[0] ||
+                      presignedRes?.data?.data?.keys?.[0];
+
+                    onChange(videoKey);
+                    setHasChanges(true);
+                  }
+                },
+                onDelete: async () => {
+                  if (value) {
+                    await Delete({ route: `cms/delete/media/${value}` });
+                    onChange("");
+                    setHasChanges(true);
+                  }
+                },
+                acceptedTypes: "video/*",
+                fileTypes: "MP4, MOV, AVI up to 100MB",
+              }
+            : isImageField
             ? {
                 setter: async (newValue) => {
                   if (imageFields?.includes(key)) {
@@ -115,44 +166,23 @@ const CMSDetailTemplate = ({ pageName }) => {
                       await Delete({ route: `cms/delete/media/${value}` });
                     }
 
-                    if (key !== "video") {
-                      // Handle image upload
-                      const formData = new FormData();
-                      formData.append("images", newValue);
+                    // Handle image upload
+                    const formData = new FormData();
+                    formData.append("image", newValue);
 
-                      const { response } = await Post({
-                        route: "media/upload",
-                        data: formData,
-                        isFormData: true,
-                      });
+                    const { response } = await Post({
+                      route: "media/upload",
+                      data: formData,
+                      isFormData: true,
+                    });
 
-                      setLoading("");
+                    console.log("response858", response);
 
-                      const imageUrl = response?.data?.images?.[0]?.key;
+                    setLoading("");
 
-                      onChange(imageUrl);
-                    } else {
-                      // Handle video upload
-                      const { response: presignedRes } = await Post({
-                        route: "media/upload",
-                        data: { videoCount: 1 },
-                      });
+                    const imageUrl = response?.data?.image[0]?.key;
 
-                      await postVideoToS3({
-                        video: newValue,
-                        url:
-                          presignedRes?.data?.urls?.[0] ||
-                          presignedRes?.data?.data?.urls?.[0],
-                        setVideoProgress,
-                      });
-
-                      setLoading("");
-                      const videoKey =
-                        presignedRes?.data?.keys?.[0] ||
-                        presignedRes?.data?.data?.keys?.[0];
-
-                      onChange(videoKey);
-                    }
+                    onChange(imageUrl);
                   } else {
                     onChange(newValue);
                   }
@@ -160,10 +190,19 @@ const CMSDetailTemplate = ({ pageName }) => {
                 },
               }
             : {
-                setValue: (newValue) => {
-                  onChange(newValue);
-                  setHasChanges(true);
-                },
+                ...(descriptionFields.includes(key)
+                  ? {
+                      setter: (newValue) => {
+                        onChange(newValue);
+                        setHasChanges(true);
+                      },
+                    }
+                  : {
+                      setValue: (newValue) => {
+                        onChange(newValue);
+                        setHasChanges(true);
+                      },
+                    }),
               })}
         />
       </div>
@@ -374,6 +413,7 @@ export default CMSDetailTemplate;
 function getInputComponent(key) {
   if (htmlDescription.includes(key)) return CMSQuill;
   if (descriptionFields.includes(key)) return TextArea;
+  if (videoFields.includes(key)) return FileUpload;
   if (imageFields.includes(key)) return UploadImageBox;
   return Input;
 }
