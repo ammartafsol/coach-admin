@@ -116,6 +116,7 @@ const TransansactionTemplate = () => {
           <TransactionCard
             key={item._id}
            item={item}
+           transactionType={transactionType}
           />
         ))
       ) : (

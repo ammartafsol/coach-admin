@@ -6,7 +6,7 @@ import { ChevronRight, ChevronDown } from "lucide-react";
 import classes from "./TransactionCard.module.css";
 import { capitalizeFirstLetter, getMonthName, mediaUrl } from "@/resources/utils/helper";
 
-const TransactionCard = ({ item }) => {
+const TransactionCard = ({ item, transactionType }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   console.log("transactionData", item);
 
@@ -20,7 +20,6 @@ const TransactionCard = ({ item }) => {
     setIsExpanded(!isExpanded);
   };
 
-  console.log("status item", item?.status);
 
   return (
     <div className={classes.transactionCard}>
@@ -39,7 +38,7 @@ const TransactionCard = ({ item }) => {
               <span className={classes.nameSpan}>{coach?.fullName}</span>
               <div className={classes.statusBadge}>
                 <span className={classes.statusDot}></span>
-                <span className={classes.statusText}>{capitalizeFirstLetter(status)}</span>
+                <span className={classes.statusText}>{transactionType?.value === "subscription" && status === "deposit" ? "Completed" : transactionType.value === "withdrawal" && status === "withdrawal" ? "Pending"  : status}</span>
               </div>
             </div>
             <div className={classes.emailContainer}>
