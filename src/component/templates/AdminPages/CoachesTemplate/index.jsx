@@ -201,6 +201,25 @@ const CoachesTemplate = () => {
     });
   };
 
+  const clearAllFilters = () => {
+    setSearch("");
+    setStatus(null);
+    setCoachStatus(null);
+    setRating(null);
+    setCountry(null);
+    setSortBy(SORT_BY_OPTIONS[0]);
+    setSortType(SORT_TYPE_OPTIONS[0]);
+    setCategory(null);
+    setPage(1);
+  };
+
+  const hasActiveFilters = () => {
+    return search || status || coachStatus || rating || country || 
+           (sortBy && sortBy.value !== SORT_BY_OPTIONS[0].value) || 
+           (sortType && sortType.value !== SORT_TYPE_OPTIONS[0].value) || 
+           category;
+  };
+
   return (
     <>
       <TopHeader title="Coaches">
@@ -222,11 +241,11 @@ const CoachesTemplate = () => {
           // secondValue={status}
           inputPlaceholder="Search By Name"
           customStyle={{ width: "300px" }}
-          onChange={(e) => {
-            setSearch(e);
-            setPage(1);
-          }}
-        >
+                     onChange={(e) => {
+             setSearch(e);
+             setPage(1);
+           }}
+         >
           <div className={classes.filterHeader}>
             <DropDown
               options={COACH_STATUS_OPTIONS}
@@ -275,9 +294,18 @@ const CoachesTemplate = () => {
                 setPage(1);
               }}
             />
-          </div>
-        </FilterHeader>
-      </TopHeader>
+                     </div>
+           {hasActiveFilters() && (
+             <button 
+               className={classes.clearAllButton}
+               onClick={clearAllFilters}
+               type="button"
+             >
+               Clear
+             </button>
+           )}
+         </FilterHeader>
+       </TopHeader>
       <div>
         <AppTable
           tableHeader={tableHeadersData}
