@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import {
   WITHOUT_LOGIN_ROUTES,
+  PROTECTED_ROUTES,
 } from "./developmentContent/routes";
 import { handleDecrypt } from "./resources/utils/helper";
 
@@ -9,20 +10,16 @@ export function middleware(request) {
 
   const accessToken = handleDecrypt(request?.cookies.get("_xpdx")?.value);
 
-  // Check if the current route requires authentication
-  const isProtectedRoute = !WITHOUT_LOGIN_ROUTES.includes(pathname) && 
-                          !pathname.startsWith('/api') && 
-                          !pathname.startsWith('/_next') && 
-                          !pathname.startsWith('/favicon.ico') &&
-                          !pathname.startsWith('/images') &&
-                          !pathname.startsWith('/fonts') &&
-                          !pathname.startsWith('/lottie') &&
-                          !pathname.startsWith('/video') &&
-                          !pathname.startsWith('/public');
+  // Check if the current route is in the protected routes list
+  const isProtectedRoute = PROTECTED_ROUTES.some(route => 
+    pathname.startsWith(route) || pathname === route
+  );
 
-  // If it's a protected route and no access token, redirect to login
+  // If it's a protected route and no access token, redirect to login with reason
   if (isProtectedRoute && !accessToken) {
-    return NextResponse.redirect(new URL("/sign-in", request.url));
+    const loginUrl = new URL("/sign-in", request.url);
+    loginUrl.searchParams.set("redirect", "auth_required");
+    return NextResponse.redirect(loginUrl);
   }
 
   return NextResponse.next();

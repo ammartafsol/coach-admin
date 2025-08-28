@@ -2,7 +2,6 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
-import { toast } from 'react-toastify';
 
 const AuthGuard = ({ children }) => {
   const { accessToken, isLogin } = useSelector((state) => state.authReducer);
@@ -11,7 +10,6 @@ const AuthGuard = ({ children }) => {
   useEffect(() => {
     // Check if user is not authenticated
     if (!accessToken || !isLogin) {
-      toast.error('Please login to access this page');
       router.push('/sign-in');
       return;
     }
