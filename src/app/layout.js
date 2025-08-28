@@ -4,11 +4,13 @@ import "react-modern-drawer/dist/index.css";
 import "./css/global.css";
 import "./css/typography.css";
 import "./css/color.css";
+import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import Header from "@/component/organisms/Header";
 import Footer from "@/component/organisms/Footer";
 import { CustomProvider } from "@/store/customProvider";
 import { SocketProvider } from "@/context/SocketContext";
+import ToastHandler from "@/component/atoms/ToastHandler";
 
 export const metadata = {
   title: "Admin",
@@ -22,6 +24,7 @@ export default function RootLayout({ children }) {
         <ToastContainer />
         <CustomProvider>
           <SocketProvider>
+            <ToastHandler />
             {children}
           </SocketProvider>
         </CustomProvider>

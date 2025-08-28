@@ -1,6 +1,7 @@
 export const WITHOUT_LOGIN_ROUTES = [
   // auth pages
   "/login",
+  "/sign-in",
   "/sign-up",
   "/forget-password",
   "/otp",
@@ -14,12 +15,3 @@ export const WITHOUT_LOGIN_ROUTES = [
   "/term-and-condition",
 ];
 
-export const CLINIC_AFTER_LOGIN_ROUTES = [
-  // clinic pages
-  "/clinic/dashboard",
-  "/clinic/patient",
-  "/clinic/patient/create",
-  "/clinic/patient/[slug]",
-  "/clinic/patient/[slug]/edit",
-  "/profile",
-];
