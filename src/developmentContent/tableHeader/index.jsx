@@ -123,28 +123,34 @@ export const tableHeadersData = [
     title: "Country",
     key: "country",
     style: { width: "10%" },
-    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} justifyCenter />,
   },
   {
     title: "Sports",
     key: "categories",
-    style: { width: "15%" },
+    style: { width: "10%" },
 
     renderValue: (cellValue) => <RenderSportsCell {...{ cellValue }} />,
   },
   {
-    title: "Total Subscriber",
-    key: "noOfSubscribers",
-    style: { width: "10%" },
-    renderValue: (cellValue) => <RenderNumberCell {...{ cellValue }} />,
+    title: "Account Status",
+    key: "status",
+    style: { width: "12%" },
+    renderValue: (cellValue) => <RenderStatusCell {...{ cellValue }} justifyCenter/>,
   },
   {
-    title: "Status",
-    key: "status",
-    style: { width: "15%" },
+    title: "Access",
+    key: "isBlockedByAdmin",
+    style: { width: "10%" },
     renderValue: (cellValue) => <RenderStatusCell {...{ cellValue }} />,
   },
-  { title: "", key: "action", width: "15%" },
+    {
+    title: "Total Subscriber",
+    key: "noOfSubscribers",
+    style: { width: "15%" },
+    renderValue: (cellValue) => <RenderNumberCell {...{ cellValue }} justifyCenter/>,
+  },
+  { title: "", key: "action", width: "5%" },
 ];
 
 export const coachtableHeaders = [

@@ -20,9 +20,9 @@ const statusClassMap = {
   canceled: "statusFalse",
 };
 
-export const RenderTextCell = ({ cellValue: item , rowItem}) => {
+export const RenderTextCell = ({ cellValue: item , rowItem, justifyCenter}) => {
   return (
-    <span className={mergeClass("maxLine1 t-t-c")}>
+    <span className={mergeClass("maxLine1 t-t-c",justifyCenter && classes.center)}>
       {item ? capitalizeFirstLetter(item) : "-"}
     </span>
   );
@@ -69,7 +69,7 @@ export const RenderImageCell = ({ cellValue }) => {
 };
 
 
-export const RenderStatusCell = ({ cellValue: item, checkAsItIs = false }) => {
+export const RenderStatusCell = ({ cellValue: item, checkAsItIs = false , justifyCenter }) => {
   const isBoolean = typeof item === "boolean";
   const displayValue = isBoolean ? checkAsItIs ? (item ? "Active" : "Inactive") : (!item ? "Active" : "Inactive") : item;
 
@@ -89,6 +89,7 @@ export const RenderStatusCell = ({ cellValue: item, checkAsItIs = false }) => {
     return (
       <span
         className={clsx(
+          justifyCenter && classes.center,
           classes.status,
           "fs-14 fw-500 lh-18 text-capitalize",
           statusClass && classes[statusClass]
@@ -130,11 +131,11 @@ export const RenderUserDataCell = ({ fullName, photo, slug = "" }) => {
   );
 };
 
-export const RenderNumberCell = ({ cellValue }) => {
+export const RenderNumberCell = ({ cellValue, justifyCenter }) => {
   if (cellValue === null || cellValue === undefined) return "-";
 
   return (
-    <div className={classes.numberCell}>
+    <div className={mergeClass(classes.numberCell, justifyCenter && classes.center)}>
       {Number(cellValue).toLocaleString()} {/* adds comma separators */}
     </div>
   );
