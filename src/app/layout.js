@@ -10,7 +10,6 @@ import Header from "@/component/organisms/Header";
 import Footer from "@/component/organisms/Footer";
 import { CustomProvider } from "@/store/customProvider";
 import { SocketProvider } from "@/context/SocketContext";
-import ToastHandler from "@/component/atoms/ToastHandler";
 
 export const metadata = {
   title: "Admin",
@@ -24,7 +23,6 @@ export default function RootLayout({ children }) {
         <ToastContainer />
         <CustomProvider>
           <SocketProvider>
-            <ToastHandler />
             {children}
           </SocketProvider>
         </CustomProvider>
