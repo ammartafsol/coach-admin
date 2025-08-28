@@ -75,7 +75,7 @@ export const COACH_STATUS_OPTIONS = [
   { label: "All", value: "all" },
   { label: "Approved", value: "approved" },
   { label: "Pending", value: "pending" },
-  { label: "Rejected", value: "rejected" },
+  // { label: "Rejected", value: "rejected" },
 ];
 export const COACH_ACTION_OPTIONS = [
   { label: "View Details", value: "viewDetails" },
