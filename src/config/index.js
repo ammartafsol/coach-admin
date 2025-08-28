@@ -7,3 +7,4 @@ export const config = {
   s3BucketURL: "https://storage.googleapis.com/the_coach_huddle",
   stripePublicKey: "",
 };
+
