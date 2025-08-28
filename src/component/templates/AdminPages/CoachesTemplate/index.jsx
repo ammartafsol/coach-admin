@@ -50,7 +50,7 @@ const CoachesTemplate = () => {
   // Get all countries for dropdown
   const countries = Country.getAllCountries().map(country => ({
     label: country.name,
-    value: country.name
+    value: country.isoCode
   }));
 
   const getSportCategories = async () => {
