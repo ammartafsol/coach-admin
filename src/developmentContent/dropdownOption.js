@@ -138,6 +138,6 @@ export const SORT_TYPE_OPTIONS = [
 ];
 
 export const SORT_BY_OPTIONS = [
-  { label: "Ascending", value: "asc" },
   { label: "Descending", value: "desc" },
+  { label: "Ascending", value: "asc" },
 ];
