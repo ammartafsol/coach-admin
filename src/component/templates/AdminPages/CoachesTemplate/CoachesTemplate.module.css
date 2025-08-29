@@ -53,3 +53,24 @@
   display: flex;
   gap: 10px;
 }
+
+.clearAllButton {
+  background: none;
+  border: none;
+  color: #B0CD6E;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0;
+  margin: 0;
+  margin-left: auto;
+  transition: color 0.2s ease;
+  font-family: "AvenirRegular";
+  align-self: center;
+  margin-bottom: 15px;
+}
+
+.clearAllButton:hover {
+  color: #8BAF4E;
+}

@@ -1,0 +1,103 @@
+.fileUploadArea {
+  /* height: 150px; */
+  height: 300px;
+  /* border: 2px dashed var(--border-color); */
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+}
+
+.fileUploadArea.dragging {
+  border-color: var(--accent-color);
+  background-color: rgba(176, 205, 110, 0.05);
+}
+
+.uploadIcon {
+  color: #9ca3af;
+  margin-bottom: 10px;
+}
+
+.orangeColor {
+  color: var(--orange-color);
+}
+
+.uploadText {
+  font-family: "AventaRegular", sans-serif;
+  color: var(--text-color);
+  margin-bottom: 5px;
+}
+
+.fileTypes {
+  font-family: "AventaLight", sans-serif;
+  color: var(--grey-shade);
+  font-size: 12px;
+}
+
+.hiddenFileInput {
+  display: none;
+}
+
+.videoUploaded {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.videoPreview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.editAndDelete {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 8px;
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.icon:hover {
+  background: rgba(0, 0, 0, 0.9);
+  transform: scale(1.05);
+}
+
+.loadingSpinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

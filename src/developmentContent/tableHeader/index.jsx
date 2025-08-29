@@ -1,5 +1,14 @@
-import { RenderTextCell , RenderImageCell, RenderDateCell, RenderStatusCell, RenderUserDataCell, RenderNumberCell, RenderSportsCell,  } from "@/component/organisms/AppTable/CommonCells";
-import { mediaUrl } from "@/resources/utils/helper";
+import {
+  RenderTextCell,
+  RenderImageCell,
+  RenderDateCell,
+  RenderStatusCell,
+  RenderUserDataCell,
+  RenderNumberCell,
+  RenderSportsCell,
+} from "@/component/organisms/AppTable/CommonCells";
+import { getFormattedParams, mediaUrl } from "@/resources/utils/helper";
+import { AiTwotoneEdit } from "react-icons/ai";
 
 export const tableHeaders = [
   {
@@ -46,10 +55,7 @@ export const tableUserHeaders = [
     key: "fullName",
     style: { width: "15%" },
     renderValue: (_, rowData) => (
-      <RenderUserDataCell
-        fullName={rowData.fullName}
-        photo={rowData.photo}
-      />
+      <RenderUserDataCell fullName={rowData.fullName} photo={rowData.photo} />
     ),
   },
   {
@@ -80,7 +86,6 @@ export const tableUserHeaders = [
     renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
 
-  
   {
     title: "Status",
     key: "isBlockedByAdmin",
@@ -118,28 +123,34 @@ export const tableHeadersData = [
     title: "Country",
     key: "country",
     style: { width: "10%" },
-    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} justifyCenter />,
   },
   {
     title: "Sports",
-    key: "categories", 
-    style: { width: "15%" },
-   
+    key: "categories",
+    style: { width: "10%" },
+
     renderValue: (cellValue) => <RenderSportsCell {...{ cellValue }} />,
   },
   {
-    title: "Total Subscriber",
-    key: "noOfSubscribers",
-    style: { width: "10%" },
-    renderValue: (cellValue) => <RenderNumberCell {...{ cellValue }} />,
+    title: "Account Status",
+    key: "status",
+    style: { width: "12%" },
+    renderValue: (cellValue) => <RenderStatusCell {...{ cellValue }} justifyCenter/>,
   },
   {
-    title: "Status",
-    key: "status",
-    style: { width: "15%" },
+    title: "Access",
+    key: "isBlockedByAdmin",
+    style: { width: "10%" },
     renderValue: (cellValue) => <RenderStatusCell {...{ cellValue }} />,
   },
-  { title: "", key: "action", width: "15%" },
+    {
+    title: "Total Subscriber",
+    key: "noOfSubscribers",
+    style: { width: "15%" },
+    renderValue: (cellValue) => <RenderNumberCell {...{ cellValue }} justifyCenter/>,
+  },
+  { title: "", key: "action", width: "5%" },
 ];
 
 export const coachtableHeaders = [
@@ -208,9 +219,26 @@ export const categoryTableHeaders = [
     style: { width: "15%" },
     renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
-  { title: "Category Image", key: "image", width: "15%" , renderValue: (cellValue) => <RenderImageCell {...{ cellValue }} />},
-  { title: "Last Updated", key: "updatedAt", width: "15%" , renderValue: (cellValue) => <RenderDateCell {...{ cellValue }} />},
-  { title: "Status", key: "isActive", width: "15%" , renderValue: (cellValue) => <RenderStatusCell {...{ cellValue, checkAsItIs : true }} />},
+  {
+    title: "Category Image",
+    key: "image",
+    width: "15%",
+    renderValue: (cellValue) => <RenderImageCell {...{ cellValue }} />,
+  },
+  {
+    title: "Last Updated",
+    key: "updatedAt",
+    width: "15%",
+    renderValue: (cellValue) => <RenderDateCell {...{ cellValue }} />,
+  },
+  {
+    title: "Status",
+    key: "isActive",
+    width: "15%",
+    renderValue: (cellValue) => (
+      <RenderStatusCell {...{ cellValue, checkAsItIs: true }} />
+    ),
+  },
   { title: "", key: "action", width: "15%" },
 ];
 
@@ -227,7 +255,39 @@ export const faqTableHeaders = [
     style: { width: "35%" },
     renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
-  { title: "Last Updated", key: "updatedAt", width: "15%" , renderValue: (cellValue) => <RenderDateCell {...{ cellValue }} />},
-  { title: "Status", key: "isActive", width: "10%" , renderValue: (cellValue) => <RenderStatusCell {...{ cellValue, checkAsItIs : true }} />},
+  {
+    title: "Last Updated",
+    key: "updatedAt",
+    width: "15%",
+    renderValue: (cellValue) => <RenderDateCell {...{ cellValue }} />,
+  },
+  {
+    title: "Status",
+    key: "isActive",
+    width: "10%",
+    renderValue: (cellValue) => (
+      <RenderStatusCell {...{ cellValue, checkAsItIs: true }} />
+    ),
+  },
   { title: "", key: "action", width: "10%" },
+];
+
+export const CmsTableHeader = [
+  {
+    title: "S.No",
+    key: "sno",
+    style: { width: "10%" },
+  },
+  {
+    title: "Name",
+    key: "pageName",
+    style: { width: "50%", textTransform: "capitalize" },
+    renderValue: (cellValue, rowItem) =>
+      getFormattedParams(rowItem.pageName) || "-",
+  },
+  {
+    title: "Actions",
+    key: "action",
+    style: { width: "20%" },
+  },
 ];

@@ -1,34 +1,27 @@
 import { NextResponse } from "next/server";
 import {
-  CLINIC_AFTER_LOGIN_ROUTES,
   WITHOUT_LOGIN_ROUTES,
+  PROTECTED_ROUTES,
 } from "./developmentContent/routes";
 import { handleDecrypt } from "./resources/utils/helper";
 
 export function middleware(request) {
   const pathname = request.nextUrl.pathname;
 
-  const role = handleDecrypt(request?.cookies.get("_xpdx_ur")?.value);
   const accessToken = handleDecrypt(request?.cookies.get("_xpdx")?.value);
 
-  // Redirect clinic to /clinic/dashboard
-  if (
-    accessToken &&
-    role === "clinic" &&
-    WITHOUT_LOGIN_ROUTES.includes(pathname)
-  ) {
-    return NextResponse.redirect(new URL("/clinic/dashboard", request.url));
-  }
-  
-      // ![...WITHOUT_LOGIN_ROUTES, ...CLINIC_AFTER_LOGIN_ROUTES].includes(pathname)
+  // Check if the current route is in the protected routes list
+  const isProtectedRoute = PROTECTED_ROUTES.some(route => 
+    pathname.startsWith(route) || pathname === route
+  );
 
-
-  // Redirect to '/' if no accessToken
-  if (!accessToken) {
-    if (pathname.startsWith("/clinic")) {
-      return NextResponse.redirect(new URL("/", request.url));
-    }
+  // If it's a protected route and no access token, redirect to login with reason
+  if (isProtectedRoute && !accessToken) {
+    const loginUrl = new URL("/sign-in", request.url);
+    loginUrl.searchParams.set("redirect", "auth_required");
+    return NextResponse.redirect(loginUrl);
   }
+
   return NextResponse.next();
 }
 

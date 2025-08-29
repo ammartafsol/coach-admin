@@ -4,6 +4,7 @@ import "react-modern-drawer/dist/index.css";
 import "./css/global.css";
 import "./css/typography.css";
 import "./css/color.css";
+import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import Header from "@/component/organisms/Header";
 import Footer from "@/component/organisms/Footer";

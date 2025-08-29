@@ -33,13 +33,11 @@ function UploadImageBox({
 
   const handleFileUpload = (file) => {
     if (!file) return;
-    
+
     const fileType = file.type;
     if (
       acceptedTypes === "*" ||
-      fileType.match(
-        acceptedTypes.replace(".", "\\.").replace(",", "|")
-      )
+      fileType.match(acceptedTypes.replace(".", "\\.").replace(",", "|"))
     ) {
       setIsUploading(true);
       // Simulate upload delay - replace with actual upload logic
@@ -137,8 +135,10 @@ function UploadImageBox({
               </div>
             </div>
           ) : (
-            <div 
-              className={`${classes.uploadBox} ${isDragOver ? classes.dragOver : ''}`}
+            <div
+              className={`${classes.uploadBox} ${
+                isDragOver ? classes.dragOver : ""
+              }`}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}

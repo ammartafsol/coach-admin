@@ -1,0 +1,82 @@
+.main {
+  padding-block: 20px;
+
+  height: calc(100vh - 121px);
+  overflow-y: scroll;
+}
+.cmsTemplate {
+  padding-top: 50px;
+}
+.heading2 {
+  color: var(--primary-color);
+}
+
+.arrayContainer {
+  border-radius: 7px;
+  /* padding: 30px; */
+  padding: 14px 17px;
+  background-color: var(--white-color);
+  border-radius: 7px;
+}
+.saveButton {
+  width: 100%;
+  padding: 16px;
+}
+.arrayInputContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.arrayInputContainer2 {
+  border: 1px solid var(--primary-color-light-v2);
+  border-radius: 10px;
+  padding: 15px 10px;
+}
+
+.deleteButton {
+  /* position: absolute; */
+  top: 0;
+  right: unset;
+  height: 47px;
+  width: 100%;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 10px;
+  left: 0;
+  border-top-left-radius: 9px;
+}
+.deleteButtonInner {
+  /* position: absolute; */
+  top: 0px;
+  right: 12px;
+  height: 47px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 10px;
+}
+
+.lottieLoader {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.deleteButtonInnerObj {
+  top: 0;
+  left: -1px;
+  right: unset;
+  border-top-left-radius: 8px;
+}

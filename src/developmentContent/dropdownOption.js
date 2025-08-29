@@ -53,7 +53,7 @@ export const FAQ_STATUS_OPTIONS = [
 
 export const FAQ_TYPE_OPTIONS = [
   { label: "User", value: "user" },
-  { label: "Admin", value: "admin" },
+  { label: "Coach", value: "coach" },
 ];
 
 export const USER_ACTION_OPTIONS = (item) => [
@@ -75,7 +75,7 @@ export const COACH_STATUS_OPTIONS = [
   { label: "All", value: "all" },
   { label: "Approved", value: "approved" },
   { label: "Pending", value: "pending" },
-  { label: "Rejected", value: "rejected" },
+  // { label: "Rejected", value: "rejected" },
 ];
 export const COACH_ACTION_OPTIONS = [
   { label: "View Details", value: "viewDetails" },
