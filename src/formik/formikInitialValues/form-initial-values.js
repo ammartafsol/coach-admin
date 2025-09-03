@@ -88,8 +88,7 @@ export const CATEGORY_MODAL_FORM_VALUES = (itemData) => ({
   name: itemData?.name ?? "",
   type: CATEGORY_TYPE_OPTIONS?.find(
     (option) => option.value === itemData?.type
-  ) ?? null ,
-  image: itemData?.image ?? null,
+  ) ?? CATEGORY_TYPE_OPTIONS[0],
   isActive: CATEGORY_STATUS_OPTIONS?.find(
     (option) => option.value === itemData?.isActive
   ),

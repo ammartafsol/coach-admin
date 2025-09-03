@@ -145,7 +145,6 @@ export const CategoryModalSchema = (isActive) => Yup.object({
       "At least one category type is required",
       (value) => value && Object.keys(value).length > 0
     ),
-  image: Yup.string().required("Image is required"),
   isActive  : isActive ? Yup.object()
   .nullable()
   .required("Status is required")
