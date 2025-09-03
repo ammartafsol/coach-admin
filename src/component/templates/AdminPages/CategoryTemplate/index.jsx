@@ -3,7 +3,11 @@ import TopHeader from "@/component/atoms/TopHeader";
 import ActionMenu from "@/component/molecules/ActionMenu/ActionMenu";
 import AddCategoryModal from "@/component/molecules/Modal/AddCategory";
 import AppTable from "@/component/organisms/AppTable/AppTable";
-import { CATEGORY_ACTION_OPTIONS, CATEGORY_FILTER_OPTIONS, STATUS_OPTIONS } from "@/developmentContent/dropdownOption";
+import {
+  CATEGORY_ACTION_OPTIONS,
+  CATEGORY_FILTER_OPTIONS,
+  STATUS_OPTIONS,
+} from "@/developmentContent/dropdownOption";
 import { categoryTableHeaders } from "@/developmentContent/tableHeader";
 import useAxios from "@/interceptor/axiosInterceptor";
 import useDebounce from "@/resources/hooks/useDebounce";
@@ -13,11 +17,13 @@ import { CreateFormData } from "@/resources/utils/helper";
 import RenderToast from "@/component/atoms/RenderToast";
 import FilterHeader from "@/component/molecules/FilterHeader/FilterHeader";
 import { RECORDS_LIMIT } from "@/const";
+import AreYouSureModal from "@/component/molecules/Modal/AreYouSureModal";
 
 const CategoryTemplate = () => {
-  const { Post, Patch , Get} = useAxios();
-  
+  const { Post, Patch, Get, Delete } = useAxios();
+
   const [showModal, setShowModal] = useState(false);
+  const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState("");
   const [page, setPage] = useState(1);
@@ -28,7 +34,8 @@ const CategoryTemplate = () => {
   const [totalRecords, setTotalRecords] = useState(0);
   const [status, setStatus] = useState(STATUS_OPTIONS[0]);
   const [selectedItem, setSelectedItem] = useState(null);
- 
+  console.log("🚀 ~ CategoryTemplate ~ selectedItem:", selectedItem)
+
   const getData = async ({
     pg = page,
     _search = debounceSearch,
@@ -43,7 +50,6 @@ const CategoryTemplate = () => {
       ...(_status && { status: _status?.value }),
       limit: RECORDS_LIMIT,
       ...(type && { type: type?.value }),
-
     };
     const query = new URLSearchParams(params).toString();
     console.log(query);
@@ -65,21 +71,45 @@ const CategoryTemplate = () => {
     setLoading("");
   };
 
+   const handleDeleteCategory = async () => {
+    const { response, error } = await Delete({
+      route: `admin/categories/${selectedItem.slug}`,
+    });
 
+    setLoading('deletingCategory');
+
+    if (response && response.status === "success") {
+     
+
+      RenderToast({
+        type: "success",
+        message: "Category deleted successfully.",
+      });
+    } else {
+      RenderToast({
+        type: "error",
+        message: "Failed to delete category.",
+      });
+    }
+    setLoading('')
+    setSelectedItem(null)
+    setShowAreYouSureModal(false)
+  };
 
   useEffect(() => {
-    getData({pg: 1, _search: debounceSearch, _status: status, type: type });
-
-  }, [debounceSearch ,status, type]);
-
+    getData({ pg: 1, _search: debounceSearch, _status: status, type: type });
+  }, [debounceSearch, status, type]);
 
   const onClickPopover = (label = "", item = rowItem) => {
-    if(label === "Edit"){
+    if (label === "Edit") {
       setSelectedItem(item);
       setShowModal(true);
     }
+    if (label === "Delete") {
+      setSelectedItem(item);
+      setShowAreYouSureModal(true);
+    }
   };
-
 
   // add/edit category
   const handleAddEditCategory = async (values) => {
@@ -117,8 +147,7 @@ const CategoryTemplate = () => {
   };
 
   const handleImageChange = async (file, setFormImage) => {
-
-    if(!file) return;
+    if (!file) return;
 
     const data = {
       media: file,
@@ -140,13 +169,14 @@ const CategoryTemplate = () => {
     }
     setLoading("");
   };
+
   const updateCategoryInList = (updatedCategory) => {
     setData((prev) => {
       const filtered = prev.filter((u) => u.slug !== updatedCategory.slug);
       return [updatedCategory, ...filtered];
     });
   };
-  
+
   return (
     <main>
       <TopHeader title="Category">
@@ -162,7 +192,7 @@ const CategoryTemplate = () => {
           onChange={(e) => {
             setSearch(e);
           }}
-          secondDropdownOption  ={CATEGORY_FILTER_OPTIONS}
+          secondDropdownOption={CATEGORY_FILTER_OPTIONS}
           secondPlaceholder={"Type"}
           setSecondValue={(value) => {
             setType(value);
@@ -185,11 +215,11 @@ const CategoryTemplate = () => {
           totalItems={totalRecords}
           onPageChange={(p) => {
             setPage(p);
-            getData({ 
-              pg: p, 
-              _search: debounceSearch, 
-              _status: status, 
-              type: type 
+            getData({
+              pg: p,
+              _search: debounceSearch,
+              _status: status,
+              type: type,
             });
           }}
           currentPage={page}
@@ -199,13 +229,13 @@ const CategoryTemplate = () => {
             if (key === "action") {
               return (
                 <div className={classes.actionButtons}>
-                    <ActionMenu
-                      popover={CATEGORY_ACTION_OPTIONS}
-                      onClick={(label) => {
-                        onClickPopover(label, rowItem);
-                      }}
-                    />
-                  </div>
+                  <ActionMenu
+                    popover={CATEGORY_ACTION_OPTIONS}
+                    onClick={(label) => {
+                      onClickPopover(label, rowItem);
+                    }}
+                  />
+                </div>
               );
             }
             return item || "";
@@ -223,6 +253,21 @@ const CategoryTemplate = () => {
           setLoading={setLoading}
         />
       )}
+      <AreYouSureModal
+        show={showAreYouSureModal}
+        setShow={setShowAreYouSureModal}
+        heading="Delete Category"
+        subheading="Are you sure you want to delete this category?"
+        confirmButtonLabel={
+          loading === "deletingCategory" ? "Deleting..." : "Delete"
+        }
+        cancelButtonLabel="Cancel"
+        confirmButtonVariant="success"
+        cancelButtonVariant="green-outlined"
+        onConfirm={() => {
+          handleDeleteCategory();
+        }}
+      />
     </main>
   );
 };
