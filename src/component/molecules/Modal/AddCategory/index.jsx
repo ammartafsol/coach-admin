@@ -96,7 +96,7 @@ const AddCategoryModal = ({
               }
             />
           </Col>
-          <Col md={12}>
+          {/* <Col md={12}>
             <UploadImageBox
               label="Category Image"
               state={categoryFormik.values.image}
@@ -111,7 +111,7 @@ const AddCategoryModal = ({
               }
               loading={loading === "uploadImage"}
             />
-          </Col>
+          </Col> */}
          {itemData && <Col md={12}>
             <DropDown
               label="Status"
