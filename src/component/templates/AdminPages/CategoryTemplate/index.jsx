@@ -90,7 +90,7 @@ const CategoryTemplate = () => {
     } else {
       RenderToast({
         type: "error",
-        message: "Failed to delete category.",
+        message: selectedItem?.type == 'feed' ? "Category is used in a feed." : "Category is used in a coach profile",
       });
     }
     setLoading('')
