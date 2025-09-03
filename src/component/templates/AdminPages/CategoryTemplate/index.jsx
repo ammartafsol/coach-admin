@@ -79,7 +79,9 @@ const CategoryTemplate = () => {
     setLoading('deletingCategory');
 
     if (response && response.status === "success") {
-     
+      setData(prevData => prevData.filter(category => category.slug !== selectedItem.slug));
+      
+      setTotalRecords(prev => prev - 1);
 
       RenderToast({
         type: "success",
