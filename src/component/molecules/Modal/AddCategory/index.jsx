@@ -96,22 +96,7 @@ const AddCategoryModal = ({
               }
             />
           </Col>
-          {/* <Col md={12}>
-            <UploadImageBox
-              label="Category Image"
-              state={categoryFormik.values.image}
-              setter={(value) => {
-                handleImageChange(value, (imageKey) => {
-                  categoryFormik.setFieldValue("image", imageKey);
-                });
-              }}
-              onBlur={categoryFormik.handleBlur}
-              errorText={
-                categoryFormik.touched.image && categoryFormik.errors.image
-              }
-              loading={loading === "uploadImage"}
-            />
-          </Col> */}
+
          {itemData && <Col md={12}>
             <DropDown
               label="Status"
