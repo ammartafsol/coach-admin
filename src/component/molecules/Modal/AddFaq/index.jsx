@@ -26,7 +26,12 @@ const AddFaqModal = ({
     validationSchema: FaqModalSchema,
     onSubmit: (values) => {
       setLoading("loading");
-      handleAddEditFaq(values);
+      // Convert order to number before submission
+      const formattedValues = {
+        ...values,
+        order: parseInt(values.order, 10)
+      };
+      handleAddEditFaq(formattedValues);
     },
   });
 
@@ -79,6 +84,19 @@ const AddFaqModal = ({
               onChange={(e) => faqFormik.setFieldValue("title", e.target.value)}
               errorText={
                 faqFormik.touched.title && faqFormik.errors.title
+              }
+            />
+          </Col>
+          <Col md={12}>
+            <Input
+              label="Order Number"
+              type="number"
+              name="order"
+              placeholder="Enter Order Number"
+              value={faqFormik.values.order}
+              onChange={(e) => faqFormik.setFieldValue("order", e.target.value)}
+              errorText={
+                faqFormik.touched.order && faqFormik.errors.order
               }
             />
           </Col>

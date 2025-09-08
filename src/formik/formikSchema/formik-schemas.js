@@ -158,6 +158,9 @@ export const CategoryModalSchema = (isActive) => Yup.object({
 export const FaqModalSchema = Yup.object({
   title: Yup.string().required("Question is required"),
   description: Yup.string().required("Answer is required"),
+  order: Yup.number()
+    .typeError("Order number must be a number")
+    .required("Order number is required"),
   isActive: Yup.object()
     .nullable()
     .required("Status is required")

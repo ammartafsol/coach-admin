@@ -97,6 +97,7 @@ export const CATEGORY_MODAL_FORM_VALUES = (itemData) => ({
 export const FAQ_MODAL_FORM_VALUES = (itemData) => ({
   title: itemData?.title ?? "",
   description: itemData?.description ?? "",
+  order: itemData?.order ?? "",
   isActive: FAQ_STATUS_OPTIONS?.find(
     (option) => option.value === itemData?.isActive
   ) ?? FAQ_STATUS_OPTIONS[0],
