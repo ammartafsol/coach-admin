@@ -28,6 +28,14 @@ export const RenderTextCell = ({ cellValue: item , rowItem, justifyCenter}) => {
   );
 };
 
+export const RenderTextNumber = ({ cellValue: item , rowItem, justifyCenter}) => {
+  return (
+    <span className={mergeClass("maxLine1 t-t-c",justifyCenter && classes.center)}>
+      {item ? item : "-"}
+    </span>
+  );
+};
+
 export const RenderCategoryCell = ({ cellValue: { item } }) => {
   return (
     <span title={item} className={mergeClass("maxLine2 t-t-c")}>

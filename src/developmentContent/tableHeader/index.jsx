@@ -6,6 +6,7 @@ import {
   RenderUserDataCell,
   RenderNumberCell,
   RenderSportsCell,
+  RenderTextNumber,
 } from "@/component/organisms/AppTable/CommonCells";
 import { getFormattedParams, mediaUrl } from "@/resources/utils/helper";
 import { AiTwotoneEdit } from "react-icons/ai";
@@ -246,14 +247,20 @@ export const faqTableHeaders = [
   {
     title: "Question",
     key: "title",
-    style: { width: "30%" },
+    style: { width: "25%" },
     renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
   },
   {
     title: "Answer",
     key: "description",
-    style: { width: "35%" },
+    style: { width: "30%" },
     renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+  },
+  {
+    title: "Order",
+    key: "order",
+    style: { width: "10%" },
+    renderValue: (cellValue) => <RenderTextNumber {...{ cellValue }} />,
   },
   {
     title: "Last Updated",
