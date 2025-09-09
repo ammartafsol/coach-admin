@@ -13,7 +13,7 @@ import RenderToast from "@/component/atoms/RenderToast";
 import FilterHeader from "@/component/molecules/FilterHeader/FilterHeader";
 
 const FaqTemplate = () => {
-  const { Post, Patch, Get } = useAxios();
+  const { Post, Patch, Get, Delete } = useAxios();
   
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState([]);
@@ -58,6 +58,24 @@ const FaqTemplate = () => {
     getData({ _search: debounceSearch, _status: status?.value });
   }, [debounceSearch, page, status]);
 
+    const handleDeleteFaq = async (values) => {
+    setLoading("deleting");
+
+    const { response } = await Delete({
+      route: `admin/faqs/${values.slug}`,
+    });
+
+    if (response) {
+      RenderToast({
+        type: "success",
+        message: "FAQ Deleted Successfully"
+      });
+
+      setLoading("");
+      getData({ _search: debounceSearch, _status: status?.value });
+    }
+  };
+
   const onClickPopover = (label = "", item = rowItem) => {
     if(label === "Edit"){
       setSelectedItem(item);
@@ -66,7 +84,8 @@ const FaqTemplate = () => {
       }, 0);
     }
     if(label === "Delete"){
-      console.log("delete");
+      setSelectedItem(item);
+      handleDeleteFaq(item);
     }
   };
 
