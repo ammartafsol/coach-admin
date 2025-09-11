@@ -237,7 +237,7 @@ const CMSDetailTemplate = ({ pageName }) => {
                         if (
                           newItem &&
                           typeof newItem === "object" &&
-                          newItem._id
+                          newItem._id == ""
                         ) {
                           delete newItem._id;
                         }
