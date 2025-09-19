@@ -7,9 +7,9 @@ import classes from "./TransactionCard.module.css";
 import { capitalizeFirstLetter, getMonthName, mediaUrl } from "@/resources/utils/helper";
 
 const TransactionCard = ({ item, transactionType }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  console.log("transactionData", item);
+  
 
+  const [isExpanded, setIsExpanded] = useState(false);
   const { coach, status, email } = item;
   const defaultAvatar = "/images/app-images/user-avatar.png";
   if (!coach?.fullName && !coach?.photo) return null;
@@ -76,7 +76,7 @@ const TransactionCard = ({ item, transactionType }) => {
               <div className={classes.detailRow}>
                 <span className={classes.detailLabel}>Total</span>
                 <span className={classes.detailValue}>
-                £{item?.totalAmount ?? "0"}
+                £{ transactionType?.value === "withdrawal" ? item?.amount : item?.totalAmount ?? "0"}
                 </span>
               </div>
             </div>
