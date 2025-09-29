@@ -9,6 +9,7 @@ import useDebounce from '@/resources/hooks/useDebounce';
 import { RECORDS_LIMIT } from '@/const';
 import useAxios from '@/interceptor/axiosInterceptor';
 import { EDIT_COMMISSION_OPTIONS, USER_ACTION_OPTIONS } from '@/developmentContent/dropdownOption';
+import FilterHeader from '@/component/molecules/FilterHeader/FilterHeader';
 
 export default function CommissionsPage() {
     const { Get } = useAxios();
@@ -56,23 +57,16 @@ const query = new URLSearchParams(params).toString();
       }, [debounceSearch]);
   return (
      <>
-      <TopHeader title="Coaches">
-        {/* <FilterHeader
-          showDropDown={true}
-          dropdownOption={COACH_RATING_OPTIONS}
-          placeholder={"Rating"}
-          setValue={(value) => {
-            setRating(value);
-            setPage(1);
-          }}
-          value={rating}
+      <TopHeader title="Commissions">
+        <FilterHeader
           inputPlaceholder="Search By Name"
+          searchValue={search}
           customStyle={{ width: "300px" }}
                      onChange={(e) => {
              setSearch(e);
              setPage(1);
            }}
-         > */}
+         />
 
        </TopHeader>
       <div>
