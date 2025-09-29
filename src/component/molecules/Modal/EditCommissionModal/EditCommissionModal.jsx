@@ -99,6 +99,7 @@ export default function EditCommissionModal({
           <Button
             label={loading ? "Saving..." : "Save"}
             variant="primary"
+            className={classes.saveButton}
             onClick={handleSave}
             disabled={loading}
           />

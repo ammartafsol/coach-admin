@@ -33,6 +33,10 @@
   font-weight: 600;
 }
 
+.saveButton{
+  background-color: #b0cd6e !important;
+  color: white !important;
+}
 /* Responsive design */
 @media (max-width: 768px) {
   .buttonContainer {
