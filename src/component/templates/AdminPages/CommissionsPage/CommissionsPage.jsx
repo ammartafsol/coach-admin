@@ -14,6 +14,7 @@ import {
 } from "@/developmentContent/dropdownOption";
 import FilterHeader from "@/component/molecules/FilterHeader/FilterHeader";
 import EditCommissionModal from "@/component/molecules/Modal/EditCommissionModal/EditCommissionModal";
+import RenderToast from "@/component/atoms/RenderToast";
 
 export default function CommissionsPage() {
   const { Get, Patch } = useAxios();
@@ -75,12 +76,17 @@ export default function CommissionsPage() {
         );
         setShowEditCommissionModal(false);
         setSelectedCoach(null);
-        // You can add a success toast here
-        console.log('Commission updated successfully');
+        RenderToast({
+          type: "success",
+          message: "Commission updated successfully"
+        });
       }
     } catch (error) {
       console.error('Error updating commission:', error);
-      // You can add an error toast here
+      RenderToast({
+        type: "error",
+        message: "Failed to update commission. Please try again."
+      });
     } finally {
       setCommissionLoading(false);
     }
@@ -88,8 +94,12 @@ export default function CommissionsPage() {
 
   // Handle action menu clicks
   const handleActionClick = (item) => {
-      setSelectedCoach(item);
-      setShowEditCommissionModal(true);
+    setSelectedCoach(item);
+    setShowEditCommissionModal(true);
+    RenderToast({
+      type: "info",
+      message: `Editing commission for ${item.fullName}`
+    });
   };
 
   useEffect(() => {

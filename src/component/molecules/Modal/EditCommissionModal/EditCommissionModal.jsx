@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Modal from "@/component/molecules/Modal/ModalSkeleton/Modal";
 import Button from "@/component/atoms/Button";
 import { Input } from "@/component/atoms/Input";
+import RenderToast from "@/component/atoms/RenderToast";
 import classes from "./EditCommissionModal.module.css";
 
 export default function EditCommissionModal({
@@ -16,7 +17,24 @@ export default function EditCommissionModal({
 
   const handleSave = () => {
     if (newCommission && newCommission !== currentCommission) {
+      if (parseFloat(newCommission) < 0) {
+        RenderToast({
+          type: "error",
+          message: "Commission cannot be negative"
+        });
+        return;
+      }
       onSave(coachSlug, parseFloat(newCommission));
+    } else if (newCommission === currentCommission?.toString()) {
+      RenderToast({
+        type: "warning",
+        message: "Please enter a different commission value"
+      });
+    } else if (!newCommission) {
+      RenderToast({
+        type: "warning",
+        message: "Please enter a commission value"
+      });
     }
   };
 
@@ -61,7 +79,7 @@ export default function EditCommissionModal({
         <div className={classes.buttonContainer}>
           <Button
             label="Cancel"
-            variant="secondary"
+            variant="outlined"
             onClick={handleCancel}
             disabled={loading}
           />
@@ -69,7 +87,7 @@ export default function EditCommissionModal({
             label={loading ? "Saving..." : "Save"}
             variant="primary"
             onClick={handleSave}
-            disabled={loading || !newCommission || parseFloat(newCommission) < 0 || newCommission === currentCommission?.toString()}
+            disabled={loading}
           />
         </div>
       </div>
