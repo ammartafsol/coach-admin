@@ -65,6 +65,10 @@ export const USER_ACTION_OPTIONS = (item) => [
   },
 ];
 
+export const EDIT_COMMISSION_OPTIONS = (item) => [
+  { label: "Edit", value: "edit" },
+];
+
 export const USER_STATUS_OPTIONS = [
   { label: "All", value: "all" },
   { label: "Active", value: true },

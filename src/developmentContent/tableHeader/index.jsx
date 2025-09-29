@@ -154,6 +154,41 @@ export const tableHeadersData = [
   { title: "", key: "action", width: "5%" },
 ];
 
+
+export const tableHeadersCommissiosData = [
+  {
+    title: "Coach Name",
+    key: "fullName",
+    style: { width: "20%" },
+    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+  },
+  {
+    title: "Email",
+    key: "email",
+    style: { width: "25%" },
+    renderValue: (cellValue) => <RenderTextCell {...{ cellValue }} />,
+  },
+  {
+    title: "Current Commission",
+    key: "coachCommission",
+    style: { width: "15%" },
+    renderValue: (cellValue) => <RenderNumberCell {...{ cellValue }} justifyCenter/>,
+  },
+  {
+    title: "Total Earning",
+    key: "totalTransactionAmount",
+    style: { width: "15%" },
+    renderValue: (cellValue) => <RenderNumberCell {...{ cellValue }} justifyCenter/>,
+  },
+    {
+    title: "Last Updated On",
+    key: "createdAt",
+    style: { width: "20%" },
+    renderValue: (cellValue) => <RenderDateCell {...{ cellValue }} justifyCenter/>,
+  },
+  { title: "", key: "action", width: "5%" },
+];
+
 export const coachtableHeaders = [
   {
     title: "User Name",
