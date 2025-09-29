@@ -87,11 +87,9 @@ export default function CommissionsPage() {
   };
 
   // Handle action menu clicks
-  const handleActionClick = (action, item) => {
-    if (action === "edit") {
+  const handleActionClick = (item) => {
       setSelectedCoach(item);
       setShowEditCommissionModal(true);
-    }
   };
 
   useEffect(() => {
@@ -129,7 +127,7 @@ export default function CommissionsPage() {
             const rowItem = data[rowIndex];
             if (renderValue) return renderValue(item, rowItem);
             if (key === "action") {
-              return <p className={classes.edit} onClick={() => handleActionClick(action, rowItem)}>Edit</p>
+              return <p className={classes.edit} onClick={() => handleActionClick(rowItem)}>Edit</p>
             }
             return item || "";
           }}
