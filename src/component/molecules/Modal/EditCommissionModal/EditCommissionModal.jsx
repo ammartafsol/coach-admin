@@ -24,6 +24,13 @@ export default function EditCommissionModal({
         });
         return;
       }
+      if (parseFloat(newCommission) > 100) {
+        RenderToast({
+          type: "error",
+          message: "Commission cannot be greater than 100%"
+        });
+        return;
+      }
       onSave(coachSlug, parseFloat(newCommission));
     } else if (newCommission === currentCommission?.toString()) {
       RenderToast({
@@ -71,8 +78,14 @@ export default function EditCommissionModal({
             value={newCommission}
             setValue={setNewCommission}
             type="number"
-            placeholder="Enter new commission"
-            errorText={newCommission && parseFloat(newCommission) < 0 ? "Commission cannot be negative" : ""}
+            placeholder="Enter new commission (0-100)"
+            errorText={
+              newCommission && parseFloat(newCommission) < 0 
+                ? "Commission cannot be negative" 
+                : newCommission && parseFloat(newCommission) > 100 
+                ? "Commission cannot be greater than 100%" 
+                : ""
+            }
           />
         </div>
 
