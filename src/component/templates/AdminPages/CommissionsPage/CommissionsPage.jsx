@@ -13,9 +13,10 @@ import {
   USER_ACTION_OPTIONS,
 } from "@/developmentContent/dropdownOption";
 import FilterHeader from "@/component/molecules/FilterHeader/FilterHeader";
+import EditCommissionModal from "@/component/molecules/Modal/EditCommissionModal/EditCommissionModal";
 
 export default function CommissionsPage() {
-  const { Get } = useAxios();
+  const { Get, Patch } = useAxios();
 
   const [showModal, setShowModal] = useState("");
   const [data, setData] = useState([]);
@@ -25,6 +26,11 @@ export default function CommissionsPage() {
   const debounceSearch = useDebounce(search, 500);
   const [totalRecords, setTotalRecords] = useState(0);
   const [selectedItem, setSelectedItem] = useState(null);
+  
+  // Edit Commission Modal states
+  const [showEditCommissionModal, setShowEditCommissionModal] = useState(false);
+  const [selectedCoach, setSelectedCoach] = useState(null);
+  const [commissionLoading, setCommissionLoading] = useState(false);
 
   const getData = async ({ pg = page, _search = debounceSearch }) => {
     const params = {
@@ -45,6 +51,47 @@ export default function CommissionsPage() {
       setTotalRecords(response?.totalRecords);
     }
     setLoading("");
+  };
+
+  // Handle commission update
+  const handleCommissionUpdate = async (slug, newCommission) => {
+    setCommissionLoading(true);
+    try {
+      const { response } = await Patch({
+        route: `admin/users/coach/commission-update/${slug}`,
+        data: {
+          coachCommission: newCommission
+        }
+      });
+      
+      if (response) {
+        // Update the local data
+        setData(prevData => 
+          prevData.map(item => 
+            item.slug === slug 
+              ? { ...item, coachCommission: newCommission }
+              : item
+          )
+        );
+        setShowEditCommissionModal(false);
+        setSelectedCoach(null);
+        // You can add a success toast here
+        console.log('Commission updated successfully');
+      }
+    } catch (error) {
+      console.error('Error updating commission:', error);
+      // You can add an error toast here
+    } finally {
+      setCommissionLoading(false);
+    }
+  };
+
+  // Handle action menu clicks
+  const handleActionClick = (action, item) => {
+    if (action === "edit") {
+      setSelectedCoach(item);
+      setShowEditCommissionModal(true);
+    }
   };
 
   useEffect(() => {
@@ -82,12 +129,22 @@ export default function CommissionsPage() {
             const rowItem = data[rowIndex];
             if (renderValue) return renderValue(item, rowItem);
             if (key === "action") {
-              return <p className={classes.edit}>Edit</p>;
+              return <p className={classes.edit} onClick={() => handleActionClick(action, rowItem)}>Edit</p>
             }
             return item || "";
           }}
         />
       </div>
+
+      {/* Edit Commission Modal */}
+      <EditCommissionModal
+        show={showEditCommissionModal}
+        setShow={setShowEditCommissionModal}
+        currentCommission={selectedCoach?.coachCommission}
+        coachSlug={selectedCoach?.slug}
+        onSave={handleCommissionUpdate}
+        loading={commissionLoading}
+      />
     </>
   );
 }
