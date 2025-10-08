@@ -174,7 +174,7 @@ const CoachDetailTemplate = ({ slug }) => {
         message: "Subscription updated successfully",
         type: "success",
       });
-      return true;
+      // return true;
     }
     setEditLoading(false);
   };
