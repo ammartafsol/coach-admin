@@ -218,10 +218,12 @@ const CoachDetailTemplate = ({ slug }) => {
       ...(values && { rejectionReason: values.rejectReason }),
     };
 
-    const { response } = await Patch({
+    const { response , error } = await Patch({
       route: `admin/users/coach/status/${slug}`,
       data: payload,
+      showAlert: false
     });
+    console.log("🚀 ~ handleCoachStatus ~ response:", response)
 
     if (response) {
       RenderToast({
@@ -236,6 +238,9 @@ const CoachDetailTemplate = ({ slug }) => {
         status: showModal === "accept" ? "approved" : "rejected",
       }));
       setShowModal("");
+    }
+    else if ( error && error?.message?.error[0] == 'Coach profile is not completed' && error?.statusCode == 400 ) {
+      console.log('101error' ,error?.statusCode, error?.message?.error[0] )
     }
     setActionLoading("");
   };

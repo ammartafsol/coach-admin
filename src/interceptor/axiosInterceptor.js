@@ -270,6 +270,10 @@ const useAxios = () => {
           type: "error",
         });
       }
+      //only when admin trying to approve and profile of the coach is incomplete
+      else if(!showAlert && route?.includes('admin/users/coach/status/')) {
+        return { error: error?.response?.data }
+      }
 
       // if (error?.response?.status === 401) {
       //   const newAccessToken = await refreshAccessToken();
