@@ -315,7 +315,7 @@ export default function UserProfile({ userData }) {
                     className={classes.videoPlayer}
                     controls
                     autoPlay
-                    src={userData?.introVideo}
+                    src={mediaUrl(userData?.introVideo)}
                   >
                     Your browser does not support the video tag.
                   </video>
