@@ -68,6 +68,40 @@ const CoachDetailTemplate = ({ slug }) => {
     value: country.isoCode,
   }));
 
+  // Function to get pending profile items (same logic as UserProfile)
+  const getPendingItems = (userData) => {
+    if (userData?.status !== "pending") return [];
+    
+    const pendingItems = [];
+    
+    // Check bio
+    if (!userData?.bio || userData.bio.trim() === "") {
+      pendingItems.push("Bio");
+    }
+    
+    // Check categories
+    if (!userData?.categories || userData.categories.length === 0) {
+      pendingItems.push("Sports Category");
+    }
+    
+    // Check cover photo
+    if (userData?.coverPhoto === "defaultCover.jpg") {
+      pendingItems.push("Cover photo");
+    }
+    
+    // Check profile photo
+    if (userData?.photo === "default.png") {
+      pendingItems.push("Profile photo");
+    }
+    
+    // Check intro video
+    if (!userData?.introVideo) {
+      pendingItems.push("Intro video");
+    }
+    
+    return pendingItems;
+  };
+
   const getData = async () => {
     setLoading("initial");
     const { response } = await Get({
@@ -218,10 +252,12 @@ const CoachDetailTemplate = ({ slug }) => {
       ...(values && { rejectionReason: values.rejectReason }),
     };
 
-    const { response } = await Patch({
+    const { response , error } = await Patch({
       route: `admin/users/coach/status/${slug}`,
       data: payload,
+      showAlert: false
     });
+    console.log("🚀 ~ handleCoachStatus ~ response:", response)
 
     if (response) {
       RenderToast({
@@ -237,7 +273,26 @@ const CoachDetailTemplate = ({ slug }) => {
       }));
       setShowModal("");
     }
+    else if ( error && error?.message?.error[0] == 'Coach profile is not completed' && error?.statusCode == 400 ) {
+      console.log('101error' ,error?.statusCode, error?.message?.error[0] )
+      
+      // Get pending items and show error toast
+      const pendingItems = getPendingItems(usersData);
+      if (pendingItems.length > 0) {
+        const pendingItemsText = pendingItems.join(', ');
+        RenderToast({
+          type: "error",
+          message: `${pendingItemsText} ${pendingItems?.length > 1 ? 'are' : 'is'} not provided by the coach`,
+        });
+      } else {
+        RenderToast({
+          type: "error",
+          message: "Coach profile is not completed",
+        });
+      }
+    }
     setActionLoading("");
+    setShowModal("");
   };
 
   const handleAccept = () => {

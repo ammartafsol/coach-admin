@@ -3,6 +3,78 @@
   padding: 16px;
 }
 
+/* Pending Items Section Styles */
+.pendingItemsSection {
+  background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+  border: 1px solid #f39c12;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(243, 156, 18, 0.15);
+}
+
+.pendingTitle {
+  color: #d68910;
+  font-family: "AventaBold";
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pendingTitle::before {
+  content: "⚠️";
+  font-size: 16px;
+}
+
+.pendingList {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.pendingItem {
+  color: #8b4513;
+  font-family: "AvenirRegular";
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  margin-bottom: 8px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.pendingItem::before {
+  content: "•";
+  color: #f39c12;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.pendingItem:last-child {
+  margin-bottom: 0;
+}
+
+/* Responsive Design for Pending Items */
+@media (max-width: 768px) {
+  .pendingItemsSection {
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .pendingTitle {
+    font-size: 16px;
+  }
+  
+  .pendingItem {
+    font-size: 13px;
+  }
+}
+
 /* Cover Photo Section Styles */
 .coverPhotoSection {
   margin-bottom: 32px;

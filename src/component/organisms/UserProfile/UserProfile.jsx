@@ -19,11 +19,48 @@ import BorderWrapper from "@/component/atoms/BorderWrapper";
 import { mediaUrl } from "@/resources/utils/helper";
 
 export default function UserProfile({ userData }) {
+  console.log("🚀 ~ UserProfile ~ userData:", userData)
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const autoScrollTimerRef = useRef(null);
   const testimonialsPerPage = 3;
+
+  // Check for pending profile items
+  const getPendingItems = () => {
+    if (userData?.status !== "pending") return [];
+    
+    const pendingItems = [];
+    
+    // Check bio
+    if (!userData?.bio || userData.bio.trim() === "") {
+      pendingItems.push("Bio is not provided");
+    }
+    
+    // Check categories
+    if (!userData?.categories || userData.categories.length === 0) {
+      pendingItems.push("Sports Category is not selected");
+    }
+    
+    // Check cover photo
+    if (userData?.coverPhoto === "defaultCover.jpg") {
+      pendingItems.push("Cover photo is not provided by the coach and a dummy image is being used");
+    }
+    
+    // Check profile photo
+    if (userData?.photo === "default.png") {
+      pendingItems.push("Profile photo is not provided by the coach and a dummy image is being used");
+    }
+    
+    // Check intro video
+    if (!userData?.introVideo) {
+      pendingItems.push("Intro video is not provided");
+    }
+    
+    return pendingItems;
+  };
+
+  const pendingItems = getPendingItems();
 
   const totalPages = Math.ceil((userData?.reviews?.length || 0) / testimonialsPerPage);
  
@@ -98,6 +135,20 @@ export default function UserProfile({ userData }) {
   return (
     <BorderWrapper>
       <div className={classes.container}>
+        {/* Pending Items Section */}
+        {pendingItems.length > 0 && (
+          <div className={classes.pendingItemsSection}>
+            <h3 className={classes.pendingTitle}>Profile Completion Required</h3>
+            <ul className={classes.pendingList}>
+              {pendingItems.map((item, index) => (
+                <li key={index} className={classes.pendingItem}>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
         {/* Cover Photo Section */}
         <div className={classes.coverPhotoSection}>
           <div className={classes.coverPhotoContainer}>
@@ -264,7 +315,7 @@ export default function UserProfile({ userData }) {
                     className={classes.videoPlayer}
                     controls
                     autoPlay
-                    src={userData?.introVideo}
+                    src={mediaUrl(userData?.introVideo)}
                   >
                     Your browser does not support the video tag.
                   </video>
