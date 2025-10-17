@@ -19,6 +19,7 @@ import BorderWrapper from "@/component/atoms/BorderWrapper";
 import { mediaUrl } from "@/resources/utils/helper";
 
 export default function UserProfile({ userData }) {
+  console.log("🚀 ~ UserProfile ~ userData:", userData)
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
