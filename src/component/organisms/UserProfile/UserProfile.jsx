@@ -19,7 +19,6 @@ import BorderWrapper from "@/component/atoms/BorderWrapper";
 import { mediaUrl } from "@/resources/utils/helper";
 
 export default function UserProfile({ userData, waitingListCount = 0 }) {
-  console.log("🚀 ~ UserProfile ~ userData:", userData)
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -323,7 +322,9 @@ export default function UserProfile({ userData, waitingListCount = 0 }) {
           <div className={classes.videoSection}>
             <h2 className={classes.videoTitle}>Intro Video</h2>
             <div className={classes.videoContainer}>
-              {!isPlaying ? (
+              {!userData?.introVideo && <NoData className={classes.noData} iconColor="var(--White)" text="No Intro Video found" />}
+
+              {userData?.introVideo && !isPlaying && (
                 <>
                   <Image
                     src={resolvedThumbnail}
@@ -341,7 +342,9 @@ export default function UserProfile({ userData, waitingListCount = 0 }) {
                     </button>
                   </div>
                 </>
-              ) : (
+              )}
+
+              {userData?.introVideo && isPlaying && (
                 <div className={classes.videoPlayerWrapper}>
                   <video
                     className={classes.videoPlayer}

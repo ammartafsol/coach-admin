@@ -117,7 +117,7 @@ export const RenderStatusCell = ({ cellValue: item, checkAsItIs = false , justif
 export const RenderUserDataCell = ({ fullName, photo, slug = "" }) => {
   const router = useRouter();
   const defaultAvatar = "/images/app-images/user-avatars.png";
-  if (!fullName && ! photo) return null;
+  if (!fullName && !photo) return null;
 
   const resolvedImage = photo ? mediaUrl(photo) : defaultAvatar;
 

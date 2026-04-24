@@ -65,6 +65,10 @@
   margin-bottom: 0;
 }
 
+.noData p{
+  color: var(--White) !important;
+}
+
 /* Responsive Design for Pending Items */
 @media (max-width: 768px) {
   .pendingItemsSection {

@@ -107,7 +107,7 @@ export default function AppTable({
                 ) : (
                   <tr>
                     <td>
-                      <NoData text={noDataText} />
+                      <NoData className={classes.noData} text={noDataText || "No Data Found"} />
                     </td>
                   </tr>
                 )}

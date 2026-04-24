@@ -30,6 +30,9 @@ export default function VideoModalSkeleton({
     return null;
   }
 
+  const comments = Array.isArray(activeFeed.comments) ? activeFeed.comments : [];
+  const commentsToShow = showAllComments ? comments : comments.slice(0, 3);
+
   return (
     <Modal
       isOpen={isOpen}
@@ -159,10 +162,7 @@ export default function VideoModalSkeleton({
 
           {/* Comments List */}
           <div className={classes.commentsList}>
-            {(showAllComments
-              ? activeFeed.comments
-              : activeFeed.comments.slice(0, 3)
-            ).map((comment) => (
+            {commentsToShow.map((comment) => (
               <div key={comment.id} className={classes.comment}>
                 <div className={classes.commentAvatar}>
                   <Image
@@ -187,17 +187,16 @@ export default function VideoModalSkeleton({
                 </div>
               </div>
             ))}
+            {comments.length === 0 && <p className={classes.commentText}>No comments found</p>}
           </div>
 
           {/* View All Comments */}
-          {activeFeed.comments &&
-            activeFeed.comments.length > 3 &&
-            !showAllComments && (
+          {comments.length > 3 && !showAllComments && (
               <button
                 className={classes.viewAllBtn}
                 onClick={() => setShowAllComments(true)}
               >
-                View all {activeFeed.comments.length} comments
+                View all {comments.length} comments
               </button>
             )}
 
