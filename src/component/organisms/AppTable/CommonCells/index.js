@@ -139,12 +139,12 @@ export const RenderUserDataCell = ({ fullName, photo, slug = "" }) => {
   );
 };
 
-export const RenderNumberCell = ({ cellValue, justifyCenter }) => {
+export const RenderNumberCell = ({ cellValue, justifyCenter, prefix = "", suffix = "" }) => {
   if (cellValue === null || cellValue === undefined) return "-";
 
   return (
     <div className={mergeClass(classes.numberCell, justifyCenter && classes.center)}>
-      {Number(cellValue).toLocaleString()} {/* adds comma separators */}
+      {prefix}{Number(cellValue).toLocaleString()}{suffix}
     </div>
   );
 };
