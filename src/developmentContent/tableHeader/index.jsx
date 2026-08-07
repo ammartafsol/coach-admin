@@ -194,7 +194,7 @@ export const tableHeadersCommissiosData = [
   },
   {
     title: "Last Updated On",
-    key: "createdAt",
+    key: "coachCommissionUpdatedAt",
     style: { width: "18%" },
     renderValue: (cellValue) => <RenderDateCell {...{ cellValue }} justifyCenter/>,
   },
