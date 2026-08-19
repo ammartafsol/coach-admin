@@ -1,0 +1,79 @@
+.wrapper {
+  padding: 24px;
+}
+
+.sectionTitle {
+  color: #333;
+  font-family: "AventaRegular";
+  font-size: 20px;
+  font-weight: 400;
+  margin: 8px 0 16px;
+}
+
+.mediaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.mediaItem {
+  flex: 1;
+  min-width: 180px;
+  max-width: 280px;
+}
+
+.coverItem {
+  flex: 1.5;
+  min-width: 260px;
+  max-width: 420px;
+}
+
+.videoUpload {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.videoBox {
+  border: 1px dashed #b8b6b6;
+  border-radius: 10px;
+  min-height: 140px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #fff;
+}
+
+.videoName {
+  font-family: "AvenirRegular";
+  font-size: 13px;
+  color: #344313;
+  word-break: break-all;
+  text-align: center;
+}
+
+.videoActions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.actions button {
+  min-width: 140px;
+}

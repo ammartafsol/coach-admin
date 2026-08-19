@@ -371,6 +371,30 @@
   gap: 12px;
 }
 
+.bankDetails {
+  margin-top: 24px;
+}
+
+.bankInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bankItem {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  color: #71717a;
+  font-family: "AvenirRegular";
+  font-size: 16px;
+}
+
+.bankLabel {
+  color: #333;
+  font-weight: 600;
+}
+
 .twitterIcon,
 .instagramIcon,
 .phoneIcon {

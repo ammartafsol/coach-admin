@@ -9,6 +9,7 @@ import UsersTable from "@/component/molecules/UsersTable";
 import FeedsCom from "@/component/organisms/FeedsCom";
 import Subscription from "@/component/organisms/Subscription/Subscription";
 import UserProfile from "@/component/organisms/UserProfile/UserProfile";
+import EditCoachProfile from "@/component/organisms/EditCoachProfile";
 import { coachTabs } from "@/developmentContent/enums/enum";
 import useAxios from "@/interceptor/axiosInterceptor";
 import useDebounce from "@/resources/hooks/useDebounce";
@@ -68,6 +69,8 @@ const CoachDetailTemplate = ({ slug }) => {
   // Accept/Reject functionality states
   const [showModal, setShowModal] = useState("");
   const [actionLoading, setActionLoading] = useState("");
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
+  const [profileEditLoading, setProfileEditLoading] = useState(false);
 
   // Get all countries for dropdown
   const countries = Country.getAllCountries().map((country) => ({
@@ -218,6 +221,33 @@ const CoachDetailTemplate = ({ slug }) => {
       // return true;
     }
     setEditLoading(false);
+  };
+
+  const editCoachProfile = async (payload) => {
+    setProfileEditLoading(true);
+    const { response } = await Patch({
+      route: `admin/users/coach/profile/${slug}`,
+      data: payload,
+    });
+
+    if (response) {
+      const { response: refreshed } = await Get({
+        route: `admin/users/${slug}`,
+      });
+
+      if (refreshed) {
+        setUsersData(refreshed.data);
+      } else if (response?.data) {
+        setUsersData(response.data);
+      }
+
+      RenderToast({
+        message: "Coach profile updated successfully",
+        type: "success",
+      });
+      setIsEditingProfile(false);
+    }
+    setProfileEditLoading(false);
   };
 
   const getCategoryData = async (coachSlug = slug) => {
@@ -377,6 +407,7 @@ const CoachDetailTemplate = ({ slug }) => {
   useEffect(() => {
     getData();
     getCategoryData();
+    setIsEditingProfile(false);
     if (SelectedTabs.value === "feeds") {
       getFeedsData({
         _search: debounceSearch,
@@ -443,40 +474,55 @@ const CoachDetailTemplate = ({ slug }) => {
             />
             {SelectedTabs.value === "profile" ? (
                 <div className={classes?.actionButtons}>
-                 {usersData?.status === "pending" && <Button
-                    label="Accept"
-                    variant="success"
-                    onClick={handleAccept}
-                    className={classes?.acceptButton}
-                  />}
-                {usersData?.status === "pending" && <Button
-                    label="Reject"
-                    variant="outlined"
-                    onClick={handleReject}
-                    className={classes?.rejectButton}
-                  />}
-                  <button 
-                    className={classes.downloadButton} 
-                    onClick={handleDownloadTransactions}
-                    disabled={downloadLoading}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
+                 {isEditingProfile ? (
+                  <Button
+                    label="Back"
+                    variant="green-outlined"
+                    onClick={() => setIsEditingProfile(false)}
+                    disabled={profileEditLoading}
+                  />
+                 ) : (
+                  <>
+                    <Button
+                      label="Edit Profile"
+                      onClick={() => setIsEditingProfile(true)}
+                    />
+                    {usersData?.status === "pending" && <Button
+                      label="Accept"
+                      variant="success"
+                      onClick={handleAccept}
+                      className={classes?.acceptButton}
+                    />}
+                    {usersData?.status === "pending" && <Button
+                      label="Reject"
+                      variant="outlined"
+                      onClick={handleReject}
+                      className={classes?.rejectButton}
+                    />}
+                    <button 
+                      className={classes.downloadButton} 
+                      onClick={handleDownloadTransactions}
+                      disabled={downloadLoading}
                     >
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                      <polyline points="7 10 12 15 17 10"></polyline>
-                      <line x1="12" y1="15" x2="12" y2="3"></line>
-                    </svg>
-                    {downloadLoading ? "Downloading..." : "Download Transactions"}
-                  </button>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                      </svg>
+                      {downloadLoading ? "Downloading..." : "Download Transactions"}
+                    </button>
+                  </>
+                 )}
                 </div>
             ) : SelectedTabs.value === "feeds" ? (
               <div className={classes?.main}>
@@ -547,7 +593,16 @@ const CoachDetailTemplate = ({ slug }) => {
                 }}
               />
             ) : SelectedTabs.value === "profile" ? (
-              <UserProfile userData={usersData} waitingListCount={waitingListCount} />
+              isEditingProfile ? (
+                <EditCoachProfile
+                  userData={usersData}
+                  loading={profileEditLoading}
+                  onCancel={() => setIsEditingProfile(false)}
+                  onSubmit={editCoachProfile}
+                />
+              ) : (
+                <UserProfile userData={usersData} waitingListCount={waitingListCount} />
+              )
             ) : SelectedTabs.value === "subscriptionCost" ? (
               <Subscription
                 editSubscription={editSubscription}

@@ -211,6 +211,27 @@ export const EditSubscriptionSchema = Yup.object({
   price: Yup.number().required("Price is required"),
 });
 
+export const CoachProfileSchema = Yup.object({
+  firstName: Yup.string().required("First name is required"),
+  lastName: Yup.string().required("Last name is required"),
+  phoneNumber: Yup.string().optional(),
+  bio: Yup.string().optional(),
+  queryDescription: Yup.string().optional(),
+  photo: Yup.mixed().nullable(),
+  coverPhoto: Yup.mixed().nullable(),
+  introVideo: Yup.mixed().nullable(),
+  introVideoThumbnail: Yup.mixed().nullable(),
+  categories: Yup.array().optional(),
+  subscriptionCost: Yup.number()
+    .transform((value, originalValue) =>
+      originalValue === "" || originalValue === null || originalValue === undefined
+        ? undefined
+        : value
+    )
+    .typeError("Subscription cost must be a number")
+    .optional(),
+});
+
 export const updatePasswordSchema = Yup.object().shape({
   currentPassword: Yup.string()
     .min(6, "Password must be at least 6 characters")

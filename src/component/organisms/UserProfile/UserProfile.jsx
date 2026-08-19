@@ -219,6 +219,13 @@ export default function UserProfile({ userData, waitingListCount = 0 }) {
               <p className={classes.bioText}>{userData?.bio}</p>
             </div>
 
+            {userData?.queryDescription && (
+              <div>
+                <h2 className={classes.sectionTitle}>Query Description</h2>
+                <p className={classes.bioText}>{userData?.queryDescription}</p>
+              </div>
+            )}
+
             <div className={classes.contactInfo}>
               <div className={classes.contactItem}>
                 <MdOutlineMail
@@ -242,7 +249,16 @@ export default function UserProfile({ userData, waitingListCount = 0 }) {
                   fill="#F29267"
                   size={24}
                 />
-                <span>{userData?.country}</span>
+                <span>
+                  {[
+                    userData?.city,
+                    userData?.state,
+                    userData?.country,
+                    userData?.postalCode,
+                  ]
+                    .filter(Boolean)
+                    .join(", ") || userData?.country}
+                </span>
               </div>
             </div>
 
@@ -297,25 +313,31 @@ export default function UserProfile({ userData, waitingListCount = 0 }) {
 
                 )
               }
-            {/* <div className={classes.bankDetails}>
+            {(userData?.bankDetails || userData?.banksDetails) && (
+            <div className={classes.bankDetails}>
               <h2 className={classes.sectionTitle}>Bank Details</h2>
               <div className={classes.bankInfo}>
                 <div className={classes.bankItem}>
                   <span className={classes.bankLabel}>Account Holder Name: </span>
-                  <span className={classes.bioText}>{userData?.banksDetails?.accountHolderName}</span>
+                  <span className={classes.bioText}>
+                    {(userData?.bankDetails || userData?.banksDetails)?.accountHolderName}
+                  </span>
                 </div>
                 <div className={classes.bankItem}>
                   <span className={classes.bankLabel}>Account Number: </span>
-                  <span className={classes.bioText}>{userData?.banksDetails?.accountNumber}</span>
+                  <span className={classes.bioText}>
+                    {(userData?.bankDetails || userData?.banksDetails)?.accountNumber}
+                  </span>
                 </div>
                 <div className={classes.bankItem}>
                   <span className={classes.bankLabel}>Bank Name: </span>
-                  <span className={classes.bioText}>{userData?.banksDetails?.bankName}</span>
+                  <span className={classes.bioText}>
+                    {(userData?.bankDetails || userData?.banksDetails)?.bankName}
+                  </span>
                 </div>
-                
-                
               </div>
-            </div> */}
+            </div>
+            )}
           </div>
 
           {/* Video Section */}

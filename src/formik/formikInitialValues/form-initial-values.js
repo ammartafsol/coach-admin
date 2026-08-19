@@ -124,6 +124,24 @@ export const PROFILE_FORM_VALUES = (userData) => ({
   photo: userData?.photo ?? null,
 });
 
+export const COACH_PROFILE_FORM_VALUES = (userData) => ({
+  firstName: userData?.firstName ?? "",
+  lastName: userData?.lastName ?? "",
+  phoneNumber: userData?.phoneNumber ?? "",
+  bio: userData?.bio ?? "",
+  queryDescription: userData?.queryDescription ?? "",
+  photo: userData?.photo ?? null,
+  coverPhoto: userData?.coverPhoto ?? null,
+  introVideo: userData?.introVideo ?? null,
+  introVideoThumbnail: userData?.introVideoThumbnail ?? null,
+  categories:
+    userData?.categories?.map((category) => ({
+      label: category?.name,
+      value: category?._id || category,
+    })) ?? [],
+  subscriptionCost: userData?.subscriptionCost ?? "",
+});
+
 export const UPDATE_PASSWORD_FORM_VALUES = {
   currentPassword: "",
   newPassword: "",
