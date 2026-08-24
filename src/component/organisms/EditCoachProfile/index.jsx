@@ -6,13 +6,19 @@ import { useFormik } from "formik";
 import BorderWrapper from "@/component/atoms/BorderWrapper";
 import Button from "@/component/atoms/Button";
 import { Input } from "@/component/atoms/Input";
+import RenderToast from "@/component/atoms/RenderToast";
 import { TextArea } from "@/component/atoms/TextArea/TextArea";
 import UploadImageBox from "@/component/atoms/UploadImagebox";
 import DropDown from "@/component/molecules/DropDown/DropDown";
 import { COACH_PROFILE_FORM_VALUES } from "@/formik/formikInitialValues/form-initial-values";
 import { CoachProfileSchema } from "@/formik/formikSchema/formik-schemas";
 import useAxios from "@/interceptor/axiosInterceptor";
-import { CreateFormData } from "@/resources/utils/helper";
+import {
+  CreateFormData,
+  getVideoContentTypeFromSource,
+  isAviVideoFile,
+  mediaUrl,
+} from "@/resources/utils/helper";
 import classes from "./EditCoachProfile.module.css";
 
 const EditCoachProfile = ({
@@ -85,6 +91,77 @@ const EditCoachProfile = ({
     setUploadLoading("");
   };
 
+  const getSignedUrlVideo = async (file) => {
+    if (!file) return;
+
+    if (!file.type?.startsWith("video/")) {
+      RenderToast({
+        type: "error",
+        message: "Please select a video file.",
+      });
+      return;
+    }
+
+    if (isAviVideoFile(file)) {
+      RenderToast({
+        type: "error",
+        message: "AVI files won't upload. Please select another video format.",
+      });
+      return;
+    }
+
+    setUploadLoading("introVideo");
+
+    const contentType = getVideoContentTypeFromSource(file);
+    const { response } = await Post({
+      route: "media/upload",
+      data: {
+        videoCount: 1,
+        ...(contentType ? { videos: [contentType] } : {}),
+      },
+    });
+
+    const presignedUrl =
+      response?.data?.urls?.[0] || response?.data?.data?.urls?.[0];
+    const videoKey =
+      response?.data?.keys?.[0] || response?.data?.data?.keys?.[0];
+
+    if (!presignedUrl || !videoKey) {
+      RenderToast({
+        type: "error",
+        message: "Error in uploading video.",
+      });
+      setUploadLoading("");
+      return;
+    }
+
+    try {
+      const uploadResponse = await fetch(presignedUrl, {
+        method: "PUT",
+        body: file,
+        headers: {
+          "Content-Type": file.type,
+        },
+      });
+
+      if (uploadResponse.ok) {
+        formik.setFieldValue("introVideo", videoKey);
+      } else {
+        RenderToast({
+          type: "error",
+          message: "Error in uploading video.",
+        });
+      }
+    } catch {
+      RenderToast({
+        type: "error",
+        message: "Error in uploading video.",
+      });
+    }
+
+    setUploadLoading("");
+  };
+
   useEffect(() => {
     getSportCategories();
   }, []);
@@ -130,19 +207,25 @@ const EditCoachProfile = ({
           <div className={`${classes.mediaItem} ${classes.videoUpload}`}>
             <label>Intro Video</label>
             <div className={classes.videoBox}>
-              <p className={classes.videoName}>
-                {formik.values.introVideo
-                  ? typeof formik.values.introVideo === "string"
-                    ? formik.values.introVideo
-                    : formik.values.introVideo?.name
-                  : "No video uploaded"}
-              </p>
+              {formik.values.introVideo ? (
+                <video
+                  className={classes.videoPreview}
+                  controls
+                  src={mediaUrl(formik.values.introVideo)}
+                >
+                  Your browser does not support the video tag.
+                </video>
+              ) : (
+                <p className={classes.videoName}>No video uploaded</p>
+              )}
               <div className={classes.videoActions}>
                 <Button
                   label={
                     uploadLoading === "introVideo"
                       ? "Uploading..."
-                      : "Upload Video"
+                      : formik.values.introVideo
+                        ? "Replace Video"
+                        : "Upload Video"
                   }
                   variant="green-outlined"
                   disabled={isBusy}
@@ -161,11 +244,11 @@ const EditCoachProfile = ({
                 ref={videoInputRef}
                 className={classes.hiddenInput}
                 type="file"
-                accept="video/*"
+                accept="video/mp4,video/webm,video/quicktime,video/ogg,.mp4,.webm,.mov,.ogg"
                 onChange={(e) => {
                   const file = e.target.files?.[0];
                   if (file) {
-                    uploadMedia(file, "introVideo", "introVideo");
+                    getSignedUrlVideo(file);
                   }
                   e.target.value = "";
                 }}

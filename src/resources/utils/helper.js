@@ -611,6 +611,50 @@ export const formatDate = (date) => {
   return new Date(date).toLocaleDateString("en-US", options);
 };
 
+export const getVideoContentTypeFromSource = (item) => {
+  if (!item) return null;
+
+  if (item.file && item.file.type) {
+    return item.file.type;
+  }
+  if (item instanceof File && item.type && item.type.trim() !== "") {
+    return item.type;
+  }
+
+  const rawSource =
+    typeof item === "string" ? item : item.url || item.key || "";
+
+  const source = rawSource.toLowerCase();
+  if (!source) return null;
+
+  if (source.endsWith(".mp4")) return "video/mp4";
+  if (source.endsWith(".webm")) return "video/webm";
+  if (source.endsWith(".ogv") || source.endsWith(".ogg")) return "video/ogg";
+  if (source.endsWith(".mov")) return "video/quicktime";
+  if (source.endsWith(".avi")) return "video/x-msvideo";
+  if (source.endsWith(".wmv")) return "video/x-ms-wmv";
+  if (source.endsWith(".mkv")) return "video/x-matroska";
+
+  return null;
+};
+
+export const isAviVideoFile = (fileLike) => {
+  if (!fileLike) return false;
+
+  const type = (fileLike.type || "").toLowerCase();
+  const name = (fileLike.name || "").toLowerCase();
+
+  if (type === "video/avi" || type === "video/x-msvideo") {
+    return true;
+  }
+
+  if (name.endsWith(".avi")) {
+    return true;
+  }
+
+  return false;
+};
+
 export const getMonthName = (input) => {
   // Accepts a month index (0-11), a Date instance, or a date string/ISO timestamp
   if (input === null || input === undefined) return "";
