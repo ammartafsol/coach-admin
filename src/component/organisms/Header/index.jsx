@@ -72,10 +72,12 @@ export default function Navbar() {
     <header className={classes.header}>
       <div className={classes.logo}>
         <Image
+          className={classes.logoImg}
           src="/images/app-images/logo.png"
           alt="The Coach Huddle Logo"
-          width={100}
-          height={40}
+          width={150}
+          height={150}
+          priority
         />
       </div>
 

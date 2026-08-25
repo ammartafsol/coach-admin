@@ -6,13 +6,20 @@
   height: 80px;
   border-radius: 20px;
   background: var(--black-color-300);
-  padding: 28px 24px;
+  padding: 10px 24px;
 }
 
 .logo {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.logoImg {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 .logoText {

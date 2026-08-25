@@ -59,9 +59,11 @@ const ResetPassword = () => {
         <div className={classes.loginContainer}>
           <Image
             src={"/images/app-images/logo.png"}
-            alt="logo"
-            width={130}
-            height={50}
+            alt="The Coach Huddle Logo"
+            width={120}
+            height={120}
+            style={{ objectFit: "contain" }}
+            priority
           />
           <div className={classes.formContainer}>
             <div className={classes.headingDiv}>
